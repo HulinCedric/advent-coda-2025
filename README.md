@@ -2,4 +2,5 @@
 
 Ce repository contient mes résolutions du [calendrier de l'Avent Coda](https://coda-school.github.io/advent-2025/).
 
-- [Jour 1 — Un curieux message](day-01/README.md)
+- [Jour 1 - Un curieux message](day-01/README.md)
+- [Jour 2 - Compter les Rennes](day-02/README.md)

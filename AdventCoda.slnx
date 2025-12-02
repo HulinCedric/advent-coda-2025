@@ -3,4 +3,8 @@
     <Project Path="day-01/src/Day01.csproj" />
     <Project Path="day-01/tests/Day01.Tests.csproj" />
   </Folder>
+  <Folder Name="/Jour 2 - Compter les Rennes/">
+    <Project Path="day-02/src/Day02.csproj" />
+    <Project Path="day-02/tests/Day02.Tests.csproj" />
+  </Folder>
 </Solution>
