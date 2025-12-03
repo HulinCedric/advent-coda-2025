@@ -1,10 +1,17 @@
 <Solution>
   <Folder Name="/Jour 1 - Un curieux message/">
+    <File Path="day-01\README.md" />
     <Project Path="day-01/src/Day01.csproj" />
     <Project Path="day-01/tests/Day01.Tests.csproj" />
   </Folder>
   <Folder Name="/Jour 2 - Compter les Rennes/">
+    <File Path="day-02\README.md" />
     <Project Path="day-02/src/Day02.csproj" />
     <Project Path="day-02/tests/Day02.Tests.csproj" />
+  </Folder>
+  <Folder Name="/Jour 3 - Le script fantôme/">
+    <File Path="day-03\backup.sh" />
+    <File Path="day-03\grant-santa.sh" />
+    <File Path="day-03\README.md" />
   </Folder>
 </Solution>
