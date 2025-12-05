@@ -28,4 +28,23 @@ public class Test
 
         elfOfTheDay.Name.Should().Be("Nora");
     }
+    
+    [Fact]
+    public void Get_elves_top3()
+    {
+        var elves = Elves("sample");
+
+        var elfOfTheDay = elves
+            .OrderByDescending(elf => elf.GetTotalCalories())
+            .Take(3);
+
+        elfOfTheDay
+            .Should()
+            .BeEquivalentTo(
+            [
+                new Elf("Nora", [7000, 8000, 9000]),
+                new Elf("Marius", [5000, 6000]),
+                new Elf("Tika", [10000])
+            ]);
+    }
 }
