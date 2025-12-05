@@ -2,7 +2,7 @@
 
 public static class ElvesFileLoader
 {
-    private const string ElvesSeparator = "\r\n\r\n";
+    private const string ElfSeparator = "\r\n\r\n";
     private const string ElfCharacteristicSeparator = "\r\n";
 
     public static IEnumerable<Elf> Elves(string fileName)
@@ -11,13 +11,13 @@ public static class ElvesFileLoader
 
     private static IEnumerable<string[]> LoadElvesDescription(string fileName)
         => ElvesBlock(FileContent(fileName))
-            .Select(elfBlock => elfBlock.Split(ElfCharacteristicSeparator));
+            .Select(elf => elf.Split(ElfCharacteristicSeparator));
 
     private static string FileContent(string fileName) => File.ReadAllText(fileName);
 
     private static string[] ElvesBlock(string fileContent)
         => fileContent.Split(
-            ElvesSeparator,
+            ElfSeparator,
             StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
 
     private static Elf MapElfFromDescription(string[] elfDescription)
