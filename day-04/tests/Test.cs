@@ -7,10 +7,8 @@ public class Test
 {
     [Fact]
     public void test_read_sample()
-    {
-        var elves = LoadElves("sample");
-
-        elves.Should()
+        => Elves("sample")
+            .Should()
             .BeEquivalentTo(
             [
                 new Elf("Pepin", [1000, 2000, 3000]),
@@ -19,21 +17,22 @@ public class Test
                 new Elf("Nora", [7000, 8000, 9000]),
                 new Elf("Tika", [10000])
             ]);
-    }
 
-    private static IEnumerable<Elf> LoadElves(string fileName)
+    private static IEnumerable<Elf> Elves(string fileName)
+        => LoadElvesDescription(fileName)
+            .Select(MapElfFromDescription);
+
+    private static IEnumerable<string[]> LoadElvesDescription(string fileName)
     {
         var fileContent = FileContent(fileName);
-
-        fileContent.Should().Contain("Pepin");
 
         var elvesDescriptions = fileContent.Split(
             "\r\n\r\n",
             StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
-        elvesDescriptions.Length.Should().Be(5);
 
-
-        return elvesDescriptions.Select(elvesDescription => MapElfFromDescription(elvesDescription.Split("\r\n")));
+        var d = elvesDescriptions
+            .Select(elvesDescription => elvesDescription.Split("\r\n"));
+        return d;
     }
 
     private static Elf MapElfFromDescription(string[] elfDescription)
