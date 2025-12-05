@@ -1,4 +1,4 @@
-﻿namespace Day04.Tests;
+﻿namespace Day04;
 
 public static class Top3Report
 {
