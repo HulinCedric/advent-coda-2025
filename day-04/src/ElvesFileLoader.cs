@@ -2,29 +2,26 @@
 
 public static class ElvesFileLoader
 {
+    private const string ElvesSeparator = "\r\n\r\n";
+    private const string ElfCharacteristicSeparator = "\r\n";
+
     public static IEnumerable<Elf> Elves(string fileName)
         => LoadElvesDescription(fileName)
             .Select(MapElfFromDescription);
 
     private static IEnumerable<string[]> LoadElvesDescription(string fileName)
-    {
-        var fileContent = FileContent(fileName);
+        => ElvesBlock(FileContent(fileName))
+            .Select(elfBlock => elfBlock.Split(ElfCharacteristicSeparator));
 
-        const string elvesSeparator = "\r\n\r\n";
+    private static string FileContent(string fileName) => File.ReadAllText(fileName);
 
-        var elvesDescriptions = fileContent.Split(
-            elvesSeparator,
+    private static string[] ElvesBlock(string fileContent)
+        => fileContent.Split(
+            ElvesSeparator,
             StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
-
-        const string elfCharacteristicSeparator = "\r\n";
-        return elvesDescriptions
-            .Select<string, string[]>(elvesDescription => elvesDescription.Split(elfCharacteristicSeparator));
-    }
 
     private static Elf MapElfFromDescription(string[] elfDescription)
         => new(
             Name: elfDescription[0],
             Calories: elfDescription.Skip(1).Select(int.Parse).ToList());
-
-    private static string FileContent(string fileName) => File.ReadAllText(fileName);
 }
