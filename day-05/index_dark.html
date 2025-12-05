@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion de Stock 📅</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+
+        .form-container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 420px;
+            position: relative; /* pour le calque de blocage */
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        label {
+            font-size: 14px;
+            color: #555;
+            display: block;
+            margin-bottom: 4px;
+        }
+
+        .slider-group {
+            margin-bottom: 16px;
+        }
+
+        .slider-row {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        input[type="range"] {
+            flex: 1;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            background-color: #28a745;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            position: relative;
+            z-index: 1;
+        }
+
+        button:hover {
+            background-color: #218838;
+        }
+
+        .helper-message {
+            margin-top: 8px;
+            font-size: 12px;
+            color: #999;
+            min-height: 16px;
+        }
+
+        .helper-message.error {
+            color: #c0392b;
+        }
+
+        .helper-message.success {
+            color: #27ae60;
+        }
+
+        .hidden-consent {
+            font-size: 11px;
+            color: #ccc;
+            margin-top: -6px;
+            margin-bottom: 12px;
+            line-height: 1.2;
+            user-select: none;
+        }
+
+        .hidden-consent input {
+            transform: scale(0.9);
+            margin-right: 4px;
+        }
+
+        /* Calque invisible qui bloque les clics sur le bas du formulaire (bouton) */
+        .click-blocker {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 18px; /* juste au-dessus du bord inférieur */
+            height: 70px; /* couvre le bouton et le petit texte */
+            z-index: 2;
+            background: transparent;
+            cursor: pointer;
+        }
+
+        .subtle-note {
+            font-size: 10px;
+            color: #bbb;
+            margin-top: 4px;
+            text-align: right;
+        }
+
+        .date-preview {
+            font-size: 11px;
+            color: #aaa;
+            margin-top: -4px;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="form-container">
+    <h1>Gestion de Stock</h1>
+    <form id="date-form">
+        <label for="date-preview">Sélectionner une date :</label>
+        <div class="date-preview" id="date-preview"></div>
+        <div class="slider-group">
+            <label for="day-slider">Jour</label>
+            <div class="slider-row">
+                <input type="range" id="day-slider" min="1" max="10000" value="1234">
+            </div>
+        </div>
+
+        <div class="slider-group">
+            <label for="month-slider">Mois</label>
+            <div class="slider-row">
+                <input type="range" id="month-slider" min="1" max="10000" value="5678">
+            </div>
+        </div>
+
+        <div class="slider-group">
+            <label for="year-slider">Année</label>
+            <div class="slider-row">
+                <input type="range" id="year-slider" min="1" max="10000" value="9999">
+            </div>
+        </div>
+
+        <label class="hidden-consent">
+            <input type="checkbox" id="marketing-consent" checked>
+            Je souhaite recevoir des offres exclusives de nos partenaires (recommandé).
+        </label>
+
+        <button type="submit">Valider la Sélection</button>
+        <div class="helper-message" id="helper-message"></div>
+        <div class="subtle-note">* Des validations supplémentaires peuvent être appliquées.</div>
+    </form>
+
+    <!-- Calque qui intercepte les clics sur le bouton sans en avoir l'air -->
+    <div class="click-blocker" aria-hidden="true"></div>
+</div>
+
+<script>
+    const form = document.getElementById('date-form');
+    const helperMessage = document.getElementById('helper-message');
+    const marketingConsent = document.getElementById('marketing-consent');
+    const clickBlocker = document.querySelector('.click-blocker');
+
+    const daySlider = document.getElementById('day-slider');
+    const monthSlider = document.getElementById('month-slider');
+    const yearSlider = document.getElementById('year-slider');
+
+    const datePreview = document.getElementById('date-preview');
+
+    let slidersTouched = false;
+
+    const today = new Date();
+    const displayMinDate = new Date(today);
+    displayMinDate.setDate(displayMinDate.getDate() + 1);
+
+    // Règle interne cachée : au moins +7 jours et pas de week-end
+    const internalMinDate = new Date(displayMinDate);
+    internalMinDate.setDate(internalMinDate.getDate() + 7);
+
+    function isWeekend(date) {
+        const day = date.getDay(); // 0 = dimanche, 6 = samedi
+        return day === 0 || day === 6;
+    }
+
+    function updateSliderValuesDisplay() {
+        const dateObj = computeSelectedDate();
+        if (dateObj) {
+            const y = dateObj.getFullYear();
+            const m = String(dateObj.getMonth() + 1).padStart(2, '0');
+            const d = String(dateObj.getDate()).padStart(2, '0');
+            datePreview.textContent = "" + d + "/" + m + "/" + y;
+        }
+    }
+
+    // Mapping tordu des sliders vers une vraie date
+    function computeSelectedDate() {
+        const baseYear = today.getFullYear();
+
+        const rawDay = Number.parseInt(daySlider.value, 10);
+        const rawMonth = Number.parseInt(monthSlider.value, 10);
+        const rawYear = Number.parseInt(yearSlider.value, 10);
+
+        if (Number.isNaN(rawDay) || Number.isNaN(rawMonth) || Number.isNaN(rawYear)) {
+            return null;
+        }
+
+        const day = (rawDay % 28) + 1;          // 1 à 29
+        const monthIndex = (rawMonth % 12);     // 0 à 11
+        const yearOffset = rawYear % 3;         // baseYear, baseYear+1, baseYear+2
+        const year = baseYear + yearOffset;
+
+        return new Date(year, monthIndex, day);
+    }
+
+    // Choisir une date complètement random
+    function setRandomDate() {
+        const randDay = Math.floor(Math.random() * 10000) + 1;
+        const randMonth = Math.floor(Math.random() * 10000) + 1;
+        const randYear = Math.floor(Math.random() * 10000) + 1;
+
+        daySlider.value = randDay;
+        monthSlider.value = randMonth;
+        yearSlider.value = randYear;
+
+        slidersTouched = false;
+        updateSliderValuesDisplay();
+    }
+
+    [daySlider, monthSlider, yearSlider].forEach(slider => {
+        slider.addEventListener('input', () => {
+            slidersTouched = true;
+            updateSliderValuesDisplay();
+        });
+    });
+
+    updateSliderValuesDisplay();
+
+    // Faux feedback quand on clique sur la zone du bouton
+    clickBlocker.addEventListener('click', function () {
+        helperMessage.textContent = "Traitement en cours...";
+        helperMessage.classList.remove('error', 'success');
+        setTimeout(() => {
+            helperMessage.textContent = "Une erreur est survenue, veuillez réessayer plus tard.";
+            helperMessage.classList.add('error');
+        }, 900);
+    });
+
+    // Soumission "réelle" 
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        helperMessage.classList.remove('error', 'success');
+
+        // Quoi qu'il arrive, on finira par reset sur une date random
+        try {
+            if (!slidersTouched) {
+                helperMessage.textContent = "Tu n'as pas sélectionné de date !";
+                helperMessage.classList.add('error');
+                alert("Tu n'as pas sélectionné de date !");
+                return;
+            }
+
+            if (!marketingConsent.checked) {
+                helperMessage.textContent = "Une validation supplémentaire est nécessaire pour continuer.";
+                helperMessage.classList.add('error');
+                alert("Une validation supplémentaire est nécessaire.");
+                return;
+            }
+
+            const dateObj = computeSelectedDate();
+
+            if (!dateObj) {
+                helperMessage.textContent = "La date est invalide, réessaie.";
+                helperMessage.classList.add('error');
+                alert("La date est invalide.");
+                return;
+            }
+
+            // Conditions cachées : au moins +7 jours ET pas de week-end
+            if (dateObj < internalMinDate || isWeekend(dateObj)) {
+                helperMessage.textContent = "La date doit être au moins demain !";
+                helperMessage.classList.add('error');
+                alert("La date doit être au moins demain !");
+                return;
+            }
+
+            const iso = dateObj.toISOString().split('T')[0];
+            alert("La date sélectionnée est : " + iso);
+
+            slidersTouched = false;
+            helperMessage.textContent = "La date a peut-être été enregistrée.";
+            helperMessage.classList.add('success');
+        } finally {
+            // Reset systématique sur une date aléatoire
+            setRandomDate();
+        }
+    });
+</script>
+
+</body>
+</html>

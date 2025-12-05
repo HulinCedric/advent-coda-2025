@@ -19,4 +19,9 @@
     <Project Path="day-04/src/Day04.csproj" />
     <Project Path="day-04/tests/Day04.Tests.csproj" />
   </Folder>
+  <Folder Name="/Jour 5 - Le piège de la date infernale/">
+    <File Path="day-05\index.html" />
+    <File Path="day-05\index_dark.html" />
+    <File Path="day-05\README.md" />
+  </Folder>
 </Solution>
