@@ -18,4 +18,14 @@ public class Test
                 new Elf("Nora", [7000, 8000, 9000]),
                 new Elf("Tika", [10000])
             ]);
+    
+    [Fact]
+    public void Get_elf_with_max_calories()
+    {
+        var elves = Elves("sample");
+
+        var elfOfTheDay = elves.MaxBy(elf => elf.GetTotalCalories());
+
+        elfOfTheDay.Name.Should().Be("Nora");
+    }
 }
