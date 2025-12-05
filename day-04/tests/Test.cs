@@ -8,7 +8,14 @@ public class Test
     [Fact]
     public void test_read_sample()
     {
-        var fileContent = FileContent("sample");
+        var elves = LoadElves("sample");
+
+        elves.Should().BeEquivalentTo([new Elf("Pepin", [1000, 2000, 3000])]);
+    }
+
+    private static IEnumerable<Elf> LoadElves(string fileName)
+    {
+        var fileContent = FileContent(fileName);
 
         fileContent.Should().Contain("Pepin");
 
@@ -31,9 +38,7 @@ public class Test
                 int.Parse(elfDescription[2]),
                 int.Parse(elfDescription[3])
             ]);
-        
-        elf.Name.Should().Be("Pepin");
-        elf.Calories.Should().BeEquivalentTo([1000, 2000, 3000]);
+        return [elf];
     }
 
     private static string FileContent(string fileName) => File.ReadAllText(fileName);
