@@ -1,5 +1,6 @@
 using FluentAssertions;
 using Xunit;
+using static Day04.ElvesFileLoader;
 
 namespace Day04.Tests;
 
@@ -17,28 +18,4 @@ public class Test
                 new Elf("Nora", [7000, 8000, 9000]),
                 new Elf("Tika", [10000])
             ]);
-
-    private static IEnumerable<Elf> Elves(string fileName)
-        => LoadElvesDescription(fileName)
-            .Select(MapElfFromDescription);
-
-    private static IEnumerable<string[]> LoadElvesDescription(string fileName)
-    {
-        var fileContent = FileContent(fileName);
-
-        var elvesDescriptions = fileContent.Split(
-            "\r\n\r\n",
-            StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
-
-        var d = elvesDescriptions
-            .Select(elvesDescription => elvesDescription.Split("\r\n"));
-        return d;
-    }
-
-    private static Elf MapElfFromDescription(string[] elfDescription)
-        => new(elfDescription[0], elfDescription.Skip(1).Select(int.Parse).ToList());
-
-    private static string FileContent(string fileName) => File.ReadAllText(fileName);
 }
-
-public record Elf(string Name, List<int> Calories);
