@@ -14,4 +14,9 @@
     <File Path="day-03\grant-santa.sh" />
     <File Path="day-03\README.md" />
   </Folder>
+  <Folder Name="/Jour 4 - Bataille de biscuits/">
+    <File Path="day-04/README.md" />
+    <Project Path="day-04/src/Day04.csproj" />
+    <Project Path="day-04/tests/Day04.Tests.csproj" />
+  </Folder>
 </Solution>
