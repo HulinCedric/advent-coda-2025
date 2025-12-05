@@ -26,20 +26,13 @@ public class Test
         elfDescription.Length.Should().Be(4);
 
 
-        elfDescription[0].Should().Be("Pepin");
-        elfDescription[1].Should().Be("1000");
-        elfDescription[2].Should().Be("2000");
-        elfDescription[3].Should().Be("3000");
-
-        var elf = new Elf(
-            elfDescription[0],
-            [
-                int.Parse(elfDescription[1]),
-                int.Parse(elfDescription[2]),
-                int.Parse(elfDescription[3])
-            ]);
+        var elf = MapElf(elfDescription);
+        
         return [elf];
     }
+
+    private static Elf MapElf(string[] elfDescription)
+        => new(elfDescription[0], elfDescription.Skip(1).Select(int.Parse).ToList());
 
     private static string FileContent(string fileName) => File.ReadAllText(fileName);
 }
