@@ -5,11 +5,8 @@ namespace Day04.Tests;
 
 public class Test
 {
-
-
     [Fact]
-    public void todo()
-    {
-        true.Should().BeFalse();
-    }
+    public void todo() => FileContent("sample").Should().Contain("Pepin");
+
+    private static string FileContent(string fileName) => File.ReadAllText(fileName);
 }
