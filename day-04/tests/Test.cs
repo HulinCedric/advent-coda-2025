@@ -19,19 +19,14 @@ public class Test
 
         fileContent.Should().Contain("Pepin");
 
-        var elvesDescriptions = fileContent.Split("\r\n\r\n", StringSplitOptions.RemoveEmptyEntries);
+        var elvesDescriptions = fileContent.Split("\r\n\r\n", StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
         elvesDescriptions.Length.Should().Be(5);
 
-        var elfDescription = elvesDescriptions[0].Split("\r\n");
-        elfDescription.Length.Should().Be(4);
-
-
-        var elf = MapElf(elfDescription);
         
-        return [elf];
+        return elvesDescriptions.Select(elvesDescription =>  MapElfFromDescription(elvesDescription.Split("\r\n"))).Take(1);
     }
 
-    private static Elf MapElf(string[] elfDescription)
+    private static Elf MapElfFromDescription(string[] elfDescription)
         => new(elfDescription[0], elfDescription.Skip(1).Select(int.Parse).ToList());
 
     private static string FileContent(string fileName) => File.ReadAllText(fileName);
