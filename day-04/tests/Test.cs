@@ -11,25 +11,18 @@ public class Test
         var fileContent = FileContent("sample");
 
         fileContent.Should().Contain("Pepin");
-        
-        fileContent.Split("\r\n\r\n", StringSplitOptions.RemoveEmptyEntries)
-            .Length.Should()
-            .Be(5);
-    }
-    
-    [Fact]
-    public void test_read_data()
-    {
-        var fileContent = FileContent("data");
 
-        fileContent.Should().Contain("Lugh");
-        
-        fileContent.Split("\r\n\r\n", StringSplitOptions.RemoveEmptyEntries)
-            .Length.Should()
-            .Be(300);
-    }
+        var elvesDescriptions = fileContent.Split("\r\n\r\n", StringSplitOptions.RemoveEmptyEntries);
+        elvesDescriptions.Length.Should().Be(5);
 
-    
+        var elfDescription = elvesDescriptions[0].Split("\r\n");
+        elfDescription.Length.Should().Be(4);
+        
+        elfDescription[0].Should().Be("Pepin");
+        elfDescription[1].Should().Be("1000");
+        elfDescription[2].Should().Be("2000");
+        elfDescription[3].Should().Be("3000");
+    }
 
     private static string FileContent(string fileName) => File.ReadAllText(fileName);
 }
