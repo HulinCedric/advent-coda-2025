@@ -10,7 +10,15 @@ public class Test
     {
         var elves = LoadElves("sample");
 
-        elves.Should().BeEquivalentTo([new Elf("Pepin", [1000, 2000, 3000])]);
+        elves.Should()
+            .BeEquivalentTo(
+            [
+                new Elf("Pepin", [1000, 2000, 3000]),
+                new Elf("Luna", [4000]),
+                new Elf("Marius", [5000, 6000]),
+                new Elf("Nora", [7000, 8000, 9000]),
+                new Elf("Tika", [10000])
+            ]);
     }
 
     private static IEnumerable<Elf> LoadElves(string fileName)
@@ -19,11 +27,13 @@ public class Test
 
         fileContent.Should().Contain("Pepin");
 
-        var elvesDescriptions = fileContent.Split("\r\n\r\n", StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
+        var elvesDescriptions = fileContent.Split(
+            "\r\n\r\n",
+            StringSplitOptions.TrimEntries | StringSplitOptions.RemoveEmptyEntries);
         elvesDescriptions.Length.Should().Be(5);
 
-        
-        return elvesDescriptions.Select(elvesDescription =>  MapElfFromDescription(elvesDescription.Split("\r\n"))).Take(1);
+
+        return elvesDescriptions.Select(elvesDescription => MapElfFromDescription(elvesDescription.Split("\r\n")));
     }
 
     private static Elf MapElfFromDescription(string[] elfDescription)
