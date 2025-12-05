@@ -7,44 +7,14 @@ namespace Day04.Tests;
 public class Test
 {
     [Fact]
-    public void test_read_sample()
-        => Elves("sample")
+    public void Get_top3()
+        => ElvesFrom(fileName: "sample")
+            .ComputeReport()
             .Should()
-            .BeEquivalentTo(
-            [
-                new Elf("Pepin", [1000, 2000, 3000]),
-                new Elf("Luna", [4000]),
-                new Elf("Marius", [5000, 6000]),
-                new Elf("Nora", [7000, 8000, 9000]),
-                new Elf("Tika", [10000])
-            ]);
-    
-    [Fact]
-    public void Get_elf_with_max_calories()
-    {
-        var elves = Elves("sample");
-
-        var elfOfTheDay = elves.MaxBy(elf => elf.GetTotalCalories());
-
-        elfOfTheDay.Name.Should().Be("Nora");
-    }
-    
-    [Fact]
-    public void Get_elves_top3()
-    {
-        var elves = Elves("sample");
-
-        var elfOfTheDay = elves
-            .OrderByDescending(elf => elf.GetTotalCalories())
-            .Take(3);
-
-        elfOfTheDay
-            .Should()
-            .BeEquivalentTo(
-            [
-                new Elf("Nora", [7000, 8000, 9000]),
-                new Elf("Marius", [5000, 6000]),
-                new Elf("Tika", [10000])
-            ]);
-    }
+            .Be(
+                """
+                🍪 Elf of the Day: Nora with 24000 calories!
+                🥈 Then comes Marius (11000) and Tika (10000)
+                🎁 Combined snack power of Top 3: 45000 calories!
+                """);
 }
