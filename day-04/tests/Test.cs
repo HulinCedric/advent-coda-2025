@@ -17,12 +17,26 @@ public class Test
 
         var elfDescription = elvesDescriptions[0].Split("\r\n");
         elfDescription.Length.Should().Be(4);
-        
+
+
         elfDescription[0].Should().Be("Pepin");
         elfDescription[1].Should().Be("1000");
         elfDescription[2].Should().Be("2000");
         elfDescription[3].Should().Be("3000");
+
+        var elf = new Elf(
+            elfDescription[0],
+            [
+                int.Parse(elfDescription[1]),
+                int.Parse(elfDescription[2]),
+                int.Parse(elfDescription[3])
+            ]);
+        
+        elf.Name.Should().Be("Pepin");
+        elf.Calories.Should().BeEquivalentTo([1000, 2000, 3000]);
     }
 
     private static string FileContent(string fileName) => File.ReadAllText(fileName);
 }
+
+public record Elf(string Name, List<int> Calories);
