@@ -24,4 +24,9 @@
     <File Path="day-05\index_dark.html" />
     <File Path="day-05\README.md" />
   </Folder>
+  <Folder Name="/Jour 6 - Une histoire de poids/">
+    <File Path="day-06\README.md" />
+    <Project Path="day-06\src\Day06.csproj" />
+    <Project Path="day-06\tests\Day06.Tests.csproj" />
+  </Folder>
 </Solution>
