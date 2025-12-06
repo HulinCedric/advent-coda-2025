@@ -9,12 +9,12 @@ public class AverageWeightCalculatorShould(ITestOutputHelper testOutputHelper)
 {
     [Theory]
     [ClassData(typeof(AverageWeightScenarios))]
-    public void Compute_average_weight(double[] weights, double expected)
+    public void Compute_average_weight(double[] weights, double expectedAverageWeight)
     {
         var averageWeight = AverageWeight(weights);
 
         testOutputHelper.WriteLine($"Average weight for {weights.Length} gifts: {averageWeight:F2}");
 
-        averageWeight.Should().BeApproximately(expected, 0.01);
+        averageWeight.Should().BeApproximately(expectedAverageWeight, 0.01);
     }
 }
