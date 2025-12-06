@@ -9,12 +9,13 @@ public class AverageWeightCalculatorShould(ITestOutputHelper testOutputHelper)
 {
     // - {2, 5, 7, 10} -> 6.00 : OK
     // - {2} -> 2.00 : OK
-    // - {} -> 0.00 : NOK
-    // TODO - {1, 2} -> 1.50
+    // - {} -> 0.00 : OK
+    // - {1, 2} -> 1.50 : OK
     [Theory]
     [InlineData(new[] { 2, 5, 7, 10 }, 4, 6.00)]
     [InlineData(new[] { 2 }, 1, 2.00)]
     [InlineData(new int[] {}, 0, 0.00)]
+    [InlineData(new[] { 1, 2 }, 2, 1.50)]
     public void Compute_average_weight(int[] weights, int length, double expected)
     {
         var averageWeight = AverageWeight(weights, length);
@@ -34,7 +35,7 @@ public static class WeightCalculator
             return 0.0;
         }
         
-        var s = 0;
+        double s = 0;
         for (var i = 0; i < l; i++)
         {
             s += w[i];
