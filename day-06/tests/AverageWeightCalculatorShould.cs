@@ -32,12 +32,10 @@ public class AverageWeightCalculatorShould(ITestOutputHelper testOutputHelper)
 
 public static class WeightCalculator
 {
-    public static decimal AverageWeight(decimal[] w, int l)
+    public static decimal AverageWeight(decimal[] weights, int numberOfWeights)
     {
-        if (l == 0) return 0.0m;
+        if (numberOfWeights == 0) return 0.0m;
 
-        decimal s = w.Sum();
-
-        return s / l;
+        return weights.Sum() / numberOfWeights;
     }
 }
