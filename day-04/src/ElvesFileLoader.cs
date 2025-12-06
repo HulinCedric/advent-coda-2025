@@ -2,8 +2,8 @@
 
 public static class ElvesFileLoader
 {
-    private const string ElfSeparator = "\r\n\r\n";
-    private const string ElfCharacteristicSeparator = "\r\n";
+    private static readonly string ElfSeparator = Environment.NewLine + Environment.NewLine;
+    private static readonly string ElfCharacteristicSeparator = Environment.NewLine;
 
     public static IEnumerable<Elf> ElvesFrom(string fileName)
         => LoadElvesDescription(fileName)
