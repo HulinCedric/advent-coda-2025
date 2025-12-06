@@ -9,33 +9,33 @@ public class AverageWeightCalculatorShould(ITestOutputHelper testOutputHelper)
 {
     [Theory]
     [ClassData(typeof(AverageWeightScenarios))]
-    public void Compute_average_weight(decimal[] weights,  decimal expected)
+    public void Compute_average_weight(double[] weights, double expected)
     {
         var averageWeight = AverageWeight(weights);
 
         testOutputHelper.WriteLine($"Average weight for {weights.Length} gifts: {averageWeight:F2}");
 
-        averageWeight.Should().BeApproximately(expected, 0.01m);
+        averageWeight.Should().BeApproximately(expected, 0.01);
     }
 
-    private class AverageWeightScenarios : TheoryData<decimal[], decimal>
+    private class AverageWeightScenarios : TheoryData<double[], double>
     {
         public AverageWeightScenarios()
         {
-            Add([2m, 5m, 7m, 10m], 6.00m);
-            Add([2m], 2.00m);
-            Add([], 0.00m);
-            Add([1m, 2m], 1.50m);
+            Add([2, 5, 7, 10], 6.00);
+            Add([2], 2.00);
+            Add([], 0.00);
+            Add([1, 2], 1.50);
         }
     }
 }
 
 public static class WeightCalculator
 {
-    public static decimal AverageWeight(decimal[] weights)
+    public static double AverageWeight(double[] weights)
     {
         var numberOfWeights = weights.Length;
-        if (numberOfWeights == 0) return 0.0m;
+        if (numberOfWeights == 0) return 0.0;
 
         return weights.Sum() / numberOfWeights;
     }
