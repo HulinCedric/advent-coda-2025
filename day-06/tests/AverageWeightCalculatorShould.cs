@@ -29,6 +29,11 @@ public static class WeightCalculator
 {
     public static double AverageWeight(int[] w, int l)
     {
+        if (l == 0)
+        {
+            return 0.0;
+        }
+        
         var s = 0;
         for (var i = 0; i < l; i++)
         {
