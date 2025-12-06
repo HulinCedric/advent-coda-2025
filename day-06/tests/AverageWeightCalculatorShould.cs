@@ -34,12 +34,8 @@ public static class WeightCalculator
         {
             return 0.0;
         }
-        
-        double s = 0;
-        for (var i = 0; i < l; i++)
-        {
-            s += w[i];
-        }
+
+        double s = w.Sum();
 
         return s / l;
     }
