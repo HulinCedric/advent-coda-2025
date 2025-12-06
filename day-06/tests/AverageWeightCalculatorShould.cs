@@ -7,9 +7,14 @@ namespace Day06.Tests;
 
 public class AverageWeightCalculatorShould(ITestOutputHelper testOutputHelper)
 {
+    // - {2, 5, 7, 10} -> 6.00 : OK
+    // - {2} -> 2.00 : OK
+    // - {} -> 0.00 : NOK
+    // TODO - {1, 2} -> 1.50
     [Theory]
     [InlineData(new[] { 2, 5, 7, 10 }, 4, 6.00)]
     [InlineData(new[] { 2 }, 1, 2.00)]
+    [InlineData(new int[] {}, 0, 0.00)]
     public void Compute_average_weight(int[] weights, int length, double expected)
     {
         var averageWeight = AverageWeight(weights, length);
