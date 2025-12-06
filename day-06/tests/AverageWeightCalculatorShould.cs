@@ -1,7 +1,7 @@
 using FluentAssertions;
 using Xunit;
 using Xunit.Abstractions;
-using static Day06.Tests.WeightCalculator;
+using static Day06.WeightCalculator;
 
 namespace Day06.Tests;
 
@@ -27,16 +27,5 @@ public class AverageWeightCalculatorShould(ITestOutputHelper testOutputHelper)
             Add([], 0.00);
             Add([1, 2], 1.50);
         }
-    }
-}
-
-public static class WeightCalculator
-{
-    public static double AverageWeight(double[] weights)
-    {
-        var numberOfWeights = weights.Length;
-        if (numberOfWeights == 0) return 0.0;
-
-        return weights.Sum() / numberOfWeights;
     }
 }
