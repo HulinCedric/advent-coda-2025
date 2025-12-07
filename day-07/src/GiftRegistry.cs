@@ -30,9 +30,8 @@ public class GiftRegistry
     public bool MarkPacked(string child)
     {
         bool found = false;
-        for (int i = 0; i < _gifts.Count; i++)
+        foreach (var g in _gifts)
         {
-            var g = _gifts[i];
             if (g.ChildName == child)
             {
                 g.IsPacked = true;
