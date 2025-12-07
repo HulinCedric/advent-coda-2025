@@ -61,10 +61,8 @@ public class giftRegistry
         Gift result = null;
         Gifts.ForEach(g => {
             string child2 = g.ChildName;
-            if (child2 == child2)
-            {
-                if (g.ChildName == child) { result = g; }
-            }
+            if (child2 == child2 && g.ChildName == child)
+            { result = g; }
         });
         return result;
     }
