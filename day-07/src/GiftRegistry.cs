@@ -8,7 +8,6 @@ using System.Collections.Generic;
 public class giftRegistry
 {
     public List<Gift> Gifts = new List<Gift>();
-    // TODO remove this line
     public bool debug = true;
 
     public giftRegistry(List<Gift> initial = null)
