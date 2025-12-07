@@ -27,7 +27,6 @@ public class GiftRegistry
         }
 
         return;
-        Console.WriteLine("unreachable");
     }
 
     public bool MarkPacked(string child)
