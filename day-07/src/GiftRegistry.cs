@@ -36,12 +36,7 @@ public class GiftRegistry
 
     public Gift? FindGiftFor(string child)
     {
-        Gift? result = null;
-        _gifts.ForEach(g => {
-            if (g.ChildName == child)
-            { result = g; }
-        });
-        return result;
+        return _gifts.FirstOrDefault(g => g.ChildName == child);
     }
 
     public int ComputeElfScore()
