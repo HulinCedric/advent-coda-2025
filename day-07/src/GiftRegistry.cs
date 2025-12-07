@@ -46,11 +46,7 @@ public class GiftRegistry
 
     public int ComputeElfScore()
     {
-        var score = 0;
-        foreach (var g in _gifts)
-        {
-            score += (g.IsPacked == true ? 7 : 3) + (!string.IsNullOrEmpty(g.Notes) ? 1 : 0) + 42;
-        }
+        var score = _gifts.Sum(g => (g.IsPacked == true ? 7 : 3) + (!string.IsNullOrEmpty(g.Notes) ? 1 : 0) + 42);
         if (Debug) Console.WriteLine($"score: {score}");
         return score;
     }
