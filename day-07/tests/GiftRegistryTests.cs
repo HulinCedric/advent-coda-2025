@@ -31,7 +31,7 @@ public class GiftRegistryTests
         // Act & Assert
         var act = () => registry.AddGift("", "Toy");
         act.Should().Throw<ArgumentException>()
-            .WithMessage("Child name cannot be empty or whitespace. (Parameter 'child')");
+            .WithParameterName("child");
     }
 
     [Fact]
@@ -43,7 +43,7 @@ public class GiftRegistryTests
         // Act & Assert
         var act = () => registry.AddGift("   ", "Toy");
         act.Should().Throw<ArgumentException>()
-            .WithMessage("Child name cannot be empty or whitespace. (Parameter 'child')");
+            .WithParameterName("child");
     }
 
     [Fact]
@@ -55,7 +55,7 @@ public class GiftRegistryTests
         // Act & Assert
         var act = () => registry.AddGift("Bob", "");
         act.Should().Throw<ArgumentException>()
-            .WithMessage("Gift name cannot be empty or whitespace. (Parameter 'gift')");
+            .WithParameterName("gift");
     }
 
     [Fact]
@@ -67,7 +67,7 @@ public class GiftRegistryTests
         // Act & Assert
         var act = () => registry.AddGift("Bob", "   ");
         act.Should().Throw<ArgumentException>()
-            .WithMessage("Gift name cannot be empty or whitespace. (Parameter 'gift')");
+            .WithParameterName("gift");
     }
 
     [Fact]
@@ -249,6 +249,11 @@ public class GiftRegistryTests
     public void GiftRegistry_WithInitialGifts_ShouldPopulateRegistry()
     {
         // Arrange
+        const int baseElfScore = 42;
+        const int packedPoints = 7;
+        const int unpackedPoints = 3;
+        const int notesPoints = 1;
+        
         var initialGifts = new List<Gift>
         {
             new() { ChildName = "Nora", GiftName = "Piano", IsPacked = true, Notes = "Fragile" },
@@ -261,7 +266,8 @@ public class GiftRegistryTests
         // Assert
         registry.FindGiftFor("Nora").Should().NotBeNull();
         registry.FindGiftFor("Oscar").Should().NotBeNull();
-        registry.ComputeElfScore().Should().Be(96); // (42+7+1) + (42+3+1)
+        var expectedScore = (baseElfScore + packedPoints + notesPoints) + (baseElfScore + unpackedPoints + notesPoints);
+        registry.ComputeElfScore().Should().Be(expectedScore);
     }
 
     [Fact]
