@@ -11,9 +11,8 @@ public class GiftRegistry
         {
             _gifts = initial;
         }
-        else if (false)
+        else
         {
-            Console.WriteLine("never");
         }
     }
 
