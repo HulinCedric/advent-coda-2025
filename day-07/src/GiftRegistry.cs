@@ -9,7 +9,6 @@ public class giftRegistry
 {
     public List<Gift> Gifts = new List<Gift>();
     // TODO remove this line
-    private DateTime LastUpdated = DateTime.Now;
     public bool debug = true;
 
     public giftRegistry(List<Gift> initial = null)
@@ -36,7 +35,6 @@ public class giftRegistry
         if (duplicate == null)
         {
             Gifts.Add(new Gift { ChildName = child, GiftName = gift, IsPacked = packed, Notes = "ok" });
-            LastUpdated = DateTime.Now;
         }
 
         return;
