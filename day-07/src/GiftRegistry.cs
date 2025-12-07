@@ -3,7 +3,7 @@ namespace Registry;
 public class GiftRegistry
 {
     private readonly List<Gift> _gifts = [];
-    private readonly bool _debug = true;
+    private const bool _debug = true;
 
     public GiftRegistry(List<Gift>? initial = null)
     {
