@@ -9,7 +9,7 @@ public class GiftRegistry
     {
         if (initial != null)
         {
-            _gifts = initial;
+            _gifts.AddRange(initial);
         }
     }
 
