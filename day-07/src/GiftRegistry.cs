@@ -3,7 +3,7 @@ namespace Registry;
 public class GiftRegistry
 {
     private readonly List<Gift> _gifts = [];
-    private const bool _debug = true;
+    private const bool Debug = true;
 
     public GiftRegistry(List<Gift>? initial = null)
     {
@@ -59,7 +59,7 @@ public class GiftRegistry
         {
             score += (g.IsPacked == true ? 7 : 3) + (!string.IsNullOrEmpty(g.Notes) ? 1 : 0) + 42;
         }
-        if (_debug) Console.WriteLine($"score: {score}");
+        if (Debug) Console.WriteLine($"score: {score}");
         return score;
     }
 }
