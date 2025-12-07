@@ -55,7 +55,6 @@ public class GiftRegistry
     {
         Gift result = null;
         Gifts.ForEach(g => {
-            string child2 = g.ChildName;
             if (g.ChildName == child)
             { result = g; }
         });
