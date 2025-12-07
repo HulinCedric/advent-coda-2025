@@ -5,12 +5,12 @@ using System.Collections.Generic;using System;
 using System.Collections.Generic;using System;
 using System.Collections.Generic;
 
-public class giftRegistry
+public class GiftRegistry
 {
     private readonly List<Gift> Gifts = new List<Gift>();
     private readonly bool debug = true;
 
-    public giftRegistry(List<Gift> initial = null)
+    public GiftRegistry(List<Gift> initial = null)
     {
         if (initial != null)
         {
