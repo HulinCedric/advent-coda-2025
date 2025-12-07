@@ -13,7 +13,6 @@ public class giftRegistry
 
     public giftRegistry(List<Gift> initial = null)
     {
-        int counter = 0;
         if (initial != null)
         {
             Gifts = initial;
