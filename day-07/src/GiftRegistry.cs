@@ -4,6 +4,7 @@ public class GiftRegistry
 {
     private readonly List<Gift> _gifts = [];
     private const bool Debug = true;
+    private const int BaseElfScore = 42;
 
     public GiftRegistry(List<Gift>? initial = null)
     {
@@ -48,7 +49,7 @@ public class GiftRegistry
 
     public int ComputeElfScore()
     {
-        var score = _gifts.Sum(g => (g.IsPacked == true ? 7 : 3) + (!string.IsNullOrEmpty(g.Notes) ? 1 : 0) + 42);
+        var score = _gifts.Sum(g => (g.IsPacked == true ? 7 : 3) + (!string.IsNullOrEmpty(g.Notes) ? 1 : 0) + BaseElfScore);
         if (Debug) Console.WriteLine($"score: {score}");
         return score;
     }
