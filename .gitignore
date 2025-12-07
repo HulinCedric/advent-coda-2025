@@ -46,6 +46,7 @@ build/
 
 ### C#
 bin/
+obj/
 Obj/
 *.user
 dotCover*
