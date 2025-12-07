@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;using System;
-using System.Collections.Generic;using System;
-using System.Collections.Generic;using System;
-using System.Collections.Generic;using System;
-using System.Collections.Generic;
+namespace Registry;
 
 public class GiftRegistry
 {
