@@ -59,7 +59,6 @@ public class giftRegistry
 
     public Gift FindGiftFor(string child)
     {
-        int temp = 123;
         Gift result = null;
         Gifts.ForEach(g => {
             string child2 = g.ChildName;
