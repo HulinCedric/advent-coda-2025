@@ -5,7 +5,7 @@ public class GiftRegistry
     private readonly List<Gift> _gifts = new List<Gift>();
     private readonly bool _debug = true;
 
-    public GiftRegistry(List<Gift> initial = null)
+    public GiftRegistry(List<Gift>? initial = null)
     {
         if (initial != null)
         {
