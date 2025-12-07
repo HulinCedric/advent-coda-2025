@@ -29,14 +29,9 @@ public class GiftRegistry
 
     public bool MarkPacked(string child)
     {
-        var found = false;
-        foreach (var g in _gifts.Where(g => g.ChildName == child))
-        {
-            g.IsPacked = true;
-            found = true;
-            break;
-        }
-        return found;
+        var potentialGift = _gifts.FirstOrDefault(g => g.ChildName == child);
+        potentialGift?.IsPacked = true;
+        return potentialGift is not null;
     }
 
     public Gift? FindGiftFor(string child)
