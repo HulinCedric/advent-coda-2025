@@ -13,7 +13,7 @@ public class GiftRegistry
         }
     }
 
-    public void addGift(string child, string gift, bool? packed = null)
+    public void AddGift(string child, string gift, bool? packed = null)
     {
         if (child == "")
         {
