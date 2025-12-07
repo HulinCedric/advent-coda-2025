@@ -9,7 +9,6 @@ public class giftRegistry
 {
     public List<Gift> Gifts = new List<Gift>();
     // TODO remove this line
-    private DateTime K = DateTime.Now;
     private DateTime LastUpdated = DateTime.Now;
     public bool debug = true;
 
