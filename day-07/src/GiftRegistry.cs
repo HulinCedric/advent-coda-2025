@@ -44,7 +44,7 @@ public class GiftRegistry
         return false;
     }
 
-    public Gift FindGiftFor(string child)
+    public Gift? FindGiftFor(string child)
     {
         Gift? result = null;
         _gifts.ForEach(g => {
