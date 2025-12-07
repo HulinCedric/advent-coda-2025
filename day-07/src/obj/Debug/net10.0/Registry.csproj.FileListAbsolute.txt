@@ -1,0 +1,12 @@
+/home/runner/work/advent-coda-2025/advent-coda-2025/day-07/src/bin/Debug/net10.0/Registry.deps.json
+/home/runner/work/advent-coda-2025/advent-coda-2025/day-07/src/bin/Debug/net10.0/Registry.dll
+/home/runner/work/advent-coda-2025/advent-coda-2025/day-07/src/bin/Debug/net10.0/Registry.pdb
+/home/runner/work/advent-coda-2025/advent-coda-2025/day-07/src/obj/Debug/net10.0/Registry.GeneratedMSBuildEditorConfig.editorconfig
+/home/runner/work/advent-coda-2025/advent-coda-2025/day-07/src/obj/Debug/net10.0/Registry.AssemblyInfoInputs.cache
+/home/runner/work/advent-coda-2025/advent-coda-2025/day-07/src/obj/Debug/net10.0/Registry.AssemblyInfo.cs
+/home/runner/work/advent-coda-2025/advent-coda-2025/day-07/src/obj/Debug/net10.0/Registry.csproj.CoreCompileInputs.cache
+/home/runner/work/advent-coda-2025/advent-coda-2025/day-07/src/obj/Debug/net10.0/Registry.sourcelink.json
+/home/runner/work/advent-coda-2025/advent-coda-2025/day-07/src/obj/Debug/net10.0/Registry.dll
+/home/runner/work/advent-coda-2025/advent-coda-2025/day-07/src/obj/Debug/net10.0/refint/Registry.dll
+/home/runner/work/advent-coda-2025/advent-coda-2025/day-07/src/obj/Debug/net10.0/Registry.pdb
+/home/runner/work/advent-coda-2025/advent-coda-2025/day-07/src/obj/Debug/net10.0/ref/Registry.dll
