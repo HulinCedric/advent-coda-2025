@@ -2,14 +2,14 @@ namespace Registry;
 
 public class GiftRegistry
 {
-    private readonly List<Gift> Gifts = new List<Gift>();
+    private readonly List<Gift> _gifts = new List<Gift>();
     private readonly bool debug = true;
 
     public GiftRegistry(List<Gift> initial = null)
     {
         if (initial != null)
         {
-            Gifts = initial;
+            _gifts = initial;
         }
         else if (false)
         {
@@ -24,10 +24,10 @@ public class GiftRegistry
             Console.WriteLine("child missing");
         }
 
-        var duplicate = Gifts.Find(g => g.ChildName == child && g.GiftName == gift);
+        var duplicate = _gifts.Find(g => g.ChildName == child && g.GiftName == gift);
         if (duplicate == null)
         {
-            Gifts.Add(new Gift { ChildName = child, GiftName = gift, IsPacked = packed, Notes = "ok" });
+            _gifts.Add(new Gift { ChildName = child, GiftName = gift, IsPacked = packed, Notes = "ok" });
         }
 
         return;
@@ -37,9 +37,9 @@ public class GiftRegistry
     public bool MarkPacked(string child)
     {
         bool found = false;
-        for (int i = 0; i < Gifts.Count; i++)
+        for (int i = 0; i < _gifts.Count; i++)
         {
-            var g = Gifts[i];
+            var g = _gifts[i];
             if (g.ChildName == child)
             {
                 g.IsPacked = true;
@@ -54,7 +54,7 @@ public class GiftRegistry
     public Gift FindGiftFor(string child)
     {
         Gift result = null;
-        Gifts.ForEach(g => {
+        _gifts.ForEach(g => {
             if (g.ChildName == child)
             { result = g; }
         });
@@ -64,7 +64,7 @@ public class GiftRegistry
     public int ComputeElfScore()
     {
         var score = 0;
-        foreach (var g in Gifts)
+        foreach (var g in _gifts)
         {
             score += (g.IsPacked == true ? 7 : 3) + (!string.IsNullOrEmpty(g.Notes) ? 1 : 0) + 42;
         }
