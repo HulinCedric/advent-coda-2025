@@ -29,7 +29,7 @@ public class GiftRegistry
 
     public bool MarkPacked(string child)
     {
-        bool found = false;
+        var found = false;
         foreach (var g in _gifts)
         {
             if (g.ChildName == child)
@@ -39,8 +39,7 @@ public class GiftRegistry
                 break;
             }
         }
-        if (found) return true;
-        return false;
+        return found;
     }
 
     public Gift? FindGiftFor(string child)
