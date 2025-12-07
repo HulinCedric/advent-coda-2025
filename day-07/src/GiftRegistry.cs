@@ -67,8 +67,8 @@ public class GiftRegistry
 
 public class Gift
 {
-    public required string ChildName { get; set; }
-    public required string GiftName { get; set; }
+    public required string ChildName { get; init; }
+    public required string GiftName { get; init; }
     public bool? IsPacked { get; set; }
-    public required string Notes { get; set; }
+    public required string Notes { get; init; }
 }
