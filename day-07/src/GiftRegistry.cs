@@ -11,9 +11,6 @@ public class GiftRegistry
         {
             _gifts = initial;
         }
-        else
-        {
-        }
     }
 
     public void addGift(string child, string gift, bool? packed = null)
