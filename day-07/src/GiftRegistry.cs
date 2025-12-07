@@ -22,10 +22,10 @@ public class GiftRegistry
             throw new ArgumentException("Child name cannot be empty.", nameof(child));
         }
         
-        if (gift == "")
+        if (string.IsNullOrWhiteSpace(gift))
         {
             Console.WriteLine("gift missing");
-            throw new ArgumentException("Gift name cannot be empty.", nameof(gift));
+            throw new ArgumentException("Gift name cannot be empty or whitespace.", nameof(gift));
         }
 
         var duplicate = _gifts.Find(g => g.ChildName == child && g.GiftName == gift);
