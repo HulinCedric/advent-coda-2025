@@ -30,14 +30,11 @@ public class GiftRegistry
     public bool MarkPacked(string child)
     {
         var found = false;
-        foreach (var g in _gifts)
+        foreach (var g in _gifts.Where(g => g.ChildName == child))
         {
-            if (g.ChildName == child)
-            {
-                g.IsPacked = true;
-                found = true;
-                break;
-            }
+            g.IsPacked = true;
+            found = true;
+            break;
         }
         return found;
     }
