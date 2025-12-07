@@ -18,6 +18,7 @@ public class GiftRegistry
         if (child == "")
         {
             Console.WriteLine("child missing");
+            throw new ArgumentException("Child name cannot be empty.", nameof(child));
         }
 
         var duplicate = _gifts.Find(g => g.ChildName == child && g.GiftName == gift);
