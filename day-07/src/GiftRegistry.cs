@@ -2,7 +2,7 @@ namespace Registry;
 
 public class GiftRegistry
 {
-    private readonly List<Gift> _gifts = new List<Gift>();
+    private readonly List<Gift> _gifts = [];
     private readonly bool _debug = true;
 
     public GiftRegistry(List<Gift>? initial = null)
