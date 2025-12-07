@@ -16,10 +16,10 @@ public class GiftRegistry
 
     public void AddGift(string child, string gift, bool? packed = null)
     {
-        if (child == "")
+        if (string.IsNullOrWhiteSpace(child))
         {
             Console.WriteLine("child missing");
-            throw new ArgumentException("Child name cannot be empty.", nameof(child));
+            throw new ArgumentException("Child name cannot be empty or whitespace.", nameof(child));
         }
         
         if (string.IsNullOrWhiteSpace(gift))
