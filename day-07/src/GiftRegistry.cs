@@ -8,7 +8,7 @@ using System.Collections.Generic;
 public class giftRegistry
 {
     private readonly List<Gift> Gifts = new List<Gift>();
-    private bool debug = true;
+    private readonly bool debug = true;
 
     public giftRegistry(List<Gift> initial = null)
     {
