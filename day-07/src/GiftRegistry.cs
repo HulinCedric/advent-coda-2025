@@ -20,6 +20,12 @@ public class GiftRegistry
             Console.WriteLine("child missing");
             throw new ArgumentException("Child name cannot be empty.", nameof(child));
         }
+        
+        if (gift == "")
+        {
+            Console.WriteLine("gift missing");
+            throw new ArgumentException("Gift name cannot be empty.", nameof(gift));
+        }
 
         var duplicate = _gifts.Find(g => g.ChildName == child && g.GiftName == gift);
         if (duplicate == null)
