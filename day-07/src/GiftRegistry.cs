@@ -25,8 +25,6 @@ public class GiftRegistry
         {
             _gifts.Add(new Gift { ChildName = child, GiftName = gift, IsPacked = packed, Notes = "ok" });
         }
-
-        return;
     }
 
     public bool MarkPacked(string child)
