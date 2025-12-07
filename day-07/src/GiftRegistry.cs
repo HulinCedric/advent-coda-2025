@@ -52,7 +52,7 @@ public class giftRegistry
                 break;
             }
         }
-        if (found == true) return true;
+        if (found) return true;
         return false;
     }
 
