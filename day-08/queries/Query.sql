@@ -1,7 +1,10 @@
 SELECT c.first_name,
        c.last_name,
-       e.x_m,
-       e.y_m
+       (
+           (2 * ATAN(EXP(e.y_m / 6378137.0)) - PI() / 2)
+               * (180.0 / PI())
+           )                                AS latitude,
+       (e.x_m / 6378137.0) * (180.0 / PI()) AS longitude
 FROM behavior b
          JOIN children c ON c.id = b.child_id
          JOIN elf_plan e ON e.child_id = c.id
