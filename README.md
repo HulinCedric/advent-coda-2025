@@ -9,3 +9,4 @@ Ce repository contient mes résolutions du [calendrier de l'Avent Coda](https://
 - [Jour 5 - Le piège de la date infernale](day-05/README.md)
 - [Jour 6 - Une histoire de poids](day-06/README.md)
 - [Jour 7 - L'imparfait du futur](day-07/README.md)
+- [Jour 8 - Les 3 enfants les plus sages](day-08/README.md)

@@ -33,4 +33,8 @@
     <File Path="day-07\README.md" />
     <Project Path="day-07\src\Registry.csproj" />
   </Folder>
+  <Folder Name="/Jour 8 - Les 3 enfants les plus sages/">
+    <File Path="day-08\kids.db" />
+    <File Path="day-08\README.md" />
+  </Folder>
 </Solution>
