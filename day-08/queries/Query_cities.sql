@@ -8,5 +8,5 @@ JOIN children  c  ON c.id = b.child_id
 JOIN households h ON h.id = c.household_id
 JOIN cities    ci ON ci.id = h.city_id
 WHERE b.year = 2025
-ORDER BY b.nice_score DESC, c.last_name, c.first_name
+ORDER BY b.nice_score DESC
 LIMIT 3;
