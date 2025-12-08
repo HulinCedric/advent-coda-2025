@@ -29,4 +29,8 @@
     <Project Path="day-06\src\Day06.csproj" />
     <Project Path="day-06\tests\Day06.Tests.csproj" />
   </Folder>
+  <Folder Name="/Jour 7 - L&apos;imparfait du futur/">
+    <File Path="day-07\README.md" />
+    <Project Path="day-07\src\Registry.csproj" />
+  </Folder>
 </Solution>
