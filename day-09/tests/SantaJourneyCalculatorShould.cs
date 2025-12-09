@@ -7,6 +7,25 @@ namespace Day09.Tests;
 public class SantaJourneyCalculatorShould
 {
     [Fact]
+    public void Calculate_santa_journey_distance_in_km()
+    {
+        var elvishcoordinates = LoadElvishCoordinates("trace");
+
+        var start = elvishcoordinates
+            .MinBy(c => c.Order);
+
+        var end = elvishcoordinates
+            .MaxBy(c => c.Order);
+        
+        var startWgs84 = ToWgs84Coordinate(start!.Coordinate);
+        var endWgs84 = ToWgs84Coordinate(end!.Coordinate);
+        
+        var distanceInKm = DistanceInKm(startWgs84, endWgs84);
+        
+        distanceInKm.Should().BeApproximately(16987.634d, 1.0d);
+    }
+    
+    [Fact]
     public void Load_elvish_coordinates_from_file()
     {
         var elvishcoordinates = LoadElvishCoordinates("trace");
