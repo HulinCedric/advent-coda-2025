@@ -18,7 +18,7 @@ public class SantaJourneyCalculatorShould
             .Select(c => ToWgs84Coordinate(c.Coordinate))
             .Pipe(coords => DistanceInKm(coords.First(), coords.Last()));
 
-        distanceInKm.Should().BeApproximately(16987.634d, 1.0d);
+        distanceInKm.Should().BeApproximately(16988d, 0.5d);
     }
 
     [Fact]
