@@ -16,7 +16,7 @@ public static class ElvishCoordinateSystemLoader
         var part = line.Split(',');
         return new ElvishCoordinate(
             int.Parse(part[0], CultureInfo.InvariantCulture),
-            new WebMercatorCoordinate(
+            new Epsg3857Coordinate(
                 double.Parse(part[1], CultureInfo.InvariantCulture),
                 double.Parse(part[2], CultureInfo.InvariantCulture)));
     }

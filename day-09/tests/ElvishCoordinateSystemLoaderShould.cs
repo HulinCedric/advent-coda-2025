@@ -16,12 +16,12 @@ public class ElvishCoordinateSystemLoaderShould
             .MinBy(c => c.Order)
             .Should()
             .BeEquivalentTo(
-                new ElvishCoordinate(1, new WebMercatorCoordinate(253716.21038051567d, 6234041.976798748d)));
+                new ElvishCoordinate(1, new Epsg3857Coordinate(253716.21038051567d, 6234041.976798748d)));
 
         elvishcoordinates
             .MaxBy(c => c.Order)
             .Should()
             .BeEquivalentTo(
-                new ElvishCoordinate(500, new WebMercatorCoordinate(16826950.84323861d, -4016067.571985976d)));
+                new ElvishCoordinate(500, new Epsg3857Coordinate(16826950.84323861d, -4016067.571985976d)));
     }
 }

@@ -3,4 +3,4 @@
 /// <summary>
 ///     Elvish plan coordinate
 /// </summary>
-public sealed record ElvishCoordinate(int Order, WebMercatorCoordinate Coordinate);
+public sealed record ElvishCoordinate(int Order, Epsg3857Coordinate Coordinate);
