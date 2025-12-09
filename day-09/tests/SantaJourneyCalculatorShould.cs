@@ -37,6 +37,38 @@ public class SantaJourneyCalculatorShould
             .BeEquivalentTo(new Wgs84Coordinate(69.30013834744402d, 45.11235404506074d));
     }
 
+    [Fact]
+    public void Calculate_geodesic_distance_between_two_WGS84_coordinates()
+    {
+        // Paris (Eiffel Tower)
+        // https://geohack.toolforge.org/geohack.php?pagename=Eiffel_Tower&params=48_51_29.6_N_2_17_40.2_E_region:FR-75_type:landmark
+        var coord1 = new Wgs84Coordinate(2.2945d, 48.858222d); 
+        
+        // London (Big Ben)
+        // https://geohack.toolforge.org/geohack.php?pagename=Big_Ben&params=51.5007_N_0.1245_W_region:GB-WSM_type:landmark
+        var coord2 = new Wgs84Coordinate(-0.1245d, 51.5007d);
+
+        // mean earth radius https://en.wikipedia.org/wiki/Earth_radius
+        const double EarthRadiusInKm = 6378.1d;
+     
+        var lat1 = coord1.LatitudeInDegrees * Math.PI / 180d;
+        var lon1 = coord1.LongitudeInDegrees * Math.PI / 180d;
+        var lat2 = coord2.LatitudeInDegrees * Math.PI / 180d;
+        var lon2 = coord2.LongitudeInDegrees * Math.PI / 180d;
+        var dlat = lat2 - lat1;
+        var dlon = lon2 - lon1;
+        var a = Math.Pow(Math.Sin(dlat / 2d), 2) +
+                Math.Cos(lat1) *
+                Math.Cos(lat2) *
+                Math.Pow(Math.Sin(dlon / 2d), 2);
+        var c = 2d * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1d - a));
+        var distanceInKm = EarthRadiusInKm * c;
+
+        
+        // https://www.cqsrg.org/tools/GCDistance/
+        distanceInKm.Should().BeApproximately(340.908d, 0.1d);
+    }
+
     // EPSG:3857 => WGS84  WGS84 (longitude/latitude en degrés)
     // R = 6378137 (m).
     // lon_deg = (x_m / R) * 180/π
