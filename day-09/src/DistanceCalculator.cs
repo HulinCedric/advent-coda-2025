@@ -10,10 +10,10 @@ public static class DistanceCalculator
     public static double DistanceInKm(Wgs84Coordinate coord1, Wgs84Coordinate coord2)
     {
         // Convert degrees to radians
-        var lat1 = ToRadius(coord1.LatitudeInDegrees);
-        var lon1 = ToRadius(coord1.LongitudeInDegrees);
-        var lat2 = ToRadius(coord2.LatitudeInDegrees);
-        var lon2 = ToRadius(coord2.LongitudeInDegrees);
+        var lat1 = ToRadians(coord1.LatitudeInDegrees);
+        var lon1 = ToRadians(coord1.LongitudeInDegrees);
+        var lat2 = ToRadians(coord2.LatitudeInDegrees);
+        var lon2 = ToRadians(coord2.LongitudeInDegrees);
 
         // Distance calculation
         var dlat = lat2 - lat1;
@@ -34,5 +34,5 @@ public static class DistanceCalculator
         return EarthMeanRadiusInKilometer * c;
     }
 
-    private static double ToRadius(double input) => input * Math.PI / 180d;
+    private static double ToRadians(double input) => input * Math.PI / 180d;
 }
