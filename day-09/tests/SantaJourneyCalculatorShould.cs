@@ -6,6 +6,10 @@ namespace Day09.Tests;
 
 public class SantaJourneyCalculatorShould
 {
+    // mean earth radius https://en.wikipedia.org/wiki/Earth_radius
+    private const double EarthRadiusInMeter = 6378137d; 
+    private const double EarthRadiusInKilometer = EarthRadiusInMeter / 1000d;
+
     [Fact]
     public void Calculate_santa_journey_distance_in_km()
     {
@@ -65,8 +69,6 @@ public class SantaJourneyCalculatorShould
 
     private static double DistanceInKm(Wgs84Coordinate coord1, Wgs84Coordinate coord2)
     {
-        // mean earth radius https://en.wikipedia.org/wiki/Earth_radius
-        const double earthRadiusInKm = 6378.1d;
 
         var lat1 = coord1.LatitudeInDegrees * Math.PI / 180d;
         var lon1 = coord1.LongitudeInDegrees * Math.PI / 180d;
@@ -79,7 +81,7 @@ public class SantaJourneyCalculatorShould
                 Math.Cos(lat2) *
                 Math.Pow(Math.Sin(dlon / 2d), 2);
         var c = 2d * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1d - a));
-        var distanceInKm = earthRadiusInKm * c;
+        var distanceInKm = EarthRadiusInKilometer * c;
         return distanceInKm;
     }
 
@@ -89,9 +91,8 @@ public class SantaJourneyCalculatorShould
     // lat_deg = (2 * atan(exp(y_m / R)) - π/2) * 180/π
     private static Wgs84Coordinate ToWgs84Coordinate(WebMercatorCoordinate webMercatorCoordinate)
     {
-        const double R = 6378137d;
-        var lonDeg = webMercatorCoordinate.XInMeter / R * 180d / Math.PI;
-        var latDeg = (2d * Math.Atan(Math.Exp(webMercatorCoordinate.YInMeter / R)) - Math.PI / 2d) * 180d / Math.PI;
+        var lonDeg = webMercatorCoordinate.XInMeter / EarthRadiusInMeter * 180d / Math.PI;
+        var latDeg = (2d * Math.Atan(Math.Exp(webMercatorCoordinate.YInMeter / EarthRadiusInMeter)) - Math.PI / 2d) * 180d / Math.PI;
 
         return new Wgs84Coordinate(lonDeg, latDeg);
     }
