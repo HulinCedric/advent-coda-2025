@@ -13,7 +13,7 @@ public class SantaJourneyCalculatorShould
         elvishcoordinates.Count().Should().Be(500);
         elvishcoordinates.First()
             .Should()
-            .BeEquivalentTo(new ElvishCoordinate(146, 7714456.11274088d, 5639226.707649254d));
+            .BeEquivalentTo(new ElvishCoordinate(146, new WebMercatorCoordinate(7714456.11274088d, 5639226.707649254d)));
     }
 
     // EPSG:3857 => WGS84  WGS84 (longitude/latitude en degrés)
@@ -23,11 +23,11 @@ public class SantaJourneyCalculatorShould
     [Fact]
     public void Convert_elvish_coordinate_to_WGS84()
     {
-        var elvishCoordinate = new ElvishCoordinate(146, 7714456.11274088d, 5639226.707649254d);
+        var elvishCoordinate = new ElvishCoordinate(146, new WebMercatorCoordinate(7714456.11274088d, 5639226.707649254d));
 
         const double R = 6378137d;
-        var lonDeg = elvishCoordinate.XInMeter / R * 180d / Math.PI;
-        var latDeg = (2d * Math.Atan(Math.Exp(elvishCoordinate.YInMeter / R)) - Math.PI / 2d) * 180d / Math.PI;
+        var lonDeg = elvishCoordinate.Coordinate.XInMeter / R * 180d / Math.PI;
+        var latDeg = (2d * Math.Atan(Math.Exp(elvishCoordinate.Coordinate.YInMeter / R)) - Math.PI / 2d) * 180d / Math.PI;
 
         new WGS84Coordinate(lonDeg, latDeg)
             .Should()
@@ -46,15 +46,21 @@ public class SantaJourneyCalculatorShould
         var part = line.Split(',');
         return new ElvishCoordinate(
             int.Parse(part[0], CultureInfo.InvariantCulture),
-            double.Parse(part[1], CultureInfo.InvariantCulture),
-            double.Parse(part[2], CultureInfo.InvariantCulture));
+            new WebMercatorCoordinate(
+                double.Parse(part[1], CultureInfo.InvariantCulture),
+                double.Parse(part[2], CultureInfo.InvariantCulture)));
     }
 }
 
 /// <summary>
-///     Coordinates in metres (Elfic map – Web Mercator / EPSG:3857)
+///     Elvish plan coordinate
 /// </summary>
-public sealed record ElvishCoordinate(int Order, double XInMeter, double YInMeter);
+public sealed record ElvishCoordinate(int Order, WebMercatorCoordinate Coordinate);
+
+/// <summary>
+///     Web Mercator / EPSG:3857 Coordinates in metres
+/// </summary>
+public sealed record WebMercatorCoordinate(double XInMeter, double YInMeter);
 
 /// <summary>
 ///     WGS84 Coordinates in degrees
