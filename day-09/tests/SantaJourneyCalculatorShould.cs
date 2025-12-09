@@ -9,22 +9,14 @@ public class SantaJourneyCalculatorShould
     [Fact]
     public void Calculate_santa_journey_distance_in_km()
     {
-        var elvishcoordinates = LoadElvishCoordinates("trace");
+        var distanceInKm = LoadElvishCoordinates("trace")
+            .OrderBy(c => c.Order)
+            .Select(c => ToWgs84Coordinate(c.Coordinate))
+            .Pipe(coords => DistanceInKm(coords.First(), coords.Last()));
 
-        var start = elvishcoordinates
-            .MinBy(c => c.Order);
-
-        var end = elvishcoordinates
-            .MaxBy(c => c.Order);
-        
-        var startWgs84 = ToWgs84Coordinate(start!.Coordinate);
-        var endWgs84 = ToWgs84Coordinate(end!.Coordinate);
-        
-        var distanceInKm = DistanceInKm(startWgs84, endWgs84);
-        
         distanceInKm.Should().BeApproximately(16987.634d, 1.0d);
     }
-    
+
     [Fact]
     public void Load_elvish_coordinates_from_file()
     {
@@ -61,8 +53,8 @@ public class SantaJourneyCalculatorShould
     {
         // Paris (Eiffel Tower)
         // https://geohack.toolforge.org/geohack.php?pagename=Eiffel_Tower&params=48_51_29.6_N_2_17_40.2_E_region:FR-75_type:landmark
-        var coord1 = new Wgs84Coordinate(2.2945d, 48.858222d); 
-        
+        var coord1 = new Wgs84Coordinate(2.2945d, 48.858222d);
+
         // London (Big Ben)
         // https://geohack.toolforge.org/geohack.php?pagename=Big_Ben&params=51.5007_N_0.1245_W_region:GB-WSM_type:landmark
         var coord2 = new Wgs84Coordinate(-0.1245d, 51.5007d);
@@ -75,7 +67,7 @@ public class SantaJourneyCalculatorShould
     {
         // mean earth radius https://en.wikipedia.org/wiki/Earth_radius
         const double earthRadiusInKm = 6378.1d;
-     
+
         var lat1 = coord1.LatitudeInDegrees * Math.PI / 180d;
         var lon1 = coord1.LongitudeInDegrees * Math.PI / 180d;
         var lat2 = coord2.LatitudeInDegrees * Math.PI / 180d;
@@ -136,3 +128,11 @@ public sealed record WebMercatorCoordinate(double XInMeter, double YInMeter);
 ///     WGS84 Coordinates in degrees
 /// </summary>
 public sealed record Wgs84Coordinate(double LongitudeInDegrees, double LatitudeInDegrees);
+
+public static class FunctionalExtensions
+{
+    public static TResult Pipe<TSource, TResult>(
+        this TSource source,
+        Func<TSource, TResult> func)
+        => func(source);
+}
