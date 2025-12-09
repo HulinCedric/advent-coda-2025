@@ -17,22 +17,29 @@ public class SantaJourneyCalculatorShould
                 new ElvishCoordinate(146, new WebMercatorCoordinate(7714456.11274088d, 5639226.707649254d)));
     }
 
-    // EPSG:3857 => WGS84  WGS84 (longitude/latitude en degrés)
-    // R = 6378137 (m).
-    // lon_deg = (x_m / R) * 180/π
-    // lat_deg = (2 * atan(exp(y_m / R)) - π/2) * 180/π
+   
     [Fact]
     public void Convert_web_mercator_coordinate_to_WGS84()
     {
         var webMercatorCoordinate = new WebMercatorCoordinate(7714456.11274088d, 5639226.707649254d);
 
+        var wgs84Coordinate = ToWgs84Coordinate(webMercatorCoordinate);
+        wgs84Coordinate
+            .Should()
+            .BeEquivalentTo(new Wgs84Coordinate(69.30013834744402d, 45.11235404506074d));
+    }
+
+    // EPSG:3857 => WGS84  WGS84 (longitude/latitude en degrés)
+    // R = 6378137 (m).
+    // lon_deg = (x_m / R) * 180/π
+    // lat_deg = (2 * atan(exp(y_m / R)) - π/2) * 180/π
+    private static Wgs84Coordinate ToWgs84Coordinate(WebMercatorCoordinate webMercatorCoordinate)
+    {
         const double R = 6378137d;
         var lonDeg = webMercatorCoordinate.XInMeter / R * 180d / Math.PI;
         var latDeg = (2d * Math.Atan(Math.Exp(webMercatorCoordinate.YInMeter / R)) - Math.PI / 2d) * 180d / Math.PI;
 
-        new Wgs84Coordinate(lonDeg, latDeg)
-            .Should()
-            .BeEquivalentTo(new Wgs84Coordinate(69.30013834744402d, 45.11235404506074d));
+        return new Wgs84Coordinate(lonDeg, latDeg);
     }
 
     private static IEnumerable<ElvishCoordinate> LoadElvishCoordinates(string fileName)
