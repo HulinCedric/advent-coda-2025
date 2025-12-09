@@ -37,5 +37,5 @@ dlat = lat2 - lat1
 dlon = lon2 - lon1
 a = sin²(dlat/2) + cos(lat1) - cos(lat2) - sin²(dlon/2)
 c = 2 * atan2(sqrt(a), sqrt(1-a))
-distance_km = 6371.0 - c
+distance_km = 6371.0 * c
 ```
