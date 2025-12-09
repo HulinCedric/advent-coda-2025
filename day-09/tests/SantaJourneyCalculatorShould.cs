@@ -10,14 +10,10 @@ public class SantaJourneyCalculatorShould
 {
     [Fact]
     public void Calculate_santa_journey_distance_in_km()
-    {
-        var coords = LoadElvishCoordinates("trace")
+        => LoadElvishCoordinates("trace")
             .OrderBy(c => c.Order)
             .Select(c => ToWgs84Coordinate(c.Coordinate))
-            .ToList();
-
-        DistanceInKm(coords.First(), coords.Last())
+            .Do(coords => DistanceInKm(coords.First(), coords.Last()))
             .Should()
             .BeApproximately(16969, 0.5d);
-    }
 }
