@@ -6,20 +6,20 @@ namespace Day09.Tests;
 
 public class SantaJourneyCalculatorShould
 {
-    // mean earth radius https://en.wikipedia.org/wiki/Earth_radius
-    private const double EarthRadiusInMeter = 6378137d; 
-    private const double EarthRadiusInKilometer = EarthRadiusInMeter / 1000d;
+    // https://en.wikipedia.org/wiki/Web_Mercator_projection
+    private const double EarthRadiusWebMercatorInMeter = 6378137d;
+
+    // https://en.wikipedia.org/wiki/Earth_radius
+    private const double EarthMeanRadiusInKilometer = 6371d;
 
     [Fact]
     public void Calculate_santa_journey_distance_in_km()
-    {
-        var distanceInKm = LoadElvishCoordinates("trace")
+        => LoadElvishCoordinates("trace")
             .OrderBy(c => c.Order)
             .Select(c => ToWgs84Coordinate(c.Coordinate))
-            .Pipe(coords => DistanceInKm(coords.First(), coords.Last()));
-
-        distanceInKm.Should().BeApproximately(16988d, 0.5d);
-    }
+            .Pipe(coords => DistanceInKm(coords.First(), coords.Last()))
+            .Should()
+            .BeApproximately(16969, 0.5d);
 
     [Fact]
     public void Load_elvish_coordinates_from_file()
@@ -69,7 +69,6 @@ public class SantaJourneyCalculatorShould
 
     private static double DistanceInKm(Wgs84Coordinate coord1, Wgs84Coordinate coord2)
     {
-
         var lat1 = coord1.LatitudeInDegrees * Math.PI / 180d;
         var lon1 = coord1.LongitudeInDegrees * Math.PI / 180d;
         var lat2 = coord2.LatitudeInDegrees * Math.PI / 180d;
@@ -81,7 +80,7 @@ public class SantaJourneyCalculatorShould
                 Math.Cos(lat2) *
                 Math.Pow(Math.Sin(dlon / 2d), 2);
         var c = 2d * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1d - a));
-        var distanceInKm = EarthRadiusInKilometer * c;
+        var distanceInKm = EarthMeanRadiusInKilometer * c;
         return distanceInKm;
     }
 
@@ -91,8 +90,10 @@ public class SantaJourneyCalculatorShould
     // lat_deg = (2 * atan(exp(y_m / R)) - π/2) * 180/π
     private static Wgs84Coordinate ToWgs84Coordinate(WebMercatorCoordinate webMercatorCoordinate)
     {
-        var lonDeg = webMercatorCoordinate.XInMeter / EarthRadiusInMeter * 180d / Math.PI;
-        var latDeg = (2d * Math.Atan(Math.Exp(webMercatorCoordinate.YInMeter / EarthRadiusInMeter)) - Math.PI / 2d) * 180d / Math.PI;
+        var lonDeg = webMercatorCoordinate.XInMeter / EarthRadiusWebMercatorInMeter * 180d / Math.PI;
+        var latDeg =
+            (2d * Math.Atan(Math.Exp(webMercatorCoordinate.YInMeter / EarthRadiusWebMercatorInMeter)) - Math.PI / 2d) *
+            180d / Math.PI;
 
         return new Wgs84Coordinate(lonDeg, latDeg);
     }
