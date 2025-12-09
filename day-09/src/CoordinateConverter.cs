@@ -6,10 +6,13 @@ public static class CoordinateConverter
     private const double EarthRadiusWebMercatorInMeter = 6378137d;
 
     public static Wgs84Coordinate ToWgs84Coordinate(Epsg3857Coordinate coordinate)
-    {
-        var lonDeg = coordinate.XInMeter / EarthRadiusWebMercatorInMeter * 180d / Math.PI;
-        var latDeg = (2d * Math.Atan(Math.Exp(coordinate.YInMeter / EarthRadiusWebMercatorInMeter)) - Math.PI / 2d) * 180d / Math.PI;
+        => new(
+            LongitudeInDegrees: LongitudeInDegrees(coordinate.XInMeter),
+            LatitudeInDegrees: LatitudeInDegrees(coordinate.YInMeter));
 
-        return new Wgs84Coordinate(lonDeg, latDeg);
-    }
+    private static double LatitudeInDegrees(double yInMeter)
+        => (2d * Math.Atan(Math.Exp(yInMeter / EarthRadiusWebMercatorInMeter)) - Math.PI / 2d) * 180d / Math.PI;
+
+    private static double LongitudeInDegrees(double xInMeter)
+        => xInMeter / EarthRadiusWebMercatorInMeter * 180d / Math.PI;
 }
