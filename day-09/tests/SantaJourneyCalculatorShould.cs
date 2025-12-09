@@ -48,8 +48,14 @@ public class SantaJourneyCalculatorShould
         // https://geohack.toolforge.org/geohack.php?pagename=Big_Ben&params=51.5007_N_0.1245_W_region:GB-WSM_type:landmark
         var coord2 = new Wgs84Coordinate(-0.1245d, 51.5007d);
 
+        // https://www.cqsrg.org/tools/GCDistance/
+        DistanceInKm(coord1, coord2).Should().BeApproximately(340.908d, 0.1d);
+    }
+
+    private static double DistanceInKm(Wgs84Coordinate coord1, Wgs84Coordinate coord2)
+    {
         // mean earth radius https://en.wikipedia.org/wiki/Earth_radius
-        const double EarthRadiusInKm = 6378.1d;
+        const double earthRadiusInKm = 6378.1d;
      
         var lat1 = coord1.LatitudeInDegrees * Math.PI / 180d;
         var lon1 = coord1.LongitudeInDegrees * Math.PI / 180d;
@@ -62,11 +68,8 @@ public class SantaJourneyCalculatorShould
                 Math.Cos(lat2) *
                 Math.Pow(Math.Sin(dlon / 2d), 2);
         var c = 2d * Math.Atan2(Math.Sqrt(a), Math.Sqrt(1d - a));
-        var distanceInKm = EarthRadiusInKm * c;
-
-        
-        // https://www.cqsrg.org/tools/GCDistance/
-        distanceInKm.Should().BeApproximately(340.908d, 0.1d);
+        var distanceInKm = earthRadiusInKm * c;
+        return distanceInKm;
     }
 
     // EPSG:3857 => WGS84  WGS84 (longitude/latitude en degrés)
