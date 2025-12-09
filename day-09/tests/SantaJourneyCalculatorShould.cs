@@ -10,8 +10,8 @@ public class SantaJourneyCalculatorShould
     public void TODO()
     {
         var elvishcoordinates = LoardElvishcoordinates("trace");
-        elvishcoordinates
-            .First()
+        elvishcoordinates.Count().Should().Be(500);
+        elvishcoordinates.First()
             .Should()
             .BeEquivalentTo(new Elvishcoordinates(146, 7714456.11274088m, 5639226.707649254m));
     }
@@ -19,9 +19,6 @@ public class SantaJourneyCalculatorShould
     private static IEnumerable<Elvishcoordinates> LoardElvishcoordinates(string trace)
     {
         var lines = File.ReadAllLines(trace);
-        lines.Length.Should().Be(500);
-
-        lines.First().Should().BeEquivalentTo("146,7714456.11274088,5639226.707649254");
 
         var elvishcoordinates = lines.Select(line =>
         {
