@@ -41,7 +41,8 @@
     <File Path="day-08\README.md" />
   </Folder>
   <Folder Name="/Jour 9 - Une distance en traîneau/">
-    <File Path="day-09\trace" />
     <File Path="day-09\README.md" />
+    <Project Path="day-09\src\Day09.csproj" />
+    <Project Path="day-09\tests\Day09.Tests.csproj" />
   </Folder>
 </Solution>
