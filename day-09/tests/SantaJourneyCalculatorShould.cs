@@ -1,22 +1,24 @@
 using System.Globalization;
 using FluentAssertions;
 using Xunit;
+using static Day09.Tests.CoordinateConverter;
 
 namespace Day09.Tests;
 
 public class SantaJourneyCalculatorShould
 {
-    // https://en.wikipedia.org/wiki/Earth_radius
-
     [Fact]
     public void Calculate_santa_journey_distance_in_km()
         => ElvishCoordinateSystemLoader.LoadElvishCoordinates("trace")
             .OrderBy(c => c.Order)
-            .Select(c => CoordinateConverter.ToWgs84Coordinate(c.Coordinate))
+            .Select(c => ToWgs84Coordinate(c.Coordinate))
             .Pipe(coords => DistanceCalculator.DistanceInKm(coords.First(), coords.Last()))
             .Should()
             .BeApproximately(16969, 0.5d);
+}
 
+public class ElvishCoordinateSystemLoaderShould
+{
     [Fact]
     public void Load_elvish_coordinates_from_file()
     {
@@ -36,17 +38,15 @@ public class SantaJourneyCalculatorShould
             .BeEquivalentTo(
                 new ElvishCoordinate(500, new WebMercatorCoordinate(16826950.84323861d, -4016067.571985976d)));
     }
+}
 
+public class CoordinateConverterShould
+{
     [Fact]
     public void Convert_web_mercator_coordinate_to_WGS84()
-    {
-        var webMercatorCoordinate = new WebMercatorCoordinate(7714456.11274088d, 5639226.707649254d);
-
-        var wgs84Coordinate = CoordinateConverter.ToWgs84Coordinate(webMercatorCoordinate);
-        wgs84Coordinate
+        => ToWgs84Coordinate(new WebMercatorCoordinate(7714456.11274088d, 5639226.707649254d))
             .Should()
             .BeEquivalentTo(new Wgs84Coordinate(69.30013834744402d, 45.11235404506074d));
-    }
 }
 
 /// <remarks>Can be verified with Mike Turnbull's WGS-84 World Geodetic System Distance Calculator</remarks>
