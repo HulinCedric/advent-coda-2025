@@ -2,7 +2,7 @@
 
 public static class FunctionalExtensions
 {
-    public static TResult Pipe<TSource, TResult>(
+    public static TResult Do<TSource, TResult>(
         this TSource source,
         Func<TSource, TResult> func)
         => func(source);

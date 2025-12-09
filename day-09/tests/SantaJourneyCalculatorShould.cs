@@ -13,7 +13,7 @@ public class SantaJourneyCalculatorShould
         => LoadElvishCoordinates("trace")
             .OrderBy(c => c.Order)
             .Select(c => ToWgs84Coordinate(c.Coordinate))
-            .Pipe(coords => DistanceInKm(coords.First(), coords.Last()))
+            .Do(coords => DistanceInKm(coords.First(), coords.Last()))
             .Should()
             .BeApproximately(16969, 0.5d);
 }
