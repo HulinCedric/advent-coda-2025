@@ -9,10 +9,10 @@ public static class DistanceCalculator
     /// <seealso href="https://en.wikipedia.org/wiki/Haversine_formula" />
     public static double DistanceInKm(Wgs84Coordinate coord1, Wgs84Coordinate coord2)
     {
-        var lat1 = coord1.LatitudeInDegrees * Math.PI / 180d;
-        var lon1 = coord1.LongitudeInDegrees * Math.PI / 180d;
-        var lat2 = coord2.LatitudeInDegrees * Math.PI / 180d;
-        var lon2 = coord2.LongitudeInDegrees * Math.PI / 180d;
+        var lat1 = ToRadius(coord1.LatitudeInDegrees);
+        var lon1 = ToRadius(coord1.LongitudeInDegrees);
+        var lat2 = ToRadius(coord2.LatitudeInDegrees);
+        var lon2 = ToRadius(coord2.LongitudeInDegrees);
         var dlat = lat2 - lat1;
         var dlon = lon2 - lon1;
         var a = Math.Pow(Math.Sin(dlat / 2d), 2) +
@@ -23,4 +23,6 @@ public static class DistanceCalculator
         var distanceInKm = EarthMeanRadiusInKilometer * c;
         return distanceInKm;
     }
+
+    private static double ToRadius(double input) => input * Math.PI / 180d;
 }
