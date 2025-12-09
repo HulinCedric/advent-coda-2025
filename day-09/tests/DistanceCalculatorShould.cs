@@ -17,10 +17,10 @@ public class DistanceCalculatorShould
     public void Calculate_geodesic_distance_between_two_WGS84_coordinates()
         => DistanceCalculator.DistanceInKm(ParisEiffelTowerCoordinate, LondonBigBenCoordinate)
             .Should()
-            .BeApproximately(340.908d, 0.1d);
+            .BeApproximately(340.553d, 0.001d);
 
     [Fact]
-    public void Provie_zero_distance_for_same_coordinate()
+    public void Provide_zero_distance_for_same_coordinate()
         => DistanceCalculator.DistanceInKm(ParisEiffelTowerCoordinate, ParisEiffelTowerCoordinate)
             .Should()
             .BeApproximately(0, 0.1d);
