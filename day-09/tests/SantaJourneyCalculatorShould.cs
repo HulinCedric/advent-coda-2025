@@ -9,26 +9,27 @@ public class SantaJourneyCalculatorShould
     [Fact]
     public void TODO()
     {
-        var elvishcoordinates = LoardElvishcoordinates("trace");
+        var elvishcoordinates = LoadElvishCoordinates("trace");
         elvishcoordinates.Count().Should().Be(500);
         elvishcoordinates.First()
             .Should()
             .BeEquivalentTo(new Elvishcoordinates(146, 7714456.11274088m, 5639226.707649254m));
     }
 
-    private static IEnumerable<Elvishcoordinates> LoardElvishcoordinates(string trace)
+    private static IEnumerable<Elvishcoordinates> LoadElvishCoordinates(string fileName)
     {
-        var lines = File.ReadAllLines(trace);
+        var lines = File.ReadAllLines(fileName);
 
-        var elvishcoordinates = lines.Select(line =>
-        {
-            var part = line.Split(',');
-            return new Elvishcoordinates(
-                int.Parse(part[0], CultureInfo.InvariantCulture),
-                decimal.Parse(part[1], CultureInfo.InvariantCulture),
-                decimal.Parse(part[2], CultureInfo.InvariantCulture));
-        });
-        return elvishcoordinates;
+        return lines.Select(MapElvishCoordinate);
+    }
+
+    private static Elvishcoordinates MapElvishCoordinate(string line)
+    {
+        var part = line.Split(',');
+        return new Elvishcoordinates(
+            int.Parse(part[0], CultureInfo.InvariantCulture),
+            decimal.Parse(part[1], CultureInfo.InvariantCulture),
+            decimal.Parse(part[2], CultureInfo.InvariantCulture));
     }
 }
 
