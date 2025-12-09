@@ -7,7 +7,7 @@ namespace Day09.Tests;
 public class SantaJourneyCalculatorShould
 {
     [Fact]
-    public void TODO()
+    public void Load_elvish_coordinates_from_file()
     {
         var elvishcoordinates = LoadElvishCoordinates("trace");
         elvishcoordinates.Count().Should().Be(500);
