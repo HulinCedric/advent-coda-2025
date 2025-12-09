@@ -11,13 +11,20 @@ public class SantaJourneyCalculatorShould
     {
         var elvishcoordinates = LoadElvishCoordinates("trace");
         elvishcoordinates.Count().Should().Be(500);
-        elvishcoordinates.First()
+        elvishcoordinates
+            .MinBy(c=>c.Order)
             .Should()
             .BeEquivalentTo(
-                new ElvishCoordinate(146, new WebMercatorCoordinate(7714456.11274088d, 5639226.707649254d)));
+                new ElvishCoordinate(1, new WebMercatorCoordinate(253716.21038051567d, 6234041.976798748d)));
+        
+        elvishcoordinates
+            .MaxBy(c=>c.Order)
+            .Should()
+            .BeEquivalentTo(
+                new ElvishCoordinate(500, new WebMercatorCoordinate(16826950.84323861d, -4016067.571985976d)));
+
     }
 
-   
     [Fact]
     public void Convert_web_mercator_coordinate_to_WGS84()
     {
