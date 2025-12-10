@@ -7,6 +7,7 @@ public record Child(
     string LastName,
     int Age,
     Behavior Behavior,
+    double Benevolence,
     List<GiftRequest>? GiftRequests = null)
 {
     public List<GiftRequest> GiftRequests { get; } = GiftRequests ?? new List<GiftRequest>();
