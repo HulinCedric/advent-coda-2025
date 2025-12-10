@@ -2,7 +2,7 @@ namespace GiftSelection.Tests;
 
 public class ChildBuilder
 {
-    private static int _age = 9;
+    private int _age = 9;
     private Behavior _behavior = Behavior.Nice;
     private readonly List<GiftRequest> _giftRequests = [];
     private double _benevolence = 0.7;
