@@ -2,8 +2,5 @@ namespace GiftSelection;
 
 public static class GiftSelector
 {
-    public static string? SelectGiftFor(Child child)
-    {
-        return child.SelectGift();
-    }
+    public static string? SelectGiftFor(Child child) => child.SelectGift();
 }

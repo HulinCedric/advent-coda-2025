@@ -22,20 +22,20 @@ public record Child(
         {
             (_               , Age: >= 14, Benevolence: <= 0.5) => NoGift(),
             (Behavior.Naughty, _         , _                  ) => NoGift(),
-            (Behavior.Normal , _         , _                  ) => SelectLastFeasibleGift(),
-            (Behavior.Nice   , _         , _                  ) => SelectFirstFeasibleGift(),
+            (Behavior.Normal , _         , _                  ) => SelectLastFeasibleGift(this),
+            (Behavior.Nice   , _         , _                  ) => SelectFirstFeasibleGift(this),
             _                                                   => NoGift()
         };
 
     private static string? NoGift() => null;
 
-    private string? SelectLastFeasibleGift() => GiftRequests
+    private static string? SelectLastFeasibleGift(Child child) => child.GiftRequests
         .Where(gift => gift.IsFeasible)
         .Reverse()
         .Select(gift => gift.GiftName)
         .FirstOrDefault();
 
-    private string? SelectFirstFeasibleGift() => GiftRequests
+    private static string? SelectFirstFeasibleGift(Child child) => child.GiftRequests
         .Where(gift => gift.IsFeasible)
         .Select(gift => gift.GiftName)
         .FirstOrDefault();
