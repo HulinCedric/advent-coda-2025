@@ -9,6 +9,7 @@ public class ChildBuilder
     public static ChildBuilder AChild() => new();
 
     public static ChildBuilder AYoungChild() => AChild().Young();
+    public static ChildBuilder AnOldChild() => AChild().Old();
 
     public ChildBuilder Nice()
     {
@@ -29,6 +30,7 @@ public class ChildBuilder
     }
     
     public ChildBuilder Young() => Aged(9);
+    public ChildBuilder Old() => Aged(14);
 
     public ChildBuilder Aged(int age)
     {

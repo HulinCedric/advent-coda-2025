@@ -59,7 +59,7 @@ public class GiftSelectorTests
     {
         private static string? EvaluateRequestFor(ChildConfiguration childConfiguration)
             => SelectGiftFor(
-                childConfiguration(ChildBuilder.AChild().Aged(14)).Build()
+                childConfiguration(ChildBuilder.AnOldChild()).Build()
             );
         
         [Fact]
