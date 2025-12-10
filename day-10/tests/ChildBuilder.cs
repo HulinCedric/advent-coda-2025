@@ -2,10 +2,13 @@ namespace GiftSelection.Tests;
 
 public class ChildBuilder
 {
+    private static int _age = 9;
     private Behavior _behavior = Behavior.Nice;
     private readonly List<GiftRequest> _giftRequests = [];
 
     public static ChildBuilder AChild() => new();
+
+    public static ChildBuilder AYoungChild() => AChild().Young();
 
     public ChildBuilder Nice()
     {
@@ -24,6 +27,14 @@ public class ChildBuilder
         _behavior = Behavior.Naughty;
         return this;
     }
+    
+    public ChildBuilder Young() => Aged(9);
+
+    public ChildBuilder Aged(int age)
+    {
+        _age = age;
+        return this;
+    }
 
     public ChildBuilder RequestingFeasibleGift(string? giftName = null)
     {
@@ -37,5 +48,5 @@ public class ChildBuilder
         return this;
     }
 
-    public Child Build() => new("Jane", "Doe", 9, _behavior, _giftRequests);
+    public Child Build() => new("Jane", "Doe", _age, _behavior, _giftRequests);
 }

@@ -10,7 +10,7 @@ public class GiftSelectorTests
     {
         private static string? EvaluateRequestFor(ChildConfiguration childConfiguration)
             => SelectGiftFor(
-                childConfiguration(ChildBuilder.AChild()).Build()
+                childConfiguration(ChildBuilder.AYoungChild()).Build()
             );
         
         [Fact]
