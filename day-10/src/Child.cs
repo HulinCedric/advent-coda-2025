@@ -24,28 +24,20 @@ public record Child(
             return null;
         }
 
-        if (Behavior == Behavior.Naughty)
+        return Behavior switch
         {
-            return null;
-        }
-
-        if (Behavior == Behavior.Normal)
-        {
-            return GiftRequests
+            Behavior.Naughty => null,
+            Behavior.Normal => GiftRequests
                 .Where(gift => gift.IsFeasible)
                 .Reverse()
                 .Select(gift => gift.GiftName)
-                .FirstOrDefault();
-        }
-
-        if (Behavior == Behavior.Nice)
-        {
-            return GiftRequests
-                .Where(gift => gift.IsFeasible)
-                .Select(gift => gift.GiftName)
-                .FirstOrDefault();
-        }
-        
-        return null;
+                .FirstOrDefault(),
+            Behavior.Nice => 
+                GiftRequests
+                    .Where(gift => gift.IsFeasible)
+                    .Select(gift => gift.GiftName)
+                    .FirstOrDefault(),
+            _ => null
+        };
     }
 }
