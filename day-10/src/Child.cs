@@ -20,12 +20,14 @@ public record Child(
     public string? SelectGift()
         => (Behavior, Age, Benevolence) switch
         {
-            (_, Age: >= 14, Benevolence: <= 0.5) => null,
-            (Behavior.Naughty, _, _) => null,
+            (_, Age: >= 14, Benevolence: <= 0.5) => NoGift(),
+            (Behavior.Naughty, _, _) => NoGift(),
             (Behavior.Normal, _, _) => SelectLastFeasibleGift(),
             (Behavior.Nice, _, _) => SelectFirstFeasibleGift(),
-            _ => null
+            _ => NoGift()
         };
+
+    private static string? NoGift() => null;
 
     private string? SelectLastFeasibleGift() => GiftRequests
         .Where(gift => gift.IsFeasible)
