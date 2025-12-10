@@ -45,4 +45,9 @@
     <Project Path="day-09\src\Day09.csproj" />
     <Project Path="day-09\tests\Day09.Tests.csproj" />
   </Folder>
+  <Folder Name="/Jour 10 - La quête du cadeau parfait/">
+    <File Path="day-10\README.md" />
+    <Project Path="day-10\src\GiftSelection.csproj" />
+    <Project Path="day-10\tests\GiftSelection.Tests.csproj" />
+  </Folder>
 </Solution>
