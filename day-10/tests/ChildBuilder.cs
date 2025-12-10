@@ -5,6 +5,7 @@ public class ChildBuilder
     private static int _age = 9;
     private Behavior _behavior = Behavior.Nice;
     private readonly List<GiftRequest> _giftRequests = [];
+    private double _benevolence = 0.7;
 
     public static ChildBuilder AChild() => new();
 
@@ -37,6 +38,12 @@ public class ChildBuilder
         _age = age;
         return this;
     }
+    
+    public ChildBuilder Unkind()
+    {
+        _benevolence = 0.3;
+        return this;
+    }
 
     public ChildBuilder RequestingFeasibleGift(string? giftName = null)
     {
@@ -51,4 +58,6 @@ public class ChildBuilder
     }
 
     public Child Build() => new("Jane", "Doe", _age, _behavior, _giftRequests);
+
+   
 }

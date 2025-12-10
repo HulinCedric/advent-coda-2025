@@ -63,6 +63,16 @@ public class GiftSelectorTests
             );
         
         [Fact]
+        public void Return_Nothing_For_Unkind_Child_No_Matter_How_He_Is_Behaving()
+            => Assert.Null(EvaluateRequestFor(child =>
+                child
+                    .Unkind()
+                    .Nice()
+                    .RequestingFeasibleGift("Toy")
+                    .RequestingFeasibleGift("Book")
+            ));
+        
+        [Fact]
         public void Select_First_Feasible_Gift_For_Nice_Child()
             => Assert.Equal("Toy", EvaluateRequestFor(child =>
                 child.Nice()
