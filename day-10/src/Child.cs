@@ -27,17 +27,20 @@ public record Child(
         return Behavior switch
         {
             Behavior.Naughty => null,
-            Behavior.Normal => GiftRequests
-                .Where(gift => gift.IsFeasible)
-                .Reverse()
-                .Select(gift => gift.GiftName)
-                .FirstOrDefault(),
-            Behavior.Nice => 
-                GiftRequests
-                    .Where(gift => gift.IsFeasible)
-                    .Select(gift => gift.GiftName)
-                    .FirstOrDefault(),
+            Behavior.Normal => SelectLastFeasibleGift(),
+            Behavior.Nice => SelectFirstFeasibleGift(),
             _ => null
         };
     }
+
+    private string? SelectLastFeasibleGift() => GiftRequests
+        .Where(gift => gift.IsFeasible)
+        .Reverse()
+        .Select(gift => gift.GiftName)
+        .FirstOrDefault();
+
+    private string? SelectFirstFeasibleGift() => GiftRequests
+        .Where(gift => gift.IsFeasible)
+        .Select(gift => gift.GiftName)
+        .FirstOrDefault();
 }
