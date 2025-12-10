@@ -1,6 +1,11 @@
 namespace GiftSelection;
 
-public enum Behavior { Naughty, Normal, Nice }
+public enum Behavior
+{
+    Naughty,
+    Normal,
+    Nice
+}
 
 public record Child(
     string FirstName,
@@ -18,7 +23,7 @@ public record Child(
         {
             return null;
         }
-        
+
         if (Behavior == Behavior.Naughty)
         {
             return null;
@@ -33,9 +38,14 @@ public record Child(
                 .FirstOrDefault();
         }
 
-        return GiftRequests
-            .Where(gift => gift.IsFeasible)
-            .Select(gift => gift.GiftName)
-            .FirstOrDefault();
+        if (Behavior == Behavior.Nice)
+        {
+            return GiftRequests
+                .Where(gift => gift.IsFeasible)
+                .Select(gift => gift.GiftName)
+                .FirstOrDefault();
+        }
+        
+        return null;
     }
 }
