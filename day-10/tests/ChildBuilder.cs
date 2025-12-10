@@ -30,6 +30,12 @@ public class ChildBuilder
         return this;
     }
     
+    public ChildBuilder Behaving(Behavior behavior)
+    {
+        _behavior = behavior;
+        return this;
+    }
+    
     public ChildBuilder Young() => Aged(9);
     public ChildBuilder Old() => Aged(14);
 
@@ -57,7 +63,7 @@ public class ChildBuilder
         return this;
     }
 
-    public Child Build() => new("Jane", "Doe", _age, _behavior, Benevolence:_benevolence, _giftRequests);
+    public Child Build() => new("Jane", "Doe", _age, _behavior, _benevolence, _giftRequests);
 
    
 }

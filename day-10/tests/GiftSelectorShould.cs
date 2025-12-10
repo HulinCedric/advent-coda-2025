@@ -62,12 +62,15 @@ public class GiftSelectorTests
                 childConfiguration(ChildBuilder.AnOldChild()).Build()
             );
         
-        [Fact]
-        public void Return_Nothing_For_Unkind_Child_No_Matter_How_He_Is_Behaving()
+        [Theory]
+        [InlineData(Behavior.Nice)]
+        [InlineData(Behavior.Normal)]
+        [InlineData(Behavior.Naughty)]
+        public void Return_Nothing_For_Unkind_Child_No_Matter_How_He_Is_Behaving(Behavior behavior)
             => Assert.Null(EvaluateRequestFor(child =>
                 child
                     .Unkind()
-                    .Nice()
+                    .Behaving(behavior)
                     .RequestingFeasibleGift("Toy")
                     .RequestingFeasibleGift("Book")
             ));
