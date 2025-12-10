@@ -4,6 +4,11 @@ public static class GiftSelector
 {
     public static string? SelectGiftFor(Child child)
     {
+        return SelectGift(child);
+    }
+
+    private static string? SelectGift(Child child)
+    {
         if (child.Behavior == Behavior.Naughty)
         {
             return null;
