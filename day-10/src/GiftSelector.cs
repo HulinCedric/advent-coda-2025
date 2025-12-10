@@ -8,7 +8,8 @@ public static class GiftSelector
         {
             return null;
         }
-        else if (child.Behavior == Behavior.Normal)
+
+        if (child.Behavior == Behavior.Normal)
         {
             return child.GiftRequests
                 .Where(gift => gift.IsFeasible)
@@ -16,12 +17,10 @@ public static class GiftSelector
                 .Select(gift => gift.GiftName)
                 .FirstOrDefault();
         }
-        else
-        {
-            return child.GiftRequests
-                .Where(gift => gift.IsFeasible)
-                .Select(gift => gift.GiftName)
-                .FirstOrDefault();
-        }
+
+        return child.GiftRequests
+            .Where(gift => gift.IsFeasible)
+            .Select(gift => gift.GiftName)
+            .FirstOrDefault();
     }
 }
