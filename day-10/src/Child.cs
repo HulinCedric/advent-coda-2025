@@ -14,6 +14,11 @@ public record Child(
 
     public string? SelectGift()
     {
+        if (Age >= 14 && Benevolence <= 0.5)
+        {
+            return null;
+        }
+        
         if (Behavior == Behavior.Naughty)
         {
             return null;
