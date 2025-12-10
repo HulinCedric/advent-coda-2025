@@ -20,11 +20,11 @@ public record Child(
     public string? SelectGift()
         => (Behavior, Age, Benevolence) switch
         {
-            (_, Age: >= 14, Benevolence: <= 0.5) => NoGift(),
-            (Behavior.Naughty, _, _) => NoGift(),
-            (Behavior.Normal, _, _) => SelectLastFeasibleGift(),
-            (Behavior.Nice, _, _) => SelectFirstFeasibleGift(),
-            _ => NoGift()
+            (_               , Age: >= 14, Benevolence: <= 0.5) => NoGift(),
+            (Behavior.Naughty, _         , _                  ) => NoGift(),
+            (Behavior.Normal , _         , _                  ) => SelectLastFeasibleGift(),
+            (Behavior.Nice   , _         , _                  ) => SelectFirstFeasibleGift(),
+            _                                                   => NoGift()
         };
 
     private static string? NoGift() => null;
