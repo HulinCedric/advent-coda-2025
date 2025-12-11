@@ -20,7 +20,7 @@ public record GiftRequests(List<GiftRequest> Requests)
         .Select(gift => gift.GiftName)
         .FirstOrDefault();
 
-    public string? NoGift() => null;
+    internal string? NoGift() => null;
 }
 
 public record Child(
@@ -29,17 +29,17 @@ public record Child(
     int Age,
     Behavior Behavior,
     double Benevolence,
-    List<GiftRequest>? GiftRequests = null)
+    GiftRequests? GiftRequests = null)
 {
-    private readonly GiftRequests _giftRequests = new(GiftRequests ?? new List<GiftRequest>());
+    private GiftRequests GiftRequests { get; } = GiftRequests ?? new GiftRequests([]);
 
     public string? SelectGift()
         => (Behavior, Age, Benevolence) switch
         {
-            (_               , Age: >= 14, Benevolence: <= 0.5) => _giftRequests.NoGift(),
-            (Behavior.Naughty, _         , _                  ) => _giftRequests.NoGift(),
-            (Behavior.Normal , _         , _                  ) => _giftRequests.SelectLastFeasibleGift(),
-            (Behavior.Nice   , _         , _                  ) => _giftRequests.SelectFirstFeasibleGift(),
-            _                                                   => _giftRequests.NoGift()
+            (_               , Age: >= 14, Benevolence: <= 0.5) => GiftRequests.NoGift(),
+            (Behavior.Naughty, _         , _                  ) => GiftRequests.NoGift(),
+            (Behavior.Normal , _         , _                  ) => GiftRequests.SelectLastFeasibleGift(),
+            (Behavior.Nice   , _         , _                  ) => GiftRequests.SelectFirstFeasibleGift(),
+            _                                                   => GiftRequests.NoGift()
         };
 }

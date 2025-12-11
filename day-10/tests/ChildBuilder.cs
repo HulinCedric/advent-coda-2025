@@ -63,7 +63,7 @@ public class ChildBuilder
         return this;
     }
 
-    public Child Build() => new("Jane", "Doe", _age, _behavior, _benevolence, _giftRequests);
+    public Child Build() => new("Jane", "Doe", _age, _behavior, _benevolence, new GiftRequests(_giftRequests));
 
    
 }
