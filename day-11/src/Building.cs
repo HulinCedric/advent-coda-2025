@@ -2,13 +2,8 @@
 
 public static class Building
 {
-    public static int WhichFloor(string signalStream)
-    {
-        List<int> val = [];
-        val.AddRange(signalStream.Select(c => Calculate(signalStream, c)));
-
-        return val.Sum();
-    }
+    public static int WhichFloor(string signalStream) 
+        => signalStream.Sum(c => Calculate(signalStream, c));
 
     private static int Calculate(string signalStream, char c)
     {
