@@ -7,20 +7,20 @@ public enum Behavior
     Nice
 }
 
-public static class GiftRequests
+public record GiftRequests(List<GiftRequest> Requests)
 {
-    internal static string? SelectLastFeasibleGift(Child child) => child.GiftRequests
+    internal string? SelectLastFeasibleGift() => Requests
         .Where(gift => gift.IsFeasible)
         .Reverse()
         .Select(gift => gift.GiftName)
         .FirstOrDefault();
 
-    internal static string? SelectFirstFeasibleGift(Child child) => child.GiftRequests
+    internal string? SelectFirstFeasibleGift() => Requests
         .Where(gift => gift.IsFeasible)
         .Select(gift => gift.GiftName)
         .FirstOrDefault();
 
-    public static string? NoGift() => null;
+    public string? NoGift() => null;
 }
 
 public record Child(
@@ -31,15 +31,15 @@ public record Child(
     double Benevolence,
     List<GiftRequest>? GiftRequests = null)
 {
-    public List<GiftRequest> GiftRequests { get; } = GiftRequests ?? new List<GiftRequest>();
+    private readonly GiftRequests _giftRequests = new(GiftRequests ?? new List<GiftRequest>());
 
     public string? SelectGift()
         => (Behavior, Age, Benevolence) switch
         {
-            (_               , Age: >= 14, Benevolence: <= 0.5) => GiftSelection.GiftRequests.NoGift(),
-            (Behavior.Naughty, _         , _                  ) => GiftSelection.GiftRequests.NoGift(),
-            (Behavior.Normal , _         , _                  ) => GiftSelection.GiftRequests.SelectLastFeasibleGift(this),
-            (Behavior.Nice   , _         , _                  ) => GiftSelection.GiftRequests.SelectFirstFeasibleGift(this),
-            _                                                   => GiftSelection.GiftRequests.NoGift()
+            (_               , Age: >= 14, Benevolence: <= 0.5) => _giftRequests.NoGift(),
+            (Behavior.Naughty, _         , _                  ) => _giftRequests.NoGift(),
+            (Behavior.Normal , _         , _                  ) => _giftRequests.SelectLastFeasibleGift(),
+            (Behavior.Nice   , _         , _                  ) => _giftRequests.SelectFirstFeasibleGift(),
+            _                                                   => _giftRequests.NoGift()
         };
 }
