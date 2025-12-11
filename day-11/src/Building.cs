@@ -2,23 +2,23 @@
 
 public static class Building
 {
-    public static int WhichFloor(string signalStream) => signalStream.Sum(c => Calculate(signalStream, c));
+    public static int WhichFloor(string signalStream) => signalStream.Sum(Calculate(signalStream));
 
-    private static int Calculate(string signalStream, char c)
+    private static Func<char, int> Calculate(string signalStream)
         => signalStream.Contains("🧝")
-            ? EflCalculationStrategy(c)
-            : StandardCalculationStrategy(c);
+            ? EflCalculationStrategy()
+            : StandardCalculationStrategy();
 
-    private static int StandardCalculationStrategy(char c)
-        => c switch
+    private static Func<char, int> StandardCalculationStrategy()
+        => signal => signal switch
         {
             '(' => 1,
             ')' => -1,
             _ => 0
         };
 
-    private static int EflCalculationStrategy(char c)
-        => c switch
+    private static Func<char, int> EflCalculationStrategy()
+        => signal => signal switch
         {
             ')' => 3,
             '(' => -2,
