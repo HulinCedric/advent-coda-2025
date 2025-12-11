@@ -4,7 +4,7 @@ public static class Building
 {
     public static int WhichFloor(string signalStream)
     {
-        List<Tuple<char, int>> val = [];
+        List<int> val = [];
 
         for (int i = 0; i < signalStream.Length; i++)
         {
@@ -16,18 +16,18 @@ public static class Building
                 else if (c == '(') j = -2;
                 else j = 0; // If there is "🧝" we should ignore it.
 
-                val.Add(new Tuple<char, int>(c, j));
+                val.Add(j);
             }
             else if (!signalStream.Contains("🧝"))
             {
-                val.Add(new Tuple<char, int>(c, c == '(' ? 1 : -1));
+                val.Add(c == '(' ? 1 : -1);
             }
         }
 
         int result = 0;
         foreach (var kp in val)
         {
-            result += kp.Item2;
+            result += kp;
         }
         return result;
     }
