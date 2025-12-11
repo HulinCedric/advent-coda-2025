@@ -24,11 +24,6 @@ public static class Building
             }
         }
 
-        int result = 0;
-        foreach (var kp in val)
-        {
-            result += kp;
-        }
-        return result;
+        return val.Sum();
     }
 }
