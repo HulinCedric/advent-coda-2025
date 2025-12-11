@@ -9,12 +9,12 @@ public static class Building
         for (int i = 0; i < signalStream.Length; i++)
         {
             var c = signalStream[i];
-
             if (signalStream.Contains("🧝"))
             {
                 int j;
                 if (c == ')') j = 3;
-                else j = -2;
+                else if (c == '(') j = -2;
+                else j = 0; // If there is "🧝" we should ignore it.
 
                 val.Add(new Tuple<char, int>(c, j));
             }
