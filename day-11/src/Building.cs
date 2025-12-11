@@ -5,12 +5,7 @@ public static class Building
     public static int WhichFloor(string signalStream)
     {
         List<int> val = [];
-
-        for (int i = 0; i < signalStream.Length; i++)
-        {
-            var c = signalStream[i];
-            val.Add(Calculate(signalStream, c));
-        }
+        val.AddRange(signalStream.Select(c => Calculate(signalStream, c)));
 
         return val.Sum();
     }
