@@ -9,18 +9,17 @@ public enum Behavior
 
 public sealed record GiftRequests(List<GiftRequest> Requests)
 {
-    internal string? SelectLastFeasibleGift() => Requests
+    internal string? LastFeasibleGift() => Requests
         .Where(gift => gift.IsFeasible)
         .Reverse()
         .Select(gift => gift.GiftName)
         .FirstOrDefault();
 
-    internal string? SelectFirstFeasibleGift() => Requests
+    internal string? FirstFeasibleGift() => Requests
         .Where(gift => gift.IsFeasible)
         .Select(gift => gift.GiftName)
         .FirstOrDefault();
 
-    internal string? NoGift() => null;
 }
 
 public sealed record Child(
@@ -36,10 +35,12 @@ public sealed record Child(
     public string? SelectGift()
         => (Behavior, Age, Benevolence) switch
         {
-            (_               , Age: >= 14, Benevolence: <= 0.5) => GiftRequests.NoGift(),
-            (Behavior.Naughty, _         , _                  ) => GiftRequests.NoGift(),
-            (Behavior.Normal , _         , _                  ) => GiftRequests.SelectLastFeasibleGift(),
-            (Behavior.Nice   , _         , _                  ) => GiftRequests.SelectFirstFeasibleGift(),
-            _                                                   => GiftRequests.NoGift()
+            (_               , Age: >= 14, Benevolence: <= 0.5) => NoGift(),
+            (Behavior.Naughty, _         , _                  ) => NoGift(),
+            (Behavior.Normal , _         , _                  ) => GiftRequests.LastFeasibleGift(),
+            (Behavior.Nice   , _         , _                  ) => GiftRequests.FirstFeasibleGift(),
+            _                                                   => NoGift()
         };
+
+    private static string? NoGift() => null;
 }
