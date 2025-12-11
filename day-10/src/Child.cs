@@ -7,7 +7,7 @@ public enum Behavior
     Nice
 }
 
-public record GiftRequests(List<GiftRequest> Requests)
+public sealed record GiftRequests(List<GiftRequest> Requests)
 {
     internal string? SelectLastFeasibleGift() => Requests
         .Where(gift => gift.IsFeasible)
@@ -23,7 +23,7 @@ public record GiftRequests(List<GiftRequest> Requests)
     internal string? NoGift() => null;
 }
 
-public record Child(
+public sealed record Child(
     string FirstName,
     string LastName,
     int Age,

@@ -1,3 +1,3 @@
 namespace GiftSelection;
 
-public record GiftRequest(string GiftName, bool IsFeasible);
+public sealed record GiftRequest(string GiftName, bool IsFeasible);
