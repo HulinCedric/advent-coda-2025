@@ -5,19 +5,23 @@ public sealed record Child(
     string LastName,
     int Age,
     Behavior Behavior,
-    double Benevolence,
+    double Kindness,
     GiftRequests? GiftRequests = null)
 {
     private GiftRequests GiftRequests { get; } = GiftRequests ?? new GiftRequests([]);
 
+    private bool IsKind() => Kindness > 0.5;
+    
+    private bool IsOld() => Age >= 14;
+    
     public string? SelectGift()
-        => (Behavior, Age, Benevolence) switch
+        => (Behavior, IsOld(), IsKind()) switch
         {
-            (_               , Age: >= 14, Benevolence: <= 0.5) => NoGift(),
-            (Behavior.Naughty, _         , _                  ) => NoGift(),
-            (Behavior.Normal , _         , _                  ) => GiftRequests.LastFeasibleGift(),
-            (Behavior.Nice   , _         , _                  ) => GiftRequests.FirstFeasibleGift(),
-            _                                                   => NoGift()
+            (_               , true, false) => NoGift(),
+            (Behavior.Naughty, _    , _   ) => NoGift(),
+            (Behavior.Normal , _    , _   ) => GiftRequests.LastFeasibleGift(),
+            (Behavior.Nice   , _    , _   ) => GiftRequests.FirstFeasibleGift(),
+            (_               , _    , _   ) => NoGift()
         };
 
     private static string? NoGift() => null;
