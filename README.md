@@ -12,3 +12,4 @@ Ce repository contient mes résolutions du [calendrier de l'Avent Coda](https://
 - [Jour 8 - Les 3 enfants les plus sages](day-08/README.md)
 - [Jour 9 - Une distance en traîneau](day-09/README.md)
 - [Jour 10 - La quête du cadeau parfait](day-10/README.md)
+- [Jour 11 - Un bug bloque la tournée...](day-11/README.md)
