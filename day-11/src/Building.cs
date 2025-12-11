@@ -2,8 +2,7 @@
 
 public static class Building
 {
-    public static int WhichFloor(string signalStream) 
-        => signalStream.Sum(c => Calculate(signalStream, c));
+    public static int WhichFloor(string signalStream) => signalStream.Sum(c => Calculate(signalStream, c));
 
     private static int Calculate(string signalStream, char c)
     {
@@ -16,11 +15,7 @@ public static class Building
 
             return j;
         }
-        else if (!signalStream.Contains("🧝"))
-        {
-            return c == '(' ? 1 : -1;
-        }
-
-        return 0;
+        
+        return c == '(' ? 1 : -1;
     }
 }
