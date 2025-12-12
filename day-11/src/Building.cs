@@ -1,20 +1,21 @@
 ﻿namespace Navigation;
 
-using FloorCalculationStrategy = Func<char, int>;
+using FloorStrategy = Func<char, int>;
 
 public static class Building
 {
     private const char Up = '(';
     private const char Down = ')';
     private const string Elf = "🧝";
+    
     public static int WhichFloor(string instructions) => instructions.Sum(Calculate(instructions));
 
-    private static FloorCalculationStrategy Calculate(string instructions)
+    private static FloorStrategy Calculate(string instructions)
         => instructions.Contains(Elf)
-            ? EflCalculationStrategy()
-            : StandardCalculationStrategy();
+            ? EflStrategy()
+            : StandardStrategy();
 
-    private static FloorCalculationStrategy StandardCalculationStrategy()
+    private static FloorStrategy StandardStrategy()
         => instruction => instruction switch
         {
             Up => 1,
@@ -22,7 +23,7 @@ public static class Building
             _ => 0
         };
 
-    private static FloorCalculationStrategy EflCalculationStrategy()
+    private static FloorStrategy EflStrategy()
         => instruction => instruction switch
         {
             Up => -2,
