@@ -29,14 +29,32 @@ public class GiftFactory : IGiftFactory
     }
 }
 
+public class GiftWrapperService
+{
+    private readonly ILogger _logger;
+
+    public GiftWrapperService(ILogger logger)
+    {
+        _logger = logger;
+    }
+
+    public void WrapGift(string gift)
+    {
+        _logger.Log($"Emballage du cadeau : {gift}");
+        Thread.Sleep(3); // Petite pause simulée (3 ms)
+    }
+}
+
 public class GiftMachine
 {
     private readonly ILogger _logger;
     private readonly IGiftFactory _giftFactory;
+    private readonly GiftWrapperService _giftWrapperService;
 
     public GiftMachine(ILogger logger)
     {
         _giftFactory = new GiftFactory(logger);
+        _giftWrapperService = new GiftWrapperService(logger);
     }
 
     public string CreateGift(string type, string recipient)
@@ -47,7 +65,7 @@ public class GiftMachine
 
             string gift = _giftFactory.BuildGift(type, recipient);
 
-            WrapGift(gift);
+            _giftWrapperService.WrapGift(gift);
             AddRibbon(gift);
             DeliverGift(gift, recipient);
 
@@ -59,12 +77,6 @@ public class GiftMachine
             DisplayError(ex.Message);
             return $"Échec de la création du cadeau pour {recipient}";
         }
-    }
-
-    private void WrapGift(string gift)
-    {
-        _logger.Log($"Emballage du cadeau : {gift}");
-        Thread.Sleep(3); // Petite pause simulée (3 ms)
     }
 
     private void AddRibbon(string gift)
