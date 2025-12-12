@@ -1,4 +1,6 @@
-﻿namespace GiftMachine.Infrastructure.ExternalSystems;
+﻿using GiftMachine.Core;
+
+namespace GiftMachine.Infrastructure;
 
 public class RandomFactory : IRandomFactory
 {

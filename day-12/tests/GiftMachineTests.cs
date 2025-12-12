@@ -10,13 +10,12 @@ namespace GiftMachine.Tests;
 
 public class GiftMachineTests
 {
+    private readonly FakeDeliveryService _deliveryService;
     private readonly Core.GiftMachine _machine;
-    private readonly FakeSledgeDeliveryService _sledgeDeliveryService;
 
     public GiftMachineTests()
     {
         var timeProvider = new FakeTimeProvider();
-        _sledgeDeliveryService = new FakeSledgeDeliveryService();
         var logger = new ConsoleLogger(timeProvider);
 
         var giftBuilders = new Dictionary<string, IGiftBuilder>(StringComparer.OrdinalIgnoreCase)
@@ -31,9 +30,9 @@ public class GiftMachineTests
 
         var giftWrapper = new GiftWrapper();
         var ribbonService = new RibbonService();
+        _deliveryService = new FakeDeliveryService();
 
-        var deliveryService = new DeliveryService(_sledgeDeliveryService);
-        _machine = new Core.GiftMachine(logger, giftFactory, giftWrapper, ribbonService, deliveryService);
+        _machine = new Core.GiftMachine(logger, giftFactory, giftWrapper, ribbonService, _deliveryService);
     }
 
     [Fact]
@@ -96,15 +95,15 @@ public class GiftMachineTests
                 "[00:00:00] Cadeau livré à la zone d’expédition pour Elisabeth" + Environment.NewLine +
                 "[00:00:00] Cadeau prêt pour Elisabeth : 🤖 Robot futuriste pour Elisabeth" + Environment.NewLine);
     }
-    
-     [Fact]
+
+    [Fact]
     public void ExecuteFailDeliveryScenario()
     {
         var fakeoutput = new StringBuilder();
         Console.SetOut(new StringWriter(fakeoutput));
 
-        _sledgeDeliveryService.WillFailToDeliver("Erreur de livraison : le traîneau est tombé en panne.");
-        
+        _deliveryService.WillFailToDeliver("Erreur de livraison : le traîneau est tombé en panne.");
+
         var cadeau1 = _machine.CreateGift("teddy", "Alice");
         cadeau1.Should().Be("Échec de la création du cadeau pour Alice");
 
@@ -120,15 +119,15 @@ public class GiftMachineTests
                 "[00:00:00] ❌ Erreur de livraison : le traîneau est tombé en panne." + Environment.NewLine +
                 "[00:00:00] 🔴 Merci de respecter les principes SOLID" + Environment.NewLine);
     }
-    
+
     [Fact]
     public void ExecuteUnknownGiftScenario()
     {
         var fakeoutput = new StringBuilder();
         Console.SetOut(new StringWriter(fakeoutput));
 
-        _sledgeDeliveryService.WillFailToDeliver("Erreur de livraison : le traîneau est tombé en panne.");
-        
+        _deliveryService.WillFailToDeliver("Erreur de livraison : le traîneau est tombé en panne.");
+
         var cadeau1 = _machine.CreateGift("unknown", "Alice");
         cadeau1.Should().Be("Échec de la création du cadeau pour Alice");
 

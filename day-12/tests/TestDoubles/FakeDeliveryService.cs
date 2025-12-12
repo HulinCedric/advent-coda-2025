@@ -2,12 +2,12 @@
 
 namespace GiftMachine.Tests.TestDoubles;
 
-public class FakeSledgeDeliveryService : ISledgeDeliveryService
+public class FakeDeliveryService : IDeliveryService
 {
     private string _failureReason = string.Empty;
     private bool _shouldFailToDeliver;
 
-    public void Deliver()
+    public void DeliverGift(string gift, string recipient)
     {
         if (_shouldFailToDeliver) throw new Exception(_failureReason);
     }

@@ -1,24 +1,27 @@
 using FluentAssertions;
-using GiftMachine.Infrastructure.ExternalSystems;
+using GiftMachine.Core;
 using GiftMachine.Tests.TestDoubles;
 using Xunit;
 using static FluentAssertions.FluentActions;
 
 namespace GiftMachine.Tests;
 
-public class SledgeDeliveryServiceShould
+public class DeliveryServiceShould
 {
-    private readonly FakeRandomFactory _randomFactory = new();
-    private readonly SledgeDeliveryService _sledgeDeliveryService;
+    private const string Gift = "🎁 Cadeau spécial pour John";
+    private const string Recipient = "John";
 
-    public SledgeDeliveryServiceShould() => _sledgeDeliveryService = new SledgeDeliveryService(_randomFactory);
+    private readonly DeliveryService _deliveryService;
+    private readonly FakeRandomFactory _randomFactory = new();
+
+    public DeliveryServiceShould() => _deliveryService = new DeliveryService(_randomFactory);
 
     [Fact]
     public void DeliverGiftWithSuccess()
     {
         _randomFactory.WillProvideRandomWithSeed(42);
 
-        Invoking(() => _sledgeDeliveryService.Deliver())
+        Invoking(DeliverGift)
             .Should()
             .NotThrow();
     }
@@ -28,10 +31,12 @@ public class SledgeDeliveryServiceShould
     {
         _randomFactory.WillProvideRandomWithSeed(8);
 
-        Invoking(() => _sledgeDeliveryService.Deliver())
+        Invoking(DeliverGift)
             .Should()
             .Throw<Exception>()
             .Which.Message.Should()
             .Be("Erreur de livraison : le traîneau est tombé en panne.");
     }
+
+    private void DeliverGift() => _deliveryService.DeliverGift(Gift, Recipient);
 }

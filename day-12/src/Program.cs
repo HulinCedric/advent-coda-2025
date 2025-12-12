@@ -1,10 +1,8 @@
 ﻿using GiftMachine.Core;
 using GiftMachine.Core.GiftBuilders;
 using GiftMachine.Infrastructure;
-using GiftMachine.Infrastructure.ExternalSystems;
 
 var logger = new ConsoleLogger(new SystemClockTimeProvider());
-var randomService = new SledgeDeliveryService(new RandomFactory());
 
 var giftBuilders = new Dictionary<string, IGiftBuilder>(StringComparer.OrdinalIgnoreCase)
 {
@@ -18,7 +16,7 @@ var giftBuilders = new Dictionary<string, IGiftBuilder>(StringComparer.OrdinalIg
 var giftFactory = new GiftFactory(giftBuilders);
 var giftWrapper = new GiftWrapper();
 var ribbonService = new RibbonService();
-var deliveryService = new DeliveryService(randomService);
+var deliveryService = new DeliveryService(new RandomFactory());
 
 var machine = new GiftMachine.Core.GiftMachine(logger, giftFactory, giftWrapper, ribbonService, deliveryService);
 

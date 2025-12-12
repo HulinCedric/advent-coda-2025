@@ -1,4 +1,4 @@
-﻿namespace GiftMachine.Infrastructure.ExternalSystems;
+﻿namespace GiftMachine.Core;
 
 public interface IRandomFactory
 {

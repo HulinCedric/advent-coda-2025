@@ -1,4 +1,4 @@
-﻿using GiftMachine.Infrastructure.ExternalSystems;
+﻿using GiftMachine.Core;
 
 namespace GiftMachine.Tests.TestDoubles;
 
