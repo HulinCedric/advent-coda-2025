@@ -27,12 +27,12 @@ public class GiftMachineTests
             ["book"] = new BookBuilder(),
             ["robot"] = new RobotBuilder()
         };
-        var giftFactory = new GiftFactory(logger, giftBuilders);
+        var giftFactory = new GiftFactory(giftBuilders);
 
-        var giftWrapper = new GiftWrapper(logger);
-        var ribbonService = new RibbonService(logger);
+        var giftWrapper = new GiftWrapper();
+        var ribbonService = new RibbonService();
 
-        var deliveryService = new DeliveryService(logger, _sledgeDeliveryService);
+        var deliveryService = new DeliveryService(_sledgeDeliveryService);
         _machine = new Core.GiftMachine(logger, giftFactory, giftWrapper, ribbonService, deliveryService);
     }
 

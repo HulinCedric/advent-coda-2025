@@ -28,6 +28,7 @@ public class GiftMachine
         {
             _logger.Log($"Démarrage de la création du cadeau pour {recipient}");
 
+            _logger.Log($"Construction du cadeau de type '{type}'...");
             string gift = _giftFactory.BuildGift(type, recipient);
 
             _logger.Log($"Emballage du cadeau : {gift}");

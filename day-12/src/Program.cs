@@ -15,10 +15,10 @@ var giftBuilders = new Dictionary<string, IGiftBuilder>(StringComparer.OrdinalIg
     ["robot"] = new RobotBuilder()
 };
 
-var giftFactory = new GiftFactory(logger, giftBuilders);
-var giftWrapper = new GiftWrapper(logger);
-var ribbonService = new RibbonService(logger);
-var deliveryService = new DeliveryService(logger, randomService);
+var giftFactory = new GiftFactory(giftBuilders);
+var giftWrapper = new GiftWrapper();
+var ribbonService = new RibbonService();
+var deliveryService = new DeliveryService(randomService);
 
 var machine = new GiftMachine.Core.GiftMachine(logger, giftFactory, giftWrapper, ribbonService, deliveryService);
 
