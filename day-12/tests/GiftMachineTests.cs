@@ -120,4 +120,25 @@ public class GiftMachineTests
                 "[00:00:00] ❌ Erreur de livraison : le traîneau est tombé en panne." + Environment.NewLine +
                 "[00:00:00] 🔴 Merci de respecter les principes SOLID" + Environment.NewLine);
     }
+    
+    [Fact]
+    public void ExecuteUnknownGiftScenario()
+    {
+        var fakeoutput = new StringBuilder();
+        Console.SetOut(new StringWriter(fakeoutput));
+
+        _sledgeDeliveryService.WillFailToDeliver("Erreur de livraison : le traîneau est tombé en panne.");
+        
+        var cadeau1 = _machine.CreateGift("unknown", "Alice");
+        cadeau1.Should().Be("Échec de la création du cadeau pour Alice");
+
+        var output = fakeoutput.ToString();
+        output.Should()
+            .BeEquivalentTo(
+                "[00:00:00] Démarrage de la création du cadeau pour Alice" + Environment.NewLine +
+                "[00:00:00] Construction du cadeau de type 'unknown'..." + Environment.NewLine +
+                "[00:00:00] 🚨 ERREUR CRITIQUE 🚨" + Environment.NewLine +
+                "[00:00:00] ❌ Type de cadeau 'unknown' non reconnu !" + Environment.NewLine +
+                "[00:00:00] 🔴 Merci de respecter les principes SOLID" + Environment.NewLine);
+    }
 }
