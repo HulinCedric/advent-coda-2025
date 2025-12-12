@@ -29,7 +29,12 @@ public class GiftFactory : IGiftFactory
     }
 }
 
-public class GiftWrapperService
+public interface IGiftWrapperService
+{
+    void WrapGift(string gift);
+}
+
+public class GiftWrapperService : IGiftWrapperService
 {
     private readonly ILogger _logger;
 
@@ -49,7 +54,7 @@ public class GiftMachine
 {
     private readonly ILogger _logger;
     private readonly IGiftFactory _giftFactory;
-    private readonly GiftWrapperService _giftWrapperService;
+    private readonly IGiftWrapperService _giftWrapperService;
 
     public GiftMachine(ILogger logger)
     {
