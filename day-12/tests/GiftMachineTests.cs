@@ -6,19 +6,14 @@ namespace GiftMachine.Tests;
 
 public class GiftMachineTests
 {
-    
- 
-    [Fact]
-    public void GiftMachineShould()
-    {
-        var fakeoutput = new StringBuilder();
-        Console.SetOut(new StringWriter(fakeoutput));
+    private readonly GiftMachine _machine;
 
-        // var timeProvider = new SystemClockTimeProvider();
+    public GiftMachineTests()
+    {
         var timeProvider = new FakeTimeProvider();
-        var logger = new ConsoleLogger(timeProvider);
-        // var sledgeDeliveryService = new RandomSledgeDeliveryService();
         var sledgeDeliveryService = new FakeSledgeDeliveryService();
+        
+        var logger = new ConsoleLogger(timeProvider);
 
         var giftBuilders = new Dictionary<string, IGiftBuilder>(StringComparer.OrdinalIgnoreCase)
         {
@@ -28,25 +23,32 @@ public class GiftMachineTests
             ["book"] = new BookBuilder(),
         };
         var giftFactory = new GiftFactory(logger, giftBuilders);
+        
         var giftWrapper = new GiftWrapper(logger);
         var ribbonService = new RibbonService(logger);
 
         var deliveryService = new DeliveryService(logger, sledgeDeliveryService);
-        var machine = new GiftMachine(logger, giftFactory, giftWrapper, ribbonService, deliveryService);
+        _machine = new GiftMachine(logger, giftFactory, giftWrapper, ribbonService, deliveryService);
+    }
+    [Fact]
+    public void GiftMachineShould()
+    {
+        var fakeoutput = new StringBuilder();
+        Console.SetOut(new StringWriter(fakeoutput));
 
-        var cadeau1 = machine.CreateGift("teddy", "Alice");
+        var cadeau1 = _machine.CreateGift("teddy", "Alice");
         cadeau1.Should().Be("🧸 Ourson en peluche pour Alice");
 
-        var cadeau2 = machine.CreateGift("book", "Bob");
+        var cadeau2 = _machine.CreateGift("book", "Bob");
         cadeau2.Should().Be("📚 Livre enchanté pour Bob");
 
-        var cadeau3 = machine.CreateGift("doll", "Charlotte");
+        var cadeau3 = _machine.CreateGift("doll", "Charlotte");
         cadeau3.Should().Be("🪆 Poupée magique pour Charlotte");
 
-        var cadeau4 = machine.CreateGift("car", "David");
+        var cadeau4 = _machine.CreateGift("car", "David");
         cadeau4.Should().Be("🚗 Petite voiture pour David");
 
-        var cadeau5 = machine.CreateGift("robot", "Elisabeth");
+        var cadeau5 = _machine.CreateGift("robot", "Elisabeth");
         cadeau5.Should().Be("Échec de la création du cadeau pour Elisabeth");
 
         var output = fakeoutput.ToString();
