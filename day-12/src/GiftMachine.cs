@@ -1,6 +1,11 @@
 namespace GiftMachine;
 
-public class Logger
+public interface ILogger
+{
+    void Log(string message);
+}
+
+public class Logger : ILogger
 {
     public void Log(string message)
     {
@@ -11,7 +16,7 @@ public class Logger
 
 public class GiftMachine
 {
-    private readonly Logger _logger = new Logger();
+    private readonly ILogger _logger = new Logger();
 
     public string CreateGift(string type, string recipient)
     {
