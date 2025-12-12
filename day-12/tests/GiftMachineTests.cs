@@ -9,7 +9,9 @@ public class GiftMachineTests
     public void GiftMachineShould()
     {
         var logger = new Logger();
-        var machine = new GiftMachine(logger);
+        var giftFactory = new GiftFactory(logger);
+        var giftWrapper = new GiftWrapper(logger);
+        var machine = new GiftMachine(logger, giftFactory, giftWrapper);
 
         var cadeau1 = machine.CreateGift("teddy", "Alice");
         cadeau1.Should().Be("🧸 Ourson en peluche pour Alice");

@@ -29,16 +29,16 @@ public class GiftFactory : IGiftFactory
     }
 }
 
-public interface IGiftWrapperService
+public interface IGiftWrapper
 {
     void WrapGift(string gift);
 }
 
-public class GiftWrapperService : IGiftWrapperService
+public class GiftWrapper : IGiftWrapper
 {
     private readonly ILogger _logger;
 
-    public GiftWrapperService(ILogger logger)
+    public GiftWrapper(ILogger logger)
     {
         _logger = logger;
     }
@@ -54,12 +54,13 @@ public class GiftMachine
 {
     private readonly ILogger _logger;
     private readonly IGiftFactory _giftFactory;
-    private readonly IGiftWrapperService _giftWrapperService;
+    private readonly IGiftWrapper _giftWrapper;
 
-    public GiftMachine(ILogger logger)
+    public GiftMachine(ILogger logger, IGiftFactory giftFactory, GiftWrapper giftWrapper)
     {
-        _giftFactory = new GiftFactory(logger);
-        _giftWrapperService = new GiftWrapperService(logger);
+        _logger = logger;
+        _giftFactory = giftFactory;
+        _giftWrapper = giftWrapper;
     }
 
     public string CreateGift(string type, string recipient)
@@ -70,7 +71,7 @@ public class GiftMachine
 
             string gift = _giftFactory.BuildGift(type, recipient);
 
-            _giftWrapperService.WrapGift(gift);
+            _giftWrapper.WrapGift(gift);
             AddRibbon(gift);
             DeliverGift(gift, recipient);
 
