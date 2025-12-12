@@ -1,12 +1,37 @@
 namespace GiftMachine;
 
-public class GiftMachine
+public class GiftFactory
 {
     private readonly ILogger _logger;
 
-    public GiftMachine(ILogger logger)
+    public GiftFactory(ILogger logger)
     {
         _logger = logger;
+    }
+
+    public string BuildGift(string type, string recipient)
+    {
+        _logger.Log($"Construction du cadeau de type '{type}'...");
+
+        return type switch
+        {
+            "teddy" => $"🧸 Ourson en peluche pour {recipient}",
+            "car" => $"🚗 Petite voiture pour {recipient}",
+            "doll" => $"🪆 Poupée magique pour {recipient}",
+            "book" => $"📚 Livre enchanté pour {recipient}",
+            _ => throw new Exception($"Type de cadeau '{type}' non reconnu !")
+        };
+    }
+}
+
+public class GiftMachine
+{
+    private readonly ILogger _logger;
+    private readonly GiftFactory _giftFactory;
+
+    public GiftMachine(ILogger logger)
+    {
+        _giftFactory = new GiftFactory(logger);
     }
 
     public string CreateGift(string type, string recipient)
@@ -15,7 +40,7 @@ public class GiftMachine
         {
             _logger.Log($"Démarrage de la création du cadeau pour {recipient}");
 
-            string gift = BuildGift(type, recipient);
+            string gift = _giftFactory.BuildGift(type, recipient);
 
             WrapGift(gift);
             AddRibbon(gift);
@@ -29,20 +54,6 @@ public class GiftMachine
             DisplayError(ex.Message);
             return $"Échec de la création du cadeau pour {recipient}";
         }
-    }
-
-    private string BuildGift(string type, string recipient)
-    {
-        _logger.Log($"Construction du cadeau de type '{type}'...");
-
-        return type switch
-        {
-            "teddy" => $"🧸 Ourson en peluche pour {recipient}",
-            "car" => $"🚗 Petite voiture pour {recipient}",
-            "doll" => $"🪆 Poupée magique pour {recipient}",
-            "book" => $"📚 Livre enchanté pour {recipient}",
-            _ => throw new Exception($"Type de cadeau '{type}' non reconnu !")
-        };
     }
 
     private void WrapGift(string gift)
