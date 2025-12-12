@@ -1,4 +1,7 @@
-﻿var machine = new GiftMachine.GiftMachine();
+﻿using GiftMachine;
+
+var logger = new Logger();
+var machine = new GiftMachine.GiftMachine(logger);
 
 var cadeau1 = machine.CreateGift("teddy", "Alice");
 Console.WriteLine("🎁 Résultat final : " + cadeau1);

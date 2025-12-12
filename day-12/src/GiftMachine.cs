@@ -16,7 +16,12 @@ public class Logger : ILogger
 
 public class GiftMachine
 {
-    private readonly ILogger _logger = new Logger();
+    private readonly ILogger _logger;
+
+    public GiftMachine(ILogger logger)
+    {
+        _logger = logger;
+    }
 
     public string CreateGift(string type, string recipient)
     {

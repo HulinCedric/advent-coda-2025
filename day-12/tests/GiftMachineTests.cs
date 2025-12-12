@@ -8,7 +8,8 @@ public class GiftMachineTests
     [Fact]
     public void GiftMachineShould()
     {
-        var machine = new GiftMachine();
+        var logger = new Logger();
+        var machine = new GiftMachine(logger);
 
         var cadeau1 = machine.CreateGift("teddy", "Alice");
         cadeau1.Should().Be("🧸 Ourson en peluche pour Alice");
