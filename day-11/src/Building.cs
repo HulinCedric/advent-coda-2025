@@ -8,9 +8,9 @@ public static class Building
     private const char Down = ')';
     private const string Elf = "🧝";
     
-    public static int WhichFloor(string instructions) => instructions.Sum(Calculate(instructions));
+    public static int WhichFloor(string instructions) => instructions.Sum(FloorStrategy(instructions));
 
-    private static FloorStrategy Calculate(string instructions)
+    private static FloorStrategy FloorStrategy(string instructions)
         => instructions.Contains(Elf)
             ? EflStrategy()
             : StandardStrategy();
