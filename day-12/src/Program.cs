@@ -3,7 +3,15 @@
 var logger = new ConsoleLogger(new SystemClockTimeProvider());
 var randomService = new RandomSledgeDeliveryService();
 
-var giftFactory = new GiftFactory(logger);
+var giftBuilders = new Dictionary<string, IGiftBuilder>(StringComparer.OrdinalIgnoreCase)
+{
+    ["teddy"] = new TeddyBuilder(),
+    ["car"] = new CarBuilder(),
+    ["doll"] = new DollBuilder(),
+    ["book"] = new BookBuilder(),
+};
+
+var giftFactory = new GiftFactory(logger, giftBuilders);
 var giftWrapper = new GiftWrapper(logger);
 var ribbonService = new RibbonService(logger);
 var deliveryService = new DeliveryService(logger, randomService);

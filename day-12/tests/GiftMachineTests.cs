@@ -6,6 +6,8 @@ namespace GiftMachine.Tests;
 
 public class GiftMachineTests
 {
+    
+ 
     [Fact]
     public void GiftMachineShould()
     {
@@ -18,7 +20,14 @@ public class GiftMachineTests
         // var sledgeDeliveryService = new RandomSledgeDeliveryService();
         var sledgeDeliveryService = new FakeSledgeDeliveryService();
 
-        var giftFactory = new GiftFactory(logger);
+        var giftBuilders = new Dictionary<string, IGiftBuilder>(StringComparer.OrdinalIgnoreCase)
+        {
+            ["teddy"] = new TeddyBuilder(),
+            ["car"] = new CarBuilder(),
+            ["doll"] = new DollBuilder(),
+            ["book"] = new BookBuilder(),
+        };
+        var giftFactory = new GiftFactory(logger, giftBuilders);
         var giftWrapper = new GiftWrapper(logger);
         var ribbonService = new RibbonService(logger);
 
