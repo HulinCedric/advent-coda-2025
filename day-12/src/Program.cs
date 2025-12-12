@@ -1,10 +1,13 @@
 ﻿using GiftMachine;
 
 var logger = new Logger();
+var randomService = new SledgeDeliveryService();
+
 var giftFactory = new GiftFactory(logger);
 var giftWrapper = new GiftWrapper(logger);
 var ribbonService = new RibbonService(logger);
-var deliveryService = new DeliveryService(logger);
+var deliveryService = new DeliveryService(logger, randomService);
+
 var machine = new GiftMachine.GiftMachine(logger, giftFactory, giftWrapper, ribbonService, deliveryService);
 
 var cadeau1 = machine.CreateGift("teddy", "Alice");
