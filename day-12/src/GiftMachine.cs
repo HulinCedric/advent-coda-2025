@@ -6,10 +6,12 @@ public class GiftMachine
     private readonly IGiftFactory _giftFactory;
     private readonly IGiftWrapper _giftWrapper;
     private readonly IRibbonService _ribbonService;
+    private readonly IDeliveryService _deliveryService;
 
-    public GiftMachine(ILogger logger, IGiftFactory giftFactory, IGiftWrapper giftWrapper, IRibbonService ribbonService)
+    public GiftMachine(ILogger logger, IGiftFactory giftFactory, IGiftWrapper giftWrapper, IRibbonService ribbonService, IDeliveryService deliveryService)
     {
         _logger = logger;
+        _deliveryService = deliveryService;
         _ribbonService = ribbonService;
         _giftFactory = giftFactory;
         _giftWrapper = giftWrapper;
@@ -25,7 +27,7 @@ public class GiftMachine
 
             _giftWrapper.WrapGift(gift);
             _ribbonService.AddRibbon(gift);
-            DeliverGift(gift, recipient);
+            _deliveryService.DeliverGift(gift, recipient);
 
             _logger.Log($"Cadeau prêt pour {recipient} : {gift}");
             return gift;
@@ -35,21 +37,6 @@ public class GiftMachine
             DisplayError(ex.Message);
             return $"Échec de la création du cadeau pour {recipient}";
         }
-    }
-
-    private void DeliverGift(string gift, string recipient)
-    {
-        _logger.Log("Livraison en cours vers l'atelier de distribution...");
-        Thread.Sleep(4);
-
-        // Pour l'exercice, on simule une erreur avec 1 chance sur 5 environ
-        Random rnd = new Random();
-        if (rnd.Next(0, 11) > 8)
-        {
-            throw new Exception("Erreur de livraison : le traîneau est tombé en panne.");
-        }
-
-        _logger.Log($"Cadeau livré à la zone d’expédition pour {recipient}");
     }
 
     private void DisplayError(string message)
