@@ -1,55 +1,5 @@
 namespace GiftMachine;
 
-public interface IGiftFactory
-{
-    string BuildGift(string type, string recipient);
-}
-
-public class GiftFactory : IGiftFactory
-{
-    private readonly ILogger _logger;
-
-    public GiftFactory(ILogger logger)
-    {
-        _logger = logger;
-    }
-
-    public string BuildGift(string type, string recipient)
-    {
-        _logger.Log($"Construction du cadeau de type '{type}'...");
-
-        return type switch
-        {
-            "teddy" => $"🧸 Ourson en peluche pour {recipient}",
-            "car" => $"🚗 Petite voiture pour {recipient}",
-            "doll" => $"🪆 Poupée magique pour {recipient}",
-            "book" => $"📚 Livre enchanté pour {recipient}",
-            _ => throw new Exception($"Type de cadeau '{type}' non reconnu !")
-        };
-    }
-}
-
-public interface IGiftWrapper
-{
-    void WrapGift(string gift);
-}
-
-public class GiftWrapper : IGiftWrapper
-{
-    private readonly ILogger _logger;
-
-    public GiftWrapper(ILogger logger)
-    {
-        _logger = logger;
-    }
-
-    public void WrapGift(string gift)
-    {
-        _logger.Log($"Emballage du cadeau : {gift}");
-        Thread.Sleep(3); // Petite pause simulée (3 ms)
-    }
-}
-
 public class GiftMachine
 {
     private readonly ILogger _logger;
