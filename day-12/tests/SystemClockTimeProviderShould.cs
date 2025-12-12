@@ -9,6 +9,6 @@ public class SystemClockTimeProviderShould
     private readonly SystemClockTimeProvider _timeProvider = new();
 
     [Fact]
-    public void DeliverGiftWithSuccess()
+    public void ReturnDateTimeCloseToNow()
         => _timeProvider.GetCurrentDateTime().Should().BeCloseTo(DateTime.Now, TimeSpan.FromSeconds(1));
 }
