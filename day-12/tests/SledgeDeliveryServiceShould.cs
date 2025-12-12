@@ -9,9 +9,9 @@ namespace GiftMachine.Tests;
 public class SledgeDeliveryServiceShould
 {
     private readonly FakeRandomFactory _randomFactory = new();
-    private readonly RandomSledgeDeliveryService _sledgeDeliveryService;
+    private readonly SledgeDeliveryService _sledgeDeliveryService;
 
-    public SledgeDeliveryServiceShould() => _sledgeDeliveryService = new RandomSledgeDeliveryService(_randomFactory);
+    public SledgeDeliveryServiceShould() => _sledgeDeliveryService = new SledgeDeliveryService(_randomFactory);
 
     [Fact]
     public void DeliverGiftWithSuccess()

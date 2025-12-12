@@ -2,11 +2,11 @@
 
 namespace GiftMachine.Infrastructure.ExternalSystems;
 
-public class RandomSledgeDeliveryService : ISledgeDeliveryService
+public class SledgeDeliveryService : ISledgeDeliveryService
 {
     private readonly IRandomFactory _randomFactory;
 
-    public RandomSledgeDeliveryService(IRandomFactory randomFactory)
+    public SledgeDeliveryService(IRandomFactory randomFactory)
     {
         _randomFactory = randomFactory;
     }
