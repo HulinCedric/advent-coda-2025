@@ -16,7 +16,7 @@ public class GiftMachineTests
     {
         var timeProvider = new FakeTimeProvider();
         var sledgeDeliveryService = new FakeSledgeDeliveryService();
-        
+
         var logger = new ConsoleLogger(timeProvider);
 
         var giftBuilders = new Dictionary<string, IGiftBuilder>(StringComparer.OrdinalIgnoreCase)
@@ -25,15 +25,17 @@ public class GiftMachineTests
             ["car"] = new CarBuilder(),
             ["doll"] = new DollBuilder(),
             ["book"] = new BookBuilder(),
+            ["robot"] = new RobotBuilder()
         };
         var giftFactory = new GiftFactory(logger, giftBuilders);
-        
+
         var giftWrapper = new GiftWrapper(logger);
         var ribbonService = new RibbonService(logger);
 
         var deliveryService = new DeliveryService(logger, sledgeDeliveryService);
         _machine = new Core.GiftMachine(logger, giftFactory, giftWrapper, ribbonService, deliveryService);
     }
+
     [Fact]
     public void ExecuteScenario()
     {
@@ -53,7 +55,7 @@ public class GiftMachineTests
         cadeau4.Should().Be("🚗 Petite voiture pour David");
 
         var cadeau5 = _machine.CreateGift("robot", "Elisabeth");
-        cadeau5.Should().Be("Échec de la création du cadeau pour Elisabeth");
+        cadeau5.Should().Be("🤖 Robot futuriste pour Elisabeth");
 
         var output = fakeoutput.ToString();
         output.Should()
@@ -88,8 +90,10 @@ public class GiftMachineTests
                 "[00:00:00] Cadeau prêt pour David : 🚗 Petite voiture pour David" + Environment.NewLine +
                 "[00:00:00] Démarrage de la création du cadeau pour Elisabeth" + Environment.NewLine +
                 "[00:00:00] Construction du cadeau de type 'robot'..." + Environment.NewLine +
-                "[00:00:00] 🚨 ERREUR CRITIQUE 🚨" + Environment.NewLine +
-                "[00:00:00] ❌ Type de cadeau 'robot' non reconnu !" + Environment.NewLine +
-                "[00:00:00] 🔴 Merci de respecter les principes SOLID" + Environment.NewLine);
+                "[00:00:00] Emballage du cadeau : 🤖 Robot futuriste pour Elisabeth" + Environment.NewLine +
+                "[00:00:00] Ajout du ruban magique sur : 🤖 Robot futuriste pour Elisabeth" + Environment.NewLine +
+                "[00:00:00] Livraison en cours vers l'atelier de distribution..." + Environment.NewLine +
+                "[00:00:00] Cadeau livré à la zone d’expédition pour Elisabeth" + Environment.NewLine +
+                "[00:00:00] Cadeau prêt pour Elisabeth : 🤖 Robot futuriste pour Elisabeth" + Environment.NewLine);
     }
 }

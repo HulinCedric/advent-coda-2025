@@ -1,5 +1,4 @@
-﻿using GiftMachine;
-using GiftMachine.Core;
+﻿using GiftMachine.Core;
 using GiftMachine.Core.GiftBuilders;
 using GiftMachine.Infrastructure;
 using GiftMachine.Infrastructure.ExternalSystems;
@@ -13,6 +12,7 @@ var giftBuilders = new Dictionary<string, IGiftBuilder>(StringComparer.OrdinalIg
     ["car"] = new CarBuilder(),
     ["doll"] = new DollBuilder(),
     ["book"] = new BookBuilder(),
+    ["robot"] = new RobotBuilder()
 };
 
 var giftFactory = new GiftFactory(logger, giftBuilders);
