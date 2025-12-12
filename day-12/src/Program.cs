@@ -1,7 +1,7 @@
 ﻿using GiftMachine;
 
-var logger = new ConsoleLogger();
-var randomService = new SledgeDeliveryService();
+var logger = new ConsoleLogger(new SystemClockTimeProvider());
+var randomService = new RandomSledgeDeliveryService();
 
 var giftFactory = new GiftFactory(logger);
 var giftWrapper = new GiftWrapper(logger);

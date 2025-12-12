@@ -2,9 +2,16 @@
 
 public class ConsoleLogger : ILogger
 {
+    private readonly ITimeProvider _timeProvider;
+
+    public ConsoleLogger(ITimeProvider timeProvider)
+    {
+        _timeProvider = timeProvider;
+    }
+
     public void Log(string message)
     {
-        string time = DateTime.Now.ToString("HH:mm:ss");
+        var time = _timeProvider.GetCurrentDateTime().ToString("HH:mm:ss");
         Console.WriteLine($"[{time}] {message}");
     }
 }

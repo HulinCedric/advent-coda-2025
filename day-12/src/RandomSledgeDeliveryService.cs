@@ -1,6 +1,6 @@
 ﻿namespace GiftMachine;
 
-public class SledgeDeliveryService : ISledgeDeliveryService
+public class RandomSledgeDeliveryService : ISledgeDeliveryService
 {
     // Pour l'exercice, on simule une erreur avec 1 chance sur 5 environ
     public void Deliver()
