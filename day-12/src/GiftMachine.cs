@@ -1,6 +1,11 @@
 namespace GiftMachine;
 
-public class GiftFactory
+public interface IGiftFactory
+{
+    string BuildGift(string type, string recipient);
+}
+
+public class GiftFactory : IGiftFactory
 {
     private readonly ILogger _logger;
 
@@ -27,7 +32,7 @@ public class GiftFactory
 public class GiftMachine
 {
     private readonly ILogger _logger;
-    private readonly GiftFactory _giftFactory;
+    private readonly IGiftFactory _giftFactory;
 
     public GiftMachine(ILogger logger)
     {
