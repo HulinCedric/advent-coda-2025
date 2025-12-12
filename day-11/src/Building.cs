@@ -25,8 +25,8 @@ public static class Building
     private static CalculationStrategy EflCalculationStrategy()
         => signal => signal switch
         {
-            Down => 3,
             Up => -2,
+            Down => 3,
             _ => 0
         };
 }
