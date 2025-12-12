@@ -1,6 +1,6 @@
 ﻿using GiftMachine;
 
-var logger = new Logger();
+var logger = new ConsoleLogger();
 var randomService = new SledgeDeliveryService();
 
 var giftFactory = new GiftFactory(logger);

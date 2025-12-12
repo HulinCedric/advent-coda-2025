@@ -8,7 +8,7 @@ public class GiftMachineTests
     [Fact]
     public void GiftMachineShould()
     {
-        var logger = new Logger();
+        var logger = new ConsoleLogger();
         var sledgeDeliveryService = new SledgeDeliveryService();
        
         var giftFactory = new GiftFactory(logger);

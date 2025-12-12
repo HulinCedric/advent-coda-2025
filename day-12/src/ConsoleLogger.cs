@@ -1,6 +1,6 @@
 ﻿namespace GiftMachine;
 
-public class Logger : ILogger
+public class ConsoleLogger : ILogger
 {
     public void Log(string message)
     {
