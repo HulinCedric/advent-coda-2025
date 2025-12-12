@@ -1,12 +1,23 @@
 namespace GiftMachine;
 
+public class Logger
+{
+    public void Log(string message)
+    {
+        string time = DateTime.Now.ToString("HH:mm:ss");
+        Console.WriteLine($"[{time}] {message}");
+    }
+}
+
 public class GiftMachine
 {
+    private readonly Logger _logger = new Logger();
+
     public string CreateGift(string type, string recipient)
     {
         try
         {
-            Log($"Démarrage de la création du cadeau pour {recipient}");
+            _logger.Log($"Démarrage de la création du cadeau pour {recipient}");
 
             string gift = BuildGift(type, recipient);
 
@@ -14,7 +25,7 @@ public class GiftMachine
             AddRibbon(gift);
             DeliverGift(gift, recipient);
 
-            Log($"Cadeau prêt pour {recipient} : {gift}");
+            _logger.Log($"Cadeau prêt pour {recipient} : {gift}");
             return gift;
         }
         catch (Exception ex)
@@ -26,7 +37,7 @@ public class GiftMachine
 
     private string BuildGift(string type, string recipient)
     {
-        Log($"Construction du cadeau de type '{type}'...");
+        _logger.Log($"Construction du cadeau de type '{type}'...");
 
         return type switch
         {
@@ -40,19 +51,19 @@ public class GiftMachine
 
     private void WrapGift(string gift)
     {
-        Log($"Emballage du cadeau : {gift}");
+        _logger.Log($"Emballage du cadeau : {gift}");
         Thread.Sleep(3); // Petite pause simulée (3 ms)
     }
 
     private void AddRibbon(string gift)
     {
-        Log($"Ajout du ruban magique sur : {gift}");
+        _logger.Log($"Ajout du ruban magique sur : {gift}");
         Thread.Sleep(2);
     }
 
     private void DeliverGift(string gift, string recipient)
     {
-        Log("Livraison en cours vers l'atelier de distribution...");
+        _logger.Log("Livraison en cours vers l'atelier de distribution...");
         Thread.Sleep(4);
 
         // Pour l'exercice, on simule une erreur avec 1 chance sur 5 environ
@@ -62,19 +73,13 @@ public class GiftMachine
             throw new Exception("Erreur de livraison : le traîneau est tombé en panne.");
         }
 
-        Log($"Cadeau livré à la zone d’expédition pour {recipient}");
+        _logger.Log($"Cadeau livré à la zone d’expédition pour {recipient}");
     }
 
     private void DisplayError(string message)
     {
-        Log("🚨 ERREUR CRITIQUE 🚨");
-        Log($"❌ {message}");
-        Log("🔴 Merci de respecter les principes SOLID");
-    }
-
-    private void Log(string message)
-    {
-        string time = DateTime.Now.ToString("HH:mm:ss");
-        Console.WriteLine($"[{time}] {message}");
+        _logger.Log("🚨 ERREUR CRITIQUE 🚨");
+        _logger.Log($"❌ {message}");
+        _logger.Log("🔴 Merci de respecter les principes SOLID");
     }
 }
