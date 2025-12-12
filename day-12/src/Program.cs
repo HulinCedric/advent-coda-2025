@@ -4,7 +4,7 @@ using GiftMachine.Infrastructure;
 using GiftMachine.Infrastructure.ExternalSystems;
 
 var logger = new ConsoleLogger(new SystemClockTimeProvider());
-var randomService = new RandomSledgeDeliveryService();
+var randomService = new RandomSledgeDeliveryService(new RandomFactory());
 
 var giftBuilders = new Dictionary<string, IGiftBuilder>(StringComparer.OrdinalIgnoreCase)
 {
