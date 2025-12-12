@@ -1,12 +1,16 @@
 using System.Text;
 using FluentAssertions;
+using GiftMachine.Core;
+using GiftMachine.Core.GiftBuilders;
+using GiftMachine.Infrastructure;
+using GiftMachine.Tests.TestDoubles;
 using Xunit;
 
 namespace GiftMachine.Tests;
 
 public class GiftMachineTests
 {
-    private readonly GiftMachine _machine;
+    private readonly Core.GiftMachine _machine;
 
     public GiftMachineTests()
     {
@@ -28,10 +32,10 @@ public class GiftMachineTests
         var ribbonService = new RibbonService(logger);
 
         var deliveryService = new DeliveryService(logger, sledgeDeliveryService);
-        _machine = new GiftMachine(logger, giftFactory, giftWrapper, ribbonService, deliveryService);
+        _machine = new Core.GiftMachine(logger, giftFactory, giftWrapper, ribbonService, deliveryService);
     }
     [Fact]
-    public void GiftMachineShould()
+    public void ExecuteScenario()
     {
         var fakeoutput = new StringBuilder();
         Console.SetOut(new StringWriter(fakeoutput));

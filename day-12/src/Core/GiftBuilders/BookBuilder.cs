@@ -1,4 +1,4 @@
-﻿namespace GiftMachine;
+﻿namespace GiftMachine.Core.GiftBuilders;
 
 public class BookBuilder : IGiftBuilder
 {

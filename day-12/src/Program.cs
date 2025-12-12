@@ -1,4 +1,8 @@
 ﻿using GiftMachine;
+using GiftMachine.Core;
+using GiftMachine.Core.GiftBuilders;
+using GiftMachine.Infrastructure;
+using GiftMachine.Infrastructure.ExternalSystems;
 
 var logger = new ConsoleLogger(new SystemClockTimeProvider());
 var randomService = new RandomSledgeDeliveryService();
@@ -16,7 +20,7 @@ var giftWrapper = new GiftWrapper(logger);
 var ribbonService = new RibbonService(logger);
 var deliveryService = new DeliveryService(logger, randomService);
 
-var machine = new GiftMachine.GiftMachine(logger, giftFactory, giftWrapper, ribbonService, deliveryService);
+var machine = new GiftMachine.Core.GiftMachine(logger, giftFactory, giftWrapper, ribbonService, deliveryService);
 
 var cadeau1 = machine.CreateGift("teddy", "Alice");
 Console.WriteLine("🎁 Résultat final : " + cadeau1);

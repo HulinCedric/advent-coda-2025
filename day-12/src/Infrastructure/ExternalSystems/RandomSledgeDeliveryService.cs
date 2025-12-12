@@ -1,4 +1,6 @@
-﻿namespace GiftMachine;
+﻿using GiftMachine.Core;
+
+namespace GiftMachine.Infrastructure.ExternalSystems;
 
 public class RandomSledgeDeliveryService : ISledgeDeliveryService
 {

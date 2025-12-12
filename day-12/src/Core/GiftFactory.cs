@@ -1,4 +1,6 @@
-﻿namespace GiftMachine;
+﻿using GiftMachine.Core.GiftBuilders;
+
+namespace GiftMachine.Core;
 
 public class GiftFactory : IGiftFactory
 {
