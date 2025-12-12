@@ -11,7 +11,6 @@ public class RibbonService : IRibbonService
 
     public void AddRibbon(string gift)
     {
-        _logger.Log($"Ajout du ruban magique sur : {gift}");
         Thread.Sleep(2);
     }
 }

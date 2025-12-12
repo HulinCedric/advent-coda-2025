@@ -8,7 +8,12 @@ public class GiftMachine
     private readonly IRibbonService _ribbonService;
     private readonly IDeliveryService _deliveryService;
 
-    public GiftMachine(ILogger logger, IGiftFactory giftFactory, IGiftWrapper giftWrapper, IRibbonService ribbonService, IDeliveryService deliveryService)
+    public GiftMachine(
+        ILogger logger,
+        IGiftFactory giftFactory,
+        IGiftWrapper giftWrapper,
+        IRibbonService ribbonService,
+        IDeliveryService deliveryService)
     {
         _logger = logger;
         _deliveryService = deliveryService;
@@ -25,9 +30,15 @@ public class GiftMachine
 
             string gift = _giftFactory.BuildGift(type, recipient);
 
+            _logger.Log($"Emballage du cadeau : {gift}");
             _giftWrapper.WrapGift(gift);
+
+            _logger.Log($"Ajout du ruban magique sur : {gift}");
             _ribbonService.AddRibbon(gift);
+
+            _logger.Log("Livraison en cours vers l'atelier de distribution...");
             _deliveryService.DeliverGift(gift, recipient);
+            _logger.Log($"Cadeau livré à la zone d’expédition pour {recipient}");
 
             _logger.Log($"Cadeau prêt pour {recipient} : {gift}");
             return gift;
