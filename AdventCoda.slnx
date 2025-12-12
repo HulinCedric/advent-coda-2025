@@ -50,4 +50,9 @@
     <Project Path="day-10\src\GiftSelection.csproj" />
     <Project Path="day-10\tests\GiftSelection.Tests.csproj" />
   </Folder>
+  <Folder Name="/Jour 11 - Un bug bloque la tournée/">
+    <File Path="day-11\README.md" />
+    <Project Path="day-11\src\Navigation.csproj" />
+    <Project Path="day-11\tests\Navigation.Tests.csproj" />
+  </Folder>
 </Solution>
