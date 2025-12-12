@@ -5,10 +5,12 @@ public class GiftMachine
     private readonly ILogger _logger;
     private readonly IGiftFactory _giftFactory;
     private readonly IGiftWrapper _giftWrapper;
+    private readonly IRibbonService _ribbonService;
 
-    public GiftMachine(ILogger logger, IGiftFactory giftFactory, GiftWrapper giftWrapper)
+    public GiftMachine(ILogger logger, IGiftFactory giftFactory, IGiftWrapper giftWrapper, IRibbonService ribbonService)
     {
         _logger = logger;
+        _ribbonService = ribbonService;
         _giftFactory = giftFactory;
         _giftWrapper = giftWrapper;
     }
@@ -22,7 +24,7 @@ public class GiftMachine
             string gift = _giftFactory.BuildGift(type, recipient);
 
             _giftWrapper.WrapGift(gift);
-            AddRibbon(gift);
+            _ribbonService.AddRibbon(gift);
             DeliverGift(gift, recipient);
 
             _logger.Log($"Cadeau prêt pour {recipient} : {gift}");
@@ -33,12 +35,6 @@ public class GiftMachine
             DisplayError(ex.Message);
             return $"Échec de la création du cadeau pour {recipient}";
         }
-    }
-
-    private void AddRibbon(string gift)
-    {
-        _logger.Log($"Ajout du ruban magique sur : {gift}");
-        Thread.Sleep(2);
     }
 
     private void DeliverGift(string gift, string recipient)

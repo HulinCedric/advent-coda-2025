@@ -3,7 +3,8 @@
 var logger = new Logger();
 var giftFactory = new GiftFactory(logger);
 var giftWrapper = new GiftWrapper(logger);
-var machine = new GiftMachine.GiftMachine(logger, giftFactory, giftWrapper);
+var ribbonService = new RibbonService(logger);
+var machine = new GiftMachine.GiftMachine(logger, giftFactory, giftWrapper, ribbonService);
 
 var cadeau1 = machine.CreateGift("teddy", "Alice");
 Console.WriteLine("🎁 Résultat final : " + cadeau1);

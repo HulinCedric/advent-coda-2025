@@ -11,7 +11,8 @@ public class GiftMachineTests
         var logger = new Logger();
         var giftFactory = new GiftFactory(logger);
         var giftWrapper = new GiftWrapper(logger);
-        var machine = new GiftMachine(logger, giftFactory, giftWrapper);
+        var ribbonService = new RibbonService(logger);
+        var machine = new GiftMachine(logger, giftFactory, giftWrapper, ribbonService);
 
         var cadeau1 = machine.CreateGift("teddy", "Alice");
         cadeau1.Should().Be("🧸 Ourson en peluche pour Alice");
