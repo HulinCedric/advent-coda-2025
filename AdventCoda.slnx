@@ -60,4 +60,10 @@
     <Project Path="day-12\src\GiftMachine.csproj" />
     <Project Path="day-12\tests\GiftMachine.Tests.csproj" />
   </Folder>
+  <Folder Name="/Jour 13 - La marketplace des Elfes/">
+    <File Path="day-13\index.html" />
+    <File Path="day-13\README.md" />
+    <File Path="day-13\script.js" />
+    <File Path="day-13\styles.css" />
+  </Folder>
 </Solution>
