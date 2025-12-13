@@ -17,9 +17,9 @@ la rendre **plus rapide, plus verte, et plus inclusive**.
 ## Ta mission
 
 - **Auditer** le site fourni avec :
-    - [Lighthouse](https://chromewebstore.google.com/detail/lighthouse/blipmdconlkpinefehnmjammfjpmpbjk?hl=fr) (
+  - [Lighthouse](https://chromewebstore.google.com/detail/lighthouse/blipmdconlkpinefehnmjammfjpmpbjk?hl=fr) (
       Performance, Best Practices, SEO, Accessibility)
-    - [GreenIT-Analysis](https://www.greenit.fr/2019/07/02/web-evaluez-lempreinte-dune-page-en-un-clic/) (empreinte
+  - [GreenIT-Analysis](https://www.greenit.fr/2019/07/02/web-evaluez-lempreinte-dune-page-en-un-clic/) (empreinte
       environnementale)
 - **Évalue** le site : donne une **note synthèse** (ex. “Rouge 🟥 / Orange 🟧 / Vert 🟩”) + un court commentaire (2–3
   phrases).
