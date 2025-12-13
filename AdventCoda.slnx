@@ -55,4 +55,9 @@
     <Project Path="day-11\src\Navigation.csproj" />
     <Project Path="day-11\tests\Navigation.Tests.csproj" />
   </Folder>
+  <Folder Name="/Jour 12 - Elfe-ervescence/">
+    <File Path="day-12\README.md" />
+    <Project Path="day-12\src\GiftMachine.csproj" />
+    <Project Path="day-12\tests\GiftMachine.Tests.csproj" />
+  </Folder>
 </Solution>
