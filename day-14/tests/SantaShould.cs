@@ -10,12 +10,12 @@ public class SantaShould
     [InlineData("N", 2)]
     [InlineData("NNESESW", 8)]
     [InlineData("NNSS", 3)]
-    public void Count_unique_houses(string instructions, int expectedUniqueHouses)
+    public void Count_unique_houses(string instructions, int visitedHousesNumber)
         => Sleigh.Start()
             .FollowInstructions(instructions)
-            .VisitedHouses()
-            .Count.Should()
-            .Be(expectedUniqueHouses);
+            .VisitedHousesNumber()
+            .Should()
+            .Be(visitedHousesNumber);
 }
 
 public class SleighShould
@@ -104,7 +104,7 @@ public record Sleigh
 
     public Sleigh MoveTo(char instruction) => new(_houseLocation.MoveTo(instruction), _visitedHouses);
 
-    public IReadOnlySet<HouseLocation> VisitedHouses() => _visitedHouses;
+    public int VisitedHousesNumber() => _visitedHouses.Count;
 }
 
 public record HouseLocation(int X, int Y)
