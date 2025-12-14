@@ -9,6 +9,7 @@ public class SantaShould
     [InlineData("", 1)]
     [InlineData("N", 2)]
     [InlineData("NNESESW", 8)]
+    [InlineData("NNSS", 4)]
     public void Count_unique_houses(string instructions, int expectedUniqueHouses)
         => DeliveryCounter.CountUniqueHouses(instructions).Should().Be(expectedUniqueHouses);
 }
