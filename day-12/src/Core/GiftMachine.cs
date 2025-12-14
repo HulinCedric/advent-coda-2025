@@ -1,3 +1,5 @@
+using GiftMachine.Core.GiftTypes;
+
 namespace GiftMachine.Core;
 
 public class GiftMachine
@@ -22,7 +24,7 @@ public class GiftMachine
         _giftWrapper = giftWrapper;
     }
 
-    public string CreateGift(string type, string recipient)
+    public string CreateGift(GiftType type, string recipient)
     {
         try
         {

@@ -1,6 +1,8 @@
-﻿namespace GiftMachine.Core;
+﻿using GiftMachine.Core.GiftTypes;
+
+namespace GiftMachine.Core;
 
 public interface IGiftFactory
 {
-    string BuildGift(string type, string recipient);
+    string BuildGift(GiftType type, string recipient);
 }

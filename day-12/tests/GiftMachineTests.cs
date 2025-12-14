@@ -1,7 +1,8 @@
+using System.Globalization;
 using System.Text;
 using FluentAssertions;
 using GiftMachine.Core;
-using GiftMachine.Core.GiftBuilders;
+using GiftMachine.Core.GiftTypes;
 using GiftMachine.Infrastructure;
 using GiftMachine.Tests.TestDoubles;
 using Xunit;
@@ -17,16 +18,8 @@ public class GiftMachineTests
     {
         var timeProvider = new FakeTimeProvider();
         var logger = new ConsoleLogger(timeProvider);
-
-        var giftBuilders = new Dictionary<string, IGiftBuilder>(StringComparer.OrdinalIgnoreCase)
-        {
-            ["teddy"] = new TeddyBuilder(),
-            ["car"] = new CarBuilder(),
-            ["doll"] = new DollBuilder(),
-            ["book"] = new BookBuilder(),
-            ["robot"] = new RobotBuilder()
-        };
-        var giftFactory = new GiftFactory(giftBuilders);
+        
+        var giftFactory = new GiftFactory();
 
         var giftWrapper = new GiftWrapper();
         var ribbonService = new RibbonService();
@@ -39,21 +32,21 @@ public class GiftMachineTests
     public void ExecuteScenario()
     {
         var fakeoutput = new StringBuilder();
-        Console.SetOut(new StringWriter(fakeoutput));
+        Console.SetOut(new StringWriter(fakeoutput, new NumberFormatInfo()));
 
-        var cadeau1 = _machine.CreateGift("teddy", "Alice");
+        var cadeau1 = _machine.CreateGift(GiftType.Teddy, "Alice");
         cadeau1.Should().Be("🧸 Ourson en peluche pour Alice");
 
-        var cadeau2 = _machine.CreateGift("book", "Bob");
+        var cadeau2 = _machine.CreateGift(GiftType.Book, "Bob");
         cadeau2.Should().Be("📚 Livre enchanté pour Bob");
 
-        var cadeau3 = _machine.CreateGift("doll", "Charlotte");
+        var cadeau3 = _machine.CreateGift(GiftType.Doll, "Charlotte");
         cadeau3.Should().Be("🪆 Poupée magique pour Charlotte");
 
-        var cadeau4 = _machine.CreateGift("car", "David");
+        var cadeau4 = _machine.CreateGift(GiftType.Car, "David");
         cadeau4.Should().Be("🚗 Petite voiture pour David");
 
-        var cadeau5 = _machine.CreateGift("robot", "Elisabeth");
+        var cadeau5 = _machine.CreateGift(GiftType.Robot, "Elisabeth");
         cadeau5.Should().Be("🤖 Robot futuriste pour Elisabeth");
 
         var output = fakeoutput.ToString();
@@ -104,7 +97,7 @@ public class GiftMachineTests
 
         _deliveryService.WillFailToDeliver("Erreur de livraison : le traîneau est tombé en panne.");
 
-        var cadeau1 = _machine.CreateGift("teddy", "Alice");
+        var cadeau1 = _machine.CreateGift(GiftType.Teddy, "Alice");
         cadeau1.Should().Be("Échec de la création du cadeau pour Alice");
 
         var output = fakeoutput.ToString();
@@ -117,27 +110,6 @@ public class GiftMachineTests
                 "[00:00:00] Livraison en cours vers l'atelier de distribution..." + Environment.NewLine +
                 "[00:00:00] 🚨 ERREUR CRITIQUE 🚨" + Environment.NewLine +
                 "[00:00:00] ❌ Erreur de livraison : le traîneau est tombé en panne." + Environment.NewLine +
-                "[00:00:00] 🔴 Merci de respecter les principes SOLID" + Environment.NewLine);
-    }
-
-    [Fact]
-    public void ExecuteUnknownGiftScenario()
-    {
-        var fakeoutput = new StringBuilder();
-        Console.SetOut(new StringWriter(fakeoutput));
-
-        _deliveryService.WillFailToDeliver("Erreur de livraison : le traîneau est tombé en panne.");
-
-        var cadeau1 = _machine.CreateGift("unknown", "Alice");
-        cadeau1.Should().Be("Échec de la création du cadeau pour Alice");
-
-        var output = fakeoutput.ToString();
-        output.Should()
-            .BeEquivalentTo(
-                "[00:00:00] Démarrage de la création du cadeau pour Alice" + Environment.NewLine +
-                "[00:00:00] Construction du cadeau de type 'unknown'..." + Environment.NewLine +
-                "[00:00:00] 🚨 ERREUR CRITIQUE 🚨" + Environment.NewLine +
-                "[00:00:00] ❌ Type de cadeau 'unknown' non reconnu !" + Environment.NewLine +
                 "[00:00:00] 🔴 Merci de respecter les principes SOLID" + Environment.NewLine);
     }
 }
