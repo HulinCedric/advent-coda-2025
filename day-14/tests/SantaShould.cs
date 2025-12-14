@@ -74,6 +74,19 @@ public class SleighShould
         // Assert
         movedSleigh.CurrentHouse().Should().Be(new HouseLocation(1, 0));
     }
+
+    [Fact]
+    public void Move_to_west()
+    {
+        // Arrange
+        var sleigh = new Sleigh(new HouseLocation(0, 0));
+
+        // Act
+        var movedSleigh = sleigh.MoveTo('W');
+
+        // Assert
+        movedSleigh.CurrentHouse().Should().Be(new HouseLocation(-1, 0));
+    }
 }
 
 public record Sleigh
@@ -91,6 +104,7 @@ public record Sleigh
             'N' => new Sleigh(_houseHouseLocation with { Y = _houseHouseLocation.Y + 1 }),
             'S' => new Sleigh(_houseHouseLocation with { Y = _houseHouseLocation.Y - 1 }),
             'E' => new Sleigh(_houseHouseLocation with { X = _houseHouseLocation.X + 1 }),
+            'W' => new Sleigh(_houseHouseLocation with { X = _houseHouseLocation.X - 1 }),
             _ => this
         };
 }
