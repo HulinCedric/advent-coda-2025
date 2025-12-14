@@ -5,18 +5,12 @@ namespace Day14.Tests;
 
 public class SantaShould
 {
-    [Fact]
-    public void Deliver_to_starting_house()
-    {
-        // Arrange
-        var instructions = "NNESESW";
-
-        // Act
-        var uniqueHouses = DeliveryCounter.CountUniqueHouses(instructions);
-
-        // Assert
-        uniqueHouses.Should().Be(8);
-    }
+    [Theory]
+    [InlineData("", 1)]
+    [InlineData("N", 2)]
+    [InlineData("NNESESW", 8)]
+    public void Count_unique_houses(string instructions, int expectedUniqueHouses)
+        => DeliveryCounter.CountUniqueHouses(instructions).Should().Be(expectedUniqueHouses);
 }
 
 public static class DeliveryCounter
@@ -28,11 +22,31 @@ public class SleighShould
 {
     [Fact]
     public void Start_at_initial_point() => new Sleigh().CurrentHouse().Should().Be(new HouseLocation(0, 0));
+
+    [Fact]
+    public void Move_to_north()
+    {
+        // Arrange
+        var sleigh = new Sleigh();
+
+        // Act
+        var movedSleigh = sleigh.MoveTo('N');
+
+        // Assert
+        movedSleigh.CurrentHouse().Should().Be(new HouseLocation(0, 1));
+    }
 }
 
-public class Sleigh
+public record Sleigh
 {
-    public HouseLocation CurrentHouse() => new(0, 0);
+    private readonly HouseLocation _houseHouseLocation;
+
+    public Sleigh() => _houseHouseLocation = new HouseLocation(0, 0);
+    public Sleigh(HouseLocation houseLocation) => _houseHouseLocation = houseLocation;
+
+    public HouseLocation CurrentHouse() => _houseHouseLocation;
+
+    public Sleigh MoveTo(char c) => new(new HouseLocation(_houseHouseLocation.X, _houseHouseLocation.Y + 1));
 }
 
 public record HouseLocation(int X, int Y);
