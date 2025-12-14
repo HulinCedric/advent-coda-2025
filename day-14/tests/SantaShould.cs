@@ -91,22 +91,25 @@ public class SleighShould
 
 public record Sleigh
 {
-    private readonly HouseLocation _houseHouseLocation;
+    private readonly HouseLocation _houseLocation;
 
-    public Sleigh() => _houseHouseLocation = new HouseLocation(0, 0);
-    public Sleigh(HouseLocation houseLocation) => _houseHouseLocation = houseLocation;
+    public Sleigh() => _houseLocation = new HouseLocation(0, 0);
+    public Sleigh(HouseLocation houseLocation) => _houseLocation = houseLocation;
 
-    public HouseLocation CurrentHouse() => _houseHouseLocation;
+    public HouseLocation CurrentHouse() => _houseLocation;
 
     public Sleigh MoveTo(char c)
         => c switch
         {
-            'N' => new Sleigh(_houseHouseLocation with { Y = _houseHouseLocation.Y + 1 }),
-            'S' => new Sleigh(_houseHouseLocation with { Y = _houseHouseLocation.Y - 1 }),
-            'E' => new Sleigh(_houseHouseLocation with { X = _houseHouseLocation.X + 1 }),
-            'W' => new Sleigh(_houseHouseLocation with { X = _houseHouseLocation.X - 1 }),
+            'N' => new Sleigh(_houseLocation.ToNorth()),
+            'S' => new Sleigh(_houseLocation with { Y = _houseLocation.Y - 1 }),
+            'E' => new Sleigh(_houseLocation with { X = _houseLocation.X + 1 }),
+            'W' => new Sleigh(_houseLocation with { X = _houseLocation.X - 1 }),
             _ => this
         };
 }
 
-public record HouseLocation(int X, int Y);
+public record HouseLocation(int X, int Y)
+{
+    public HouseLocation ToNorth() => this with { Y = Y + 1 };
+}
