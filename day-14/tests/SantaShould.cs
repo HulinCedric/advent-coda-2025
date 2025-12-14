@@ -102,9 +102,9 @@ public record Sleigh
         => c switch
         {
             'N' => new Sleigh(_houseLocation.ToNorth()),
-            'S' => new Sleigh(_houseLocation with { Y = _houseLocation.Y - 1 }),
-            'E' => new Sleigh(_houseLocation with { X = _houseLocation.X + 1 }),
-            'W' => new Sleigh(_houseLocation with { X = _houseLocation.X - 1 }),
+            'S' => new Sleigh(_houseLocation.ToSouth()),
+            'E' => new Sleigh(_houseLocation.ToEast()),
+            'W' => new Sleigh(_houseLocation.ToWest()),
             _ => this
         };
 }
@@ -112,4 +112,7 @@ public record Sleigh
 public record HouseLocation(int X, int Y)
 {
     public HouseLocation ToNorth() => this with { Y = Y + 1 };
+    public HouseLocation ToSouth() => this with { Y = Y - 1 };
+    public HouseLocation ToEast() => this with { X = X + 1 };
+    public HouseLocation ToWest() => this with { X = X - 1 };
 }
