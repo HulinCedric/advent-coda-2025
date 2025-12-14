@@ -11,7 +11,7 @@ public class SantaShould
     [InlineData("NNESESW", 8)]
     [InlineData("NNSS", 3)]
     public void Count_unique_houses(string instructions, int expectedUniqueHouses)
-        => new Sleigh()
+        => Sleigh.Start()
             .FollowInstructions(instructions)
             .VisitedHouses()
             .Count.Should()
@@ -21,7 +21,7 @@ public class SantaShould
 public class SleighShould
 {
     [Fact]
-    public void Start_at_initial_point() => new Sleigh().CurrentHouse().Should().Be(new HouseLocation(0, 0));
+    public void Start_at_initial_point() => Sleigh.Start().CurrentHouse().Should().Be(new HouseLocation(0, 0));
 
     [Fact]
     public void Move_to_north()
@@ -81,7 +81,7 @@ public record Sleigh
     private readonly HouseLocation _houseLocation;
     private readonly IReadOnlySet<HouseLocation> _visitedHouses;
 
-    public Sleigh() : this(new HouseLocation(0, 0))
+    private Sleigh() : this(new HouseLocation(0, 0))
     {
     }
 
@@ -94,6 +94,8 @@ public record Sleigh
         _houseLocation = houseLocation;
         _visitedHouses = new HashSet<HouseLocation>(visitedHouses) { houseLocation };
     }
+
+    public static Sleigh Start() => new();
 
     public Sleigh FollowInstructions(string instructions)
         => instructions.Aggregate(this, (sleigh, instruction) => sleigh.MoveTo(instruction));
