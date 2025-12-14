@@ -11,26 +11,11 @@ public class SantaShould
     [InlineData("NNESESW", 8)]
     [InlineData("NNSS", 3)]
     public void Count_unique_houses(string instructions, int expectedUniqueHouses)
-        => DeliveryCounter.CountUniqueHouses(instructions).Should().Be(expectedUniqueHouses);
-}
-
-public static class DeliveryCounter
-{
-    public static int CountUniqueHouses(string instructions)
-    {
-        var sleigh = FollowInstruction(instructions);
-
-        return sleigh.VisitedHouses().Count;
-    }
-
-    private static Sleigh FollowInstruction(string instructions)
-    {
-        var sleigh = new Sleigh();
-
-        sleigh = sleigh.FollowInstructions(instructions);
-
-        return sleigh;
-    }
+        => new Sleigh()
+            .FollowInstructions(instructions)
+            .VisitedHouses()
+            .Count.Should()
+            .Be(expectedUniqueHouses);
 }
 
 public class SleighShould
