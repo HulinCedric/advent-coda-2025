@@ -2,9 +2,9 @@ namespace Day14;
 
 public record HouseLocation(int X, int Y)
 {
-    public static HouseLocation StartingHouse() => new(0, 0);
+    internal static HouseLocation StartingHouse() => new(0, 0);
 
-    public HouseLocation MoveTo(char instruction)
+    internal HouseLocation MoveTo(char instruction)
         => instruction switch
         {
             'N' => ToNorth(),
