@@ -10,12 +10,20 @@ public class SantaShould
     [InlineData("N", 2)]
     [InlineData("NNESESW", 8)]
     [InlineData("NNSS", 3)]
-    public void Count_unique_houses(string instructions, int visitedHousesNumber)
+    public void Count_visited_houses(string instructions, int visitedHousesNumber)
         => Sleigh.Start()
             .FollowInstructions(instructions)
             .VisitedHousesNumber()
             .Should()
             .Be(visitedHousesNumber);
+
+    [Fact]
+    public void Count_visited_houses_from_input_instruction()
+        => Sleigh.Start()
+            .FollowInstructions(File.ReadAllText("steps"))
+            .VisitedHousesNumber()
+            .Should()
+            .Be(5260);
 }
 
 public class SleighShould
@@ -27,7 +35,7 @@ public class SleighShould
     public void Move_to_north()
     {
         // Arrange
-        var sleigh = new Sleigh(new HouseLocation(0, 0));
+        var sleigh = Sleigh.Start();
 
         // Act
         var movedSleigh = sleigh.MoveTo('N');
@@ -40,7 +48,7 @@ public class SleighShould
     public void Move_to_south()
     {
         // Arrange
-        var sleigh = new Sleigh(new HouseLocation(0, 0));
+        var sleigh = Sleigh.Start();
 
         // Act
         var movedSleigh = sleigh.MoveTo('S');
@@ -53,7 +61,7 @@ public class SleighShould
     public void Move_to_east()
     {
         // Arrange
-        var sleigh = new Sleigh(new HouseLocation(0, 0));
+        var sleigh = Sleigh.Start();
 
         // Act
         var movedSleigh = sleigh.MoveTo('E');
@@ -66,7 +74,7 @@ public class SleighShould
     public void Move_to_west()
     {
         // Arrange
-        var sleigh = new Sleigh(new HouseLocation(0, 0));
+        var sleigh = Sleigh.Start();
 
         // Act
         var movedSleigh = sleigh.MoveTo('W');
@@ -81,21 +89,13 @@ public record Sleigh
     private readonly HouseLocation _houseLocation;
     private readonly IReadOnlySet<HouseLocation> _visitedHouses;
 
-    private Sleigh() : this(new HouseLocation(0, 0))
-    {
-    }
-
-    public Sleigh(HouseLocation houseLocation) : this(houseLocation, new HashSet<HouseLocation>())
-    {
-    }
-
     private Sleigh(HouseLocation houseLocation, IReadOnlySet<HouseLocation> visitedHouses)
     {
         _houseLocation = houseLocation;
         _visitedHouses = new HashSet<HouseLocation>(visitedHouses) { houseLocation };
     }
 
-    public static Sleigh Start() => new();
+    public static Sleigh Start() => new(HouseLocation.StartingHouse(), new HashSet<HouseLocation>());
 
     public Sleigh FollowInstructions(string instructions)
         => instructions.Aggregate(this, (sleigh, instruction) => sleigh.MoveTo(instruction));
@@ -109,6 +109,8 @@ public record Sleigh
 
 public record HouseLocation(int X, int Y)
 {
+    public static HouseLocation StartingHouse() => new(0, 0);
+
     private HouseLocation ToNorth() => this with { Y = Y + 1 };
     private HouseLocation ToSouth() => this with { Y = Y - 1 };
     private HouseLocation ToEast() => this with { X = X + 1 };
