@@ -18,14 +18,18 @@ public static class DeliveryCounter
 {
     public static int CountUniqueHouses(string instructions)
     {
-        var sleigh = new Sleigh();
-
-        foreach (var instruction in instructions)
-        {
-            sleigh = sleigh.MoveTo(instruction);
-        }
+        var sleigh = FollowInstruction(instructions);
 
         return sleigh.VisitedHouses().Count;
+    }
+
+    private static Sleigh FollowInstruction(string instructions)
+    {
+        var sleigh = new Sleigh();
+
+        sleigh = sleigh.FollowInstructions(instructions);
+
+        return sleigh;
     }
 }
 
@@ -105,6 +109,9 @@ public record Sleigh
         _houseLocation = houseLocation;
         _visitedHouses = new HashSet<HouseLocation>(visitedHouses) { houseLocation };
     }
+
+    public Sleigh FollowInstructions(string instructions)
+        => instructions.Aggregate(this, (sleigh, instruction) => sleigh.MoveTo(instruction));
 
     public HouseLocation CurrentHouse() => _houseLocation;
 
