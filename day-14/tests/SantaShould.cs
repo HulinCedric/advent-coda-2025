@@ -19,15 +19,13 @@ public static class DeliveryCounter
     public static int CountUniqueHouses(string instructions)
     {
         var sleigh = new Sleigh();
-        var visitedHouses = new HashSet<HouseLocation> { sleigh.CurrentHouse() };
 
         foreach (var instruction in instructions)
         {
             sleigh = sleigh.MoveTo(instruction);
-            visitedHouses.Add(sleigh.CurrentHouse());
         }
 
-        return visitedHouses.Count;
+        return sleigh.VisitedHouses().Count;
     }
 }
 
@@ -92,13 +90,27 @@ public class SleighShould
 public record Sleigh
 {
     private readonly HouseLocation _houseLocation;
+    private readonly IReadOnlySet<HouseLocation> _visitedHouses;
 
-    public Sleigh() => _houseLocation = new HouseLocation(0, 0);
-    public Sleigh(HouseLocation houseLocation) => _houseLocation = houseLocation;
+    public Sleigh() : this(new HouseLocation(0, 0))
+    {
+    }
+
+    public Sleigh(HouseLocation houseLocation) : this(houseLocation, new HashSet<HouseLocation>())
+    {
+    }
+
+    private Sleigh(HouseLocation houseLocation, IReadOnlySet<HouseLocation> visitedHouses)
+    {
+        _houseLocation = houseLocation;
+        _visitedHouses = new HashSet<HouseLocation>(visitedHouses) { houseLocation };
+    }
 
     public HouseLocation CurrentHouse() => _houseLocation;
 
-    public Sleigh MoveTo(char instruction) => new(_houseLocation.MoveTo(instruction));
+    public Sleigh MoveTo(char instruction) => new(_houseLocation.MoveTo(instruction), _visitedHouses);
+
+    public IReadOnlySet<HouseLocation> VisitedHouses() => _visitedHouses;
 }
 
 public record HouseLocation(int X, int Y)
