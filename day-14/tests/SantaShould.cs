@@ -98,15 +98,16 @@ public record Sleigh
 
     public HouseLocation CurrentHouse() => _houseLocation;
 
-    public Sleigh MoveTo(char c)
-        => c switch
-        {
-            'N' => new Sleigh(_houseLocation.ToNorth()),
-            'S' => new Sleigh(_houseLocation.ToSouth()),
-            'E' => new Sleigh(_houseLocation.ToEast()),
-            'W' => new Sleigh(_houseLocation.ToWest()),
-            _ => this
-        };
+    public Sleigh MoveTo(char instruction)
+        => new Sleigh(
+            instruction switch
+            {
+                'N' => _houseLocation.ToNorth(),
+                'S' => _houseLocation.ToSouth(),
+                'E' => _houseLocation.ToEast(),
+                'W' => _houseLocation.ToWest(),
+                _ => _houseLocation
+            });
 }
 
 public record HouseLocation(int X, int Y)
