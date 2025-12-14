@@ -98,22 +98,23 @@ public record Sleigh
 
     public HouseLocation CurrentHouse() => _houseLocation;
 
-    public Sleigh MoveTo(char instruction)
-        => new Sleigh(
-            instruction switch
-            {
-                'N' => _houseLocation.ToNorth(),
-                'S' => _houseLocation.ToSouth(),
-                'E' => _houseLocation.ToEast(),
-                'W' => _houseLocation.ToWest(),
-                _ => _houseLocation
-            });
+    public Sleigh MoveTo(char instruction) => new(_houseLocation.MoveTo(instruction));
 }
 
 public record HouseLocation(int X, int Y)
 {
-    public HouseLocation ToNorth() => this with { Y = Y + 1 };
-    public HouseLocation ToSouth() => this with { Y = Y - 1 };
-    public HouseLocation ToEast() => this with { X = X + 1 };
-    public HouseLocation ToWest() => this with { X = X - 1 };
+    private HouseLocation ToNorth() => this with { Y = Y + 1 };
+    private HouseLocation ToSouth() => this with { Y = Y - 1 };
+    private HouseLocation ToEast() => this with { X = X + 1 };
+    private HouseLocation ToWest() => this with { X = X - 1 };
+
+    public HouseLocation MoveTo(char instruction)
+        => instruction switch
+        {
+            'N' => ToNorth(),
+            'S' => ToSouth(),
+            'E' => ToEast(),
+            'W' => ToWest(),
+            _ => this
+        };
 }
