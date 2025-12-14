@@ -21,9 +21,18 @@ public class SantaShould
 
 public static class DeliveryCounter
 {
-    public static int CountUniqueHouses(string instructions)
-    {
-        return 1;
-    }
+    public static int CountUniqueHouses(string instructions) => 1;
 }
 
+public class SleighShould
+{
+    [Fact]
+    public void Start_at_initial_point() => new Sleigh().CurrentHouse().Should().Be(new HouseLocation(0, 0));
+}
+
+public class Sleigh
+{
+    public HouseLocation CurrentHouse() => new(0, 0);
+}
+
+public record HouseLocation(int X, int Y);
