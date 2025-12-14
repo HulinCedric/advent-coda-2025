@@ -15,7 +15,19 @@ public class SantaShould
 
 public static class DeliveryCounter
 {
-    public static int CountUniqueHouses(string instructions) => 1;
+    public static int CountUniqueHouses(string instructions)
+    {
+        var sleigh = new Sleigh();
+        var visitedHouses = new HashSet<HouseLocation> { sleigh.CurrentHouse() };
+
+        foreach (var instruction in instructions)
+        {
+            sleigh = sleigh.MoveTo(instruction);
+            visitedHouses.Add(sleigh.CurrentHouse());
+        }
+
+        return visitedHouses.Count;
+    }
 }
 
 public class SleighShould
