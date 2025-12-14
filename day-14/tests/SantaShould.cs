@@ -9,7 +9,7 @@ public class SantaShould
     [InlineData("", 1)]
     [InlineData("N", 2)]
     [InlineData("NNESESW", 8)]
-    [InlineData("NNSS", 4)]
+    [InlineData("NNSS", 3)]
     public void Count_unique_houses(string instructions, int expectedUniqueHouses)
         => DeliveryCounter.CountUniqueHouses(instructions).Should().Be(expectedUniqueHouses);
 }
@@ -40,13 +40,26 @@ public class SleighShould
     public void Move_to_north()
     {
         // Arrange
-        var sleigh = new Sleigh();
+        var sleigh = new Sleigh(new HouseLocation(0, 0));
 
         // Act
         var movedSleigh = sleigh.MoveTo('N');
 
         // Assert
         movedSleigh.CurrentHouse().Should().Be(new HouseLocation(0, 1));
+    }
+
+    [Fact]
+    public void Move_to_south()
+    {
+        // Arrange
+        var sleigh = new Sleigh(new HouseLocation(0, 0));
+
+        // Act
+        var movedSleigh = sleigh.MoveTo('S');
+
+        // Assert
+        movedSleigh.CurrentHouse().Should().Be(new HouseLocation(0, -1));
     }
 }
 
@@ -59,7 +72,13 @@ public record Sleigh
 
     public HouseLocation CurrentHouse() => _houseHouseLocation;
 
-    public Sleigh MoveTo(char c) => new(new HouseLocation(_houseHouseLocation.X, _houseHouseLocation.Y + 1));
+    public Sleigh MoveTo(char c)
+        => c switch
+        {
+            'N' => new Sleigh(_houseHouseLocation with { Y = _houseHouseLocation.Y + 1 }),
+            'S' => new Sleigh(_houseHouseLocation with { Y = _houseHouseLocation.Y - 1 }),
+            _ => this
+        };
 }
 
 public record HouseLocation(int X, int Y);
