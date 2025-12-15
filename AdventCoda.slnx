@@ -67,4 +67,9 @@
     <File Path="day-13\script.js" />
     <File Path="day-13\styles.css" />
   </Folder>
+  <Folder Name="/Jour 14 - Le chemin des cadeaux/">
+    <File Path="day-14\README.md" />
+    <Project Path="day-14\src\Day14.csproj" />
+    <Project Path="day-14\tests\Day14.Tests.csproj" />
+  </Folder>
 </Solution>
