@@ -9,28 +9,27 @@ public class GiftRouter
             return "ERROR";
         }
 
-        string? zone = g.Zone;
-        if (zone == null || string.IsNullOrWhiteSpace(zone))
+        if (g.Zone == null || string.IsNullOrWhiteSpace(g.Zone))
         {
             return "WORKSHOP-HOLD";
         }
 
-        if (g.Fragile)
+        if (g.Fragile && g.WeightKg <= 2.0)
         {
-            if (g.WeightKg <= 2.0)
-            {
-                return "REINDEER-EXPRESS";
-            }
-
-            return "SLED";
+            return "REINDEER-EXPRESS";
         }
-
-        if (g.WeightKg > 10.0)
+        
+        if (g.Fragile && g.WeightKg > 2.0)
         {
             return "SLED";
         }
 
-        if (zone == "EU" || zone == "NA")
+        if (!g.Fragile && g.WeightKg > 10.0)
+        {
+            return "SLED";
+        }
+
+        if (!g.Fragile && g.WeightKg <= 10.0 && g.Zone is "EU" or "NA")
         {
             return "REINDEER-EXPRESS";
         }
