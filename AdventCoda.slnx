@@ -72,4 +72,9 @@
     <Project Path="day-14\src\Day14.csproj" />
     <Project Path="day-14\tests\Day14.Tests.csproj" />
   </Folder>
+  <Folder Name="/Jour 15 - Le code parfait de Nori/">
+    <File Path="day-15\README.md" />
+    <File Path="day-15\src\elfWorkshop.ts" />
+    <File Path="day-15\tests\elfWorkshop.spec.ts" />
+  </Folder>
 </Solution>
