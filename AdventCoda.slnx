@@ -77,4 +77,9 @@
     <File Path="day-15\src\elfWorkshop.ts" />
     <File Path="day-15\tests\elfWorkshop.spec.ts" />
   </Folder>
+  <Folder Name="/Jour 16 - Un message secret/">
+    <File Path="day-16\README.md" />
+    <Project Path="day-16\src\Email.csproj" />
+    <Project Path="day-16\tests\Email.Tests.csproj" />
+  </Folder>
 </Solution>
