@@ -1,6 +1,6 @@
 using FluentAssertions;
 using Xunit;
-using static GlacialQuantifierSystem.Tests.GlacialQuantifierReportReader;
+using static GlacialQuantifierSystem.ReportReader;
 
 namespace GlacialQuantifierSystem.Tests;
 
@@ -33,28 +33,4 @@ public class GlacialQuantifierSystemTests
     public void Calculate_GQS_average_from_file() => CalculateAverage(ReadReport("gqs")).Should().Be(-288.7762);
 
     private static double CalculateAverage(IEnumerable<Measure> measures) => measures.Average(measure => measure.Value);
-}
-
-public record Measure(int Value)
-{
-    public static Measure Parse(string input)
-        => new(
-            input
-                .Reverse()
-                .Select((symbol, index) => Symbol.Parse(symbol).Value * (int)Math.Pow(5, index))
-                .Sum());
-}
-
-public record Symbol(int Value)
-{
-    public static Symbol Parse(char input)
-        => new(
-            input switch
-            {
-                '☃' => -2,
-                '❄' => -1,
-                '0' => 0,
-                '*' => 1,
-                '✦' => 2
-            });
 }

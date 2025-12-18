@@ -1,9 +1,9 @@
 using System.Reflection;
 using static System.IO.Path;
 
-namespace GlacialQuantifierSystem.Tests;
+namespace GlacialQuantifierSystem;
 
-public static class GlacialQuantifierReportReader
+public static class ReportReader
 {
     public static IEnumerable<Measure> ReadReport(string fileName)
         => File.ReadLines(
