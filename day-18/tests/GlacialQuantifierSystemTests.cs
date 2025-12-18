@@ -1,5 +1,6 @@
 using FluentAssertions;
 using Xunit;
+using static GlacialQuantifierSystem.Tests.GlacialQuantifierReportReader;
 
 namespace GlacialQuantifierSystem.Tests;
 
@@ -23,15 +24,13 @@ public class GlacialQuantifierSystemTests
     public void Calculate_GQS_measure(string measure, int @decimal) => Calculate(measure).Should().Be(@decimal);
 
     [Theory]
-    [InlineData("✦0\n*\n❄\n☃\n✦**", 12.8)]
-    public void Calculate_GQS_average(string routeStatement, double mean)
-        => CalculateAverage(routeStatement).Should().Be(mean);
+    [InlineData(new[] { "✦0", "*", "❄", "☃", "✦**" }, 12.8)]
+    public void Calculate_GQS_average(string[] measures, double mean) => CalculateAverage(measures).Should().Be(mean);
 
-    private static double CalculateAverage(string routeStatement)
-    {
-        var measures = routeStatement.Split('\n');
-        return measures.Select(Calculate).Average();
-    }
+    [Fact]
+    public void Calculate_GQS_average_from_file() => CalculateAverage(ReadReport("gqs")).Should().Be(-288.7762);
+
+    private static double CalculateAverage(IEnumerable<string> measures) => measures.Select(Calculate).Average();
 
     private static int Calculate(string measure)
         => measure
