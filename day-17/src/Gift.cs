@@ -13,7 +13,7 @@ public record Gift
         _zone = new PotentialZone(zone);
     }
 
-    public bool DoesNotHaveZone() => _zone.IsNotDefined();
+    public bool ZoneIsNotDefined() => _zone.IsNotDefined();
 
     public bool TargetAlmostAZone(params string[] targetZones)
         => targetZones.Any(targetZone => _zone.IsSame(targetZone));
