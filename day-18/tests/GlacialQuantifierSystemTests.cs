@@ -20,10 +20,21 @@ public class GlacialQuantifierSystemTests
     [InlineData("☃", -2)]
     [InlineData("✦**", 56)]
     [InlineData("✦*0❄", 274)]
-    public void Calculate_GQS_operations(string operation, int @decimal) => Calculate(operation).Should().Be(@decimal);
+    public void Calculate_GQS_measure(string measure, int @decimal) => Calculate(measure).Should().Be(@decimal);
 
-    private static int Calculate(string operation)
-        => operation
+    [Theory]
+    [InlineData("✦0\n*\n❄\n☃\n✦**", 12.8)]
+    public void Calculate_GQS_average(string routeStatement, double mean)
+        => CalculateAverage(routeStatement).Should().Be(mean);
+
+    private static double CalculateAverage(string routeStatement)
+    {
+        var measures = routeStatement.Split('\n');
+        return measures.Select(Calculate).Average();
+    }
+
+    private static int Calculate(string measure)
+        => measure
             .Reverse()
             .Select((symbol, index) => Parse(symbol) * (int)Math.Pow(5, index))
             .Sum();
