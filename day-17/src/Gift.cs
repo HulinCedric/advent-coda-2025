@@ -2,24 +2,24 @@ namespace Routing;
 
 public record Gift
 {
-    private readonly bool _fragile;
+    private readonly Fragility _fragility;
     private readonly WeightKg _weight;
     private readonly PotentialZone _zone;
 
     public Gift(double weightKg, bool fragile, string? zone)
     {
         _weight = new WeightKg(weightKg);
-        _fragile = fragile;
+        _fragility = new Fragility(fragile);
         _zone = new PotentialZone(zone);
     }
 
     public bool ZoneIsNotDefined() => _zone.IsNotDefined();
-    public bool IsFragile() => _fragile;
+    public bool IsFragile() => _fragility.IsFragile();
     public bool IsLight() => _weight.IsLight();
     public bool IsHeavy() => _weight.IsHeavy();
     public bool TargetExpressZone() => _zone.IsExpress();
 
-    public override string ToString() => $"Gift{{w={_weight}, fragile={_fragile}, zone='{_zone}'}}";
+    public override string ToString() => $"Gift{{w={_weight}, fragile={_fragility}, zone='{_zone}'}}";
 }
 
 public record WeightKg(double Value)
@@ -30,6 +30,11 @@ public record WeightKg(double Value)
     public bool IsLight() => Value <= LightWeight;
 
     public bool IsHeavy() => Value > HeavyWeight;
+}
+
+public record Fragility(bool Value)
+{
+    public bool IsFragile() => Value;
 }
 
 public record PotentialZone(string? Value)
