@@ -27,10 +27,9 @@ public class GlacialQuantifierSystemTests
     [Theory]
     [InlineData(new[] { "✦0", "*", "❄", "☃", "✦**" }, 12.8)]
     public void Calculate_GQS_average(string[] measures, double average)
-        => CalculateAverage(measures.Select(Measure.Parse)).Should().Be(average);
+        => Interpreter.CalculateAverage(measures.Select(Measure.Parse)).Should().Be(average);
 
     [Fact]
-    public void Calculate_GQS_average_from_file() => CalculateAverage(ReadReport("gqs")).Should().Be(-288.7762);
-
-    private static double CalculateAverage(IEnumerable<Measure> measures) => measures.Average(measure => measure.Value);
+    public void Calculate_GQS_average_from_file()
+        => Interpreter.CalculateAverage(ReadReport("gqs")).Should().Be(-288.7762);
 }
