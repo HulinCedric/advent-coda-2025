@@ -18,3 +18,4 @@ Ce repository contient mes résolutions du [calendrier de l'Avent Coda](https://
 - [Jour 14 - Le chemin des cadeaux](day-14/README.md)
 - [Jour 15 - Le code parfait de Nori](day-15/README.md)
 - [Jour 16 - Un message secret](day-16/README.md)
+- [Jour 17 - if... elfe... refactor](day-17/README.md)

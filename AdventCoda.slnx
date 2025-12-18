@@ -82,4 +82,9 @@
     <Project Path="day-16\src\Email.csproj" />
     <Project Path="day-16\tests\Email.Tests.csproj" />
   </Folder>
+  <Folder Name="/Jour 17 - if... elfe... refactor/">
+    <File Path="day-17\README.md" />
+    <Project Path="day-17\src\Routing.csproj" />
+    <Project Path="day-17\tests\Routing.Tests.csproj" />
+  </Folder>
 </Solution>
