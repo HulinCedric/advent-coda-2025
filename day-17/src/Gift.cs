@@ -22,7 +22,8 @@ public record Gift
         => targetZones.Any(targetZone => _zone.IsSame(targetZone));
 
     public bool IsFragile() => Fragile;
-    public bool IsNonFragile() => !IsFragile();
+    public bool IsLight() => WeightKg <= 2.0;
+    public bool IsHeavy() => WeightKg > 10.0;
 }
 
 public record PotentialZone(string? Value)
