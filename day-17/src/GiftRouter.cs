@@ -8,11 +8,13 @@ public class GiftRouter
             return "ERROR";
         if (gift.DoesNotHaveZone())
             return "WORKSHOP-HOLD";
-        if (gift is { Fragile: true, WeightKg: <= 2.0 })
+        if (gift.IsFragile() && gift.WeightKg <= 2.0)
             return "REINDEER-EXPRESS";
-        if (gift is { Fragile: true, WeightKg: > 2.0 } or { Fragile: false, WeightKg: > 10.0 })
+        if (gift.IsFragile() && gift.WeightKg > 2.0)
             return "SLED";
-        if (gift is { Fragile: false, WeightKg: <= 10.0 } && gift.TargetAlmostAZone("EU", "NA") )
+        if (gift.IsNonFragile() && gift.WeightKg > 10.0)
+            return "SLED";
+        if (gift.IsNonFragile() && gift.WeightKg <= 10.0 && gift.TargetAlmostAZone("EU", "NA"))
             return "REINDEER-EXPRESS";
         return "SLED";
     }

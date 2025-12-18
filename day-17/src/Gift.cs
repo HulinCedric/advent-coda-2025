@@ -20,6 +20,9 @@ public record Gift
 
     public bool TargetAlmostAZone(params string[] targetZones)
         => targetZones.Any(targetZone => _zone.IsSame(targetZone));
+
+    public bool IsFragile() => Fragile;
+    public bool IsNonFragile() => !IsFragile();
 }
 
 public record PotentialZone(string? Value)
