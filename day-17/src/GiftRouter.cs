@@ -3,14 +3,17 @@ namespace Routing;
 public class GiftRouter
 {
     public static string Route(Gift? gift)
-        => gift switch
-        {
-            null => "ERROR",
-            { Zone: var zone } when string.IsNullOrWhiteSpace(zone) => "WORKSHOP-HOLD",
-            { Fragile: true, WeightKg: <= 2.0 } => "REINDEER-EXPRESS",
-            { Fragile: true, WeightKg: > 2.0 } => "SLED",
-            { Fragile: false, WeightKg: > 10.0 } => "SLED",
-            { Fragile: false, WeightKg: <= 10.0, Zone: "EU" or "NA" } => "REINDEER-EXPRESS",
-            _ => "SLED"
-        };
+    {
+        if (gift is null)
+            return "ERROR";
+        if (gift is { Zone: var zone } && string.IsNullOrWhiteSpace(zone))
+            return "WORKSHOP-HOLD";
+        if (gift is { Fragile: true, WeightKg: <= 2.0 })
+            return "REINDEER-EXPRESS";
+        if (gift is { Fragile: true, WeightKg: > 2.0 } or { Fragile: false, WeightKg: > 10.0 })
+            return "SLED";
+        if (gift is { Fragile: false, WeightKg: <= 10.0, Zone: "EU" or "NA" })
+            return "REINDEER-EXPRESS";
+        return "SLED";
+    }
 }
