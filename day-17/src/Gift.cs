@@ -24,8 +24,12 @@ public record Gift
 
 public record WeightKg(double Value)
 {
-    public bool IsLight() => Value <= 2.0;
-    public bool IsHeavy() => Value > 10.0;
+    private const double LightWeight = 2.0;
+    private const double HeavyWeight = 10.0;
+
+    public bool IsLight() => Value <= LightWeight;
+
+    public bool IsHeavy() => Value > HeavyWeight;
 }
 
 public record PotentialZone(string? Value)
