@@ -1,6 +1,6 @@
 namespace Routing;
 
-public class GiftRouter
+public static class GiftRouter
 {
     public static string Route(Gift? gift)
         => gift switch
