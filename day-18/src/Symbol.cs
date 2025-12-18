@@ -10,6 +10,7 @@ public record Symbol(int Value)
                 '❄' => -1,
                 '0' => 0,
                 '*' => 1,
-                '✦' => 2
+                '✦' => 2,
+                _ => throw new ArgumentOutOfRangeException(nameof(input), input, null)
             });
 }
