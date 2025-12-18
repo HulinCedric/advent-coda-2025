@@ -6,7 +6,7 @@ public class GiftRouter
     {
         if (gift is null)
             return "ERROR";
-        if (gift is { Zone: var zone } && string.IsNullOrWhiteSpace(zone))
+        if (gift.DoesNotHadZone())
             return "WORKSHOP-HOLD";
         if (gift is { Fragile: true, WeightKg: <= 2.0 })
             return "REINDEER-EXPRESS";
