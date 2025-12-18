@@ -5,10 +5,10 @@ namespace GlacialQuantifierSystem.Tests;
 
 public static class GlacialQuantifierReportReader
 {
-    public static IEnumerable<string> ReadReport(string fileName)
+    public static IEnumerable<Measure> ReadReport(string fileName)
         => File.ReadLines(
-            Combine(
-                GetDirectoryName(Assembly.GetExecutingAssembly().Location)!,
-                fileName)
-        );
+                Combine(
+                    GetDirectoryName(Assembly.GetExecutingAssembly().Location)!,
+                    fileName))
+            .Select(Measure.Parse);
 }
