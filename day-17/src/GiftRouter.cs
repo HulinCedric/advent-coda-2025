@@ -8,7 +8,8 @@ public class GiftRouter
             return "ERROR";
         if (gift.DoesNotHaveZone())
             return "WORKSHOP-HOLD";
-        if (gift.IsFragile()) return RouteFragileGift(gift);
+        if (gift.IsFragile())
+            return RouteFragileGift(gift);
         if (gift.IsHeavy())
             return "SLED";
         if (gift.TargetAlmostAZone("EU", "NA"))
