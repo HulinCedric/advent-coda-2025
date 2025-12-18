@@ -15,14 +15,14 @@ public record Gift
 
     public bool ZoneIsNotDefined() => _zone.IsNotDefined();
 
-    public bool TargetAlmostAZone(params string[] targetZones)
-        => targetZones.Any(targetZone => _zone.IsSame(targetZone));
 
     public bool IsFragile() => _fragile;
     public bool IsLight() => _weight.IsLight();
     public bool IsHeavy() => _weight.IsHeavy();
 
     public override string ToString() => $"Gift{{w={_weight}, fragile={_fragile}, zone='{_zone}'}}";
+
+    public bool TargetExpressZone() => _zone.IsExpress();
 }
 
 public record WeightKg(double Value)
@@ -35,5 +35,5 @@ public record PotentialZone(string? Value)
 {
     public bool IsNotDefined() => string.IsNullOrWhiteSpace(Value);
 
-    public bool IsSame(string zone) => Value == zone;
+    public bool IsExpress() => Value is "EU" or "NA";
 }

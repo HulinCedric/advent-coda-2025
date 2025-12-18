@@ -9,7 +9,7 @@ public class GiftRouter
             _ when gift.ZoneIsNotDefined() => "WORKSHOP-HOLD",
             _ when gift.IsFragile() => RouteFragileGift(gift),
             _ when gift.IsHeavy() => "SLED",
-            _ when gift.TargetAlmostAZone("EU", "NA") => "REINDEER-EXPRESS",
+            _ when gift.TargetExpressZone() => "REINDEER-EXPRESS",
             _ => "SLED"
         };
 
