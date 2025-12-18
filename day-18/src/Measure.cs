@@ -6,8 +6,9 @@ public record Measure(double Value)
         => new(
             input
                 .Reverse()
+                .Select(Symbol.Parse)
                 .Select(Interpret)
                 .Sum());
 
-    private static double Interpret(char symbol, int position) => Symbol.Parse(symbol).Value * Math.Pow(5, position);
+    private static double Interpret(Symbol symbol, int position) => symbol * Math.Pow(5, position);
 }

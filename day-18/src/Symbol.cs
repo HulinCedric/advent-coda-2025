@@ -13,4 +13,6 @@ public record Symbol(double Value)
                 '✦' => 2,
                 _ => throw new ArgumentOutOfRangeException(nameof(input), input, null)
             });
+    
+    public static implicit operator double(Symbol symbol) => symbol.Value;
 }
