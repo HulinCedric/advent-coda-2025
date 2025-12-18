@@ -14,15 +14,12 @@ public record Gift
     }
 
     public bool ZoneIsNotDefined() => _zone.IsNotDefined();
-
-
     public bool IsFragile() => _fragile;
     public bool IsLight() => _weight.IsLight();
     public bool IsHeavy() => _weight.IsHeavy();
+    public bool TargetExpressZone() => _zone.IsExpress();
 
     public override string ToString() => $"Gift{{w={_weight}, fragile={_fragile}, zone='{_zone}'}}";
-
-    public bool TargetExpressZone() => _zone.IsExpress();
 }
 
 public record WeightKg(double Value)
@@ -33,7 +30,10 @@ public record WeightKg(double Value)
 
 public record PotentialZone(string? Value)
 {
+    private const string Europe = "EU";
+    private const string NotApplicable = "NA";
+
     public bool IsNotDefined() => string.IsNullOrWhiteSpace(Value);
 
-    public bool IsExpress() => Value is "EU" or "NA";
+    public bool IsExpress() => Value is Europe or NotApplicable;
 }
