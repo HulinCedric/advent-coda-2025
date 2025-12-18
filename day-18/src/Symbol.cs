@@ -1,6 +1,6 @@
 namespace GlacialQuantifierSystem;
 
-public record Symbol(int Value)
+public record Symbol(double Value)
 {
     public static Symbol Parse(char input)
         => new(

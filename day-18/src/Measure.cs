@@ -1,11 +1,13 @@
 namespace GlacialQuantifierSystem;
 
-public record Measure(int Value)
+public record Measure(double Value)
 {
     public static Measure Parse(string input)
         => new(
             input
                 .Reverse()
-                .Select((symbol, index) => Symbol.Parse(symbol).Value * (int)Math.Pow(5, index))
+                .Select(Interpret)
                 .Sum());
+
+    private static double Interpret(char symbol, int position) => Symbol.Parse(symbol).Value * Math.Pow(5, position);
 }
