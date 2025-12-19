@@ -298,6 +298,33 @@
     </div>
 
     <script>
+        // ↑ ↑ ↓ ↓ ← → ← → B A
+        const konamiCode = [
+            'ArrowUp', 'ArrowUp',
+            'ArrowDown', 'ArrowDown',
+            'ArrowLeft', 'ArrowRight',
+            'ArrowLeft', 'ArrowRight',
+            'b', 'a'
+        ];
+        let konamiIndex = 0;
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === konamiCode[konamiIndex++]) {
+                if (konamiIndex === konamiCode.length) {
+                    revealDarkSide();
+                    konamiIndex = 0;
+                }
+            } else {
+                konamiIndex = 0;
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space' || e.code === 'Escape') {
+                document.body.classList.remove('dark-mode');
+            }
+        });
+
         function revealDarkSide() {
             document.body.classList.add('dark-mode');
         }
