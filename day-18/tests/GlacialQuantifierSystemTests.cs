@@ -1,0 +1,34 @@
+using FluentAssertions;
+using Xunit;
+using static GlacialQuantifierSystem.ReportReader;
+
+namespace GlacialQuantifierSystem.Tests;
+
+public class GlacialQuantifierSystemTests
+{
+    [Theory]
+    [InlineData('☃', -2)]
+    [InlineData('❄', -1)]
+    [InlineData('0', 0)]
+    [InlineData('*', 1)]
+    [InlineData('✦', 2)]
+    public void Translate_GQS_symbols(char symbol, double @decimal) => Symbol.Parse(symbol).Value.Should().Be(@decimal);
+
+    [Theory]
+    [InlineData("✦0", 10)]
+    [InlineData("*", 1)]
+    [InlineData("❄", -1)]
+    [InlineData("☃", -2)]
+    [InlineData("✦**", 56)]
+    [InlineData("✦*0❄", 274)]
+    public void Calculate_GQS_measure(string measure, double @decimal)
+        => Measure.Parse(measure).Value.Should().Be(@decimal);
+
+    [Theory]
+    [InlineData(new[] { "✦0", "*", "❄", "☃", "✦**" }, 12.8)]
+    public void Calculate_GQS_average(string[] measures, double average)
+        => measures.Select(Measure.Parse).Average().Should().Be(average);
+
+    [Fact]
+    public void Calculate_GQS_average_from_file() => ReadReport("gqs").Average().Should().Be(-288.7762);
+}

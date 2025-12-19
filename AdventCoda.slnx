@@ -87,4 +87,9 @@
     <Project Path="day-17\src\Routing.csproj" />
     <Project Path="day-17\tests\Routing.Tests.csproj" />
   </Folder>
+  <Folder Name="/Jour 18 - Le mystère du GQS/">
+    <File Path="day-18\README.md" />
+    <Project Path="day-18\src\GlacialQuantifierSystem.csproj" />
+    <Project Path="day-18\tests\GlacialQuantifierSystem.Tests.csproj" />
+  </Folder>
 </Solution>
