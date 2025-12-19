@@ -92,4 +92,8 @@
     <Project Path="day-18\src\GlacialQuantifierSystem.csproj" />
     <Project Path="day-18\tests\GlacialQuantifierSystem.Tests.csproj" />
   </Folder>
+  <Folder Name="/Jour 19 - Le vrai visage du Père Noël/">
+    <File Path="day-19\index.html" />
+    <File Path="day-19\README.md" />
+  </Folder>
 </Solution>

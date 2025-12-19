@@ -20,3 +20,4 @@ Ce repository contient mes résolutions du [calendrier de l'Avent Coda](https://
 - [Jour 16 - Un message secret](day-16/README.md)
 - [Jour 17 - if... elfe... refactor](day-17/README.md)
 - [Jour 18 - Le mystère du GQS](day-18/README.md)
+- [Jour 19 - Le vrai visage du Père Noël](day-19/README.md)
