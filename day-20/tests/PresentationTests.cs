@@ -1,63 +1,33 @@
-﻿using FluentAssertions;
-using Spectre.Console.Cli;
-using Spectre.Console.Cli.Testing;
+﻿using ElfLs.Presentations;
+using ElfLs.Tests.Data;
+using FluentAssertions;
+using Spectre.Console.Testing;
 using Xunit;
 
 namespace ElfLs.Tests;
 
-public class ElfLsTests
+public class PresentationTests
 {
-    private readonly CommandAppTester _app;
+    private readonly TestConsole _console;
 
-    public ElfLsTests()
+    public PresentationTests()
     {
-        _app = new CommandAppTester
-        {
-            TestSettings = new CommandAppTesterSettings
-            {
-                TrimConsoleOutput = true
-            }
-        };
-        _app.SetDefaultCommand<ElfCommand>();
-        _app.Configure(config => config.SetApplicationName("elf"));
-    }
-
-    [Fact]
-    public void Display_help()
-    {
-        // Given
-
-        // When
-        var result = _app.Run("--help");
-
-        // Then
-        result.Output
-            .Should()
-            .BeEquivalentTo(
-                """
-                USAGE:
-                    elf [OPTIONS]
-
-                OPTIONS:
-                                         DEFAULT
-                    -h, --help                      Prints help information
-                    -p, --path <PATH>    .          Base directory path
-                    -n, --normal                    Displays items in a detailed table format
-                    -c, --compact                   Displays items in a compact line
-                    -t, --tree                      Displays items in a tree structure
-                """);
+        _console = new TestConsole();
+        _console.Profile.Width = 200;
     }
 
     [Fact]
     public void Present_directory_in_normal_mode()
     {
         // Given
+        var directory = SampleData.Directory();
 
         // When
-        var result = _app.Run("--path", "workshop-inventory", "--normal");
+        new NormalPresentation(_console).Present(directory);
 
         // Then
-        result.Output
+        var output = _console.Output.NormalizeLineEndings().TrimLines().Trim();
+        output
             .Should()
             .BeEquivalentTo(
                 """
@@ -75,12 +45,14 @@ public class ElfLsTests
     public void Present_directory_in_compact_mode()
     {
         // Given
+        var directory = SampleData.Directory();
 
         // When
-        var result = _app.Run("--path", "workshop-inventory", "--compact");
+        new CompactPresentation(_console).Present(directory);
 
         // Then
-        result.Output
+        var output = _console.Output.NormalizeLineEndings().TrimLines().Trim();
+        output
             .Should()
             .BeEquivalentTo(
                 """
@@ -92,12 +64,14 @@ public class ElfLsTests
     public void Present_directory_in_tree_mode()
     {
         // Given
+        var directory = SampleData.Directory();
 
         // When
-        var result = _app.Run("--path", "workshop-inventory", "--tree");
+        new TreePresentation(_console).Present(directory);
 
         // Then
-        result.Output
+        var output = _console.Output.NormalizeLineEndings().TrimLines().Trim();
+        output
             .Should()
             .BeEquivalentTo(
                 """
