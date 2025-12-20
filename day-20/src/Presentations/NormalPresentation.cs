@@ -10,13 +10,9 @@ public class NormalPresentation : IPresentationStrategy
 
     public NormalPresentation(IAnsiConsole console) => _console = console;
 
-    public void Present(InventoryDirectory directory)
-    {
-        var table = RenderNormal(directory);
-        _console.Write(table);
-    }
+    public void Present(InventoryDirectory directory) => _console.Write(Render(directory));
 
-    private static IRenderable RenderNormal(InventoryDirectory directory)
+    private static IRenderable Render(InventoryDirectory directory)
     {
         var table = new Table()
             .Border(TableBorder.None)
@@ -29,16 +25,26 @@ public class NormalPresentation : IPresentationStrategy
 
         table.AddEmptyRow();
 
-        foreach (var f in directory.Files)
+        foreach (var row in Rows(directory))
         {
-            table.AddRow(f.Name, "Fichier", f.Size, f.Weight, f.Magic);
-        }
-
-        foreach (var d in directory.Directories)
-        {
-            table.AddRow(d.Name, "Dossier", "-", "-", "-");
+            table.AddRow(row);
         }
 
         return table;
     }
+
+    private static IEnumerable<string[]> Rows(InventoryDirectory directory)
+        => Enumerable.Empty<string[]>()
+            .Concat(FormatFiles(directory.Files))
+            .Concat(FormatDirectories(directory.Directories));
+
+    private static IEnumerable<string[]> FormatFiles(IEnumerable<InventoryFile> files) => files.Select(FormatFile);
+
+    private static string[] FormatFile(InventoryFile file)
+        => [file.Name, "Fichier", file.Size, file.Weight, file.Magic];
+
+    private static IEnumerable<string[]> FormatDirectories(IEnumerable<InventoryDirectory> directories)
+        => directories.Select(FormatDirectory);
+
+    private static string[] FormatDirectory(InventoryDirectory directory) => [directory.Name, "Dossier", "-", "-", "-"];
 }

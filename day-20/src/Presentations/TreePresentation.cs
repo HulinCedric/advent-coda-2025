@@ -10,46 +10,30 @@ public class TreePresentation : IPresentationStrategy
 
     public TreePresentation(IAnsiConsole console) => _console = console;
 
-    public void Present(InventoryDirectory directory)
-    {
-        _console.Write(Render(directory));
-    }
+    public void Present(InventoryDirectory directory) => _console.Write(Render(directory));
 
-    
+
     private static IRenderable Render(InventoryDirectory directory)
     {
-        /// .
-        /// ├── Poupée chantante (200g, ✨✨✨)
-        /// ├── Épée en bois (1kg, ✨)
-        /// ├── Livre de sorts (500g, ✨✨)
-        /// ├── Boîte à musique (300g, ✨)
-        /// └── Dossier Jouets/
-        /// ├── Boule de neige (100g, ✨)
-        /// └── Sablier magique (300g, ✨✨)
-        /// 
-        
-        var tree = new Tree(".");
-        foreach (var file in directory.Files)
-        {
-            tree.AddNode($"{file.Name} ({file.Weight}, {file.Magic})");
-        }  
-        foreach (var dir in directory.Directories)
-        {
-            var dirNode = tree.AddNode($"Dossier {dir.Name}/");
-            AddDirectoryNodes(dirNode, dir);
-        }
+        var tree = new Tree(directory.Name);
+        AddDirectoryNodes(tree, directory);
         return tree;
     }
-    private static void AddDirectoryNodes(TreeNode parentNode, InventoryDirectory directory)
+
+    private static void AddDirectoryNodes(IHasTreeNodes parentNode, InventoryDirectory directory)
     {
-        foreach (var file in directory.Files)
+        parentNode.AddNodes(FormatFiles(directory.Files));
+
+        foreach (var children in directory.Directories)
         {
-            parentNode.AddNode($"{file.Name} ({file.Weight}, {file.Magic})");
-        }  
-        foreach (var dir in directory.Directories)
-        {
-            var dirNode = parentNode.AddNode($"Dossier {dir.Name}/");
-            AddDirectoryNodes(dirNode, dir);
+            var directoryNode = parentNode.AddNode(FormatDirectory(children));
+            AddDirectoryNodes(directoryNode, children);
         }
     }
+
+    private static IEnumerable<string> FormatFiles(IEnumerable<InventoryFile> files) => files.Select(FormatFile);
+
+    private static string FormatFile(InventoryFile file) => $"{file.Name} ({file.Weight}, {file.Magic})";
+
+    private static string FormatDirectory(InventoryDirectory directory) => $"Dossier {directory.Name}/";
 }
