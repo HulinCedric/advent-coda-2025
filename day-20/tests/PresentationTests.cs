@@ -26,8 +26,7 @@ public class PresentationTests
         new NormalPresentation(_console).Present(directory);
 
         // Then
-        var output = _console.Output.NormalizeLineEndings().TrimLines().Trim();
-        output
+        Output()
             .Should()
             .BeEquivalentTo(
                 """
@@ -51,8 +50,7 @@ public class PresentationTests
         new CompactPresentation(_console).Present(directory);
 
         // Then
-        var output = _console.Output.NormalizeLineEndings().TrimLines().Trim();
-        output
+        Output()
             .Should()
             .BeEquivalentTo(
                 """
@@ -70,8 +68,7 @@ public class PresentationTests
         new TreePresentation(_console).Present(directory);
 
         // Then
-        var output = _console.Output.NormalizeLineEndings().TrimLines().Trim();
-        output
+        Output()
             .Should()
             .BeEquivalentTo(
                 """
@@ -85,4 +82,6 @@ public class PresentationTests
                     └── Boule de neige (100g, ✨)
                 """);
     }
+
+    private string Output() => _console.Output.NormalizeLineEndings().TrimLines().Trim();
 }
