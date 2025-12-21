@@ -63,11 +63,11 @@ public class ElfLsTests
             .BeEquivalentTo(
                 """
                 Nom                Type      Taille   Poids   Magie
-
-                Poupée chantante   Fichier   15cm     200g    ✨✨✨
-                Livre de sorts     Fichier   20cm     500g    ✨✨
+                
                 Boîte à musique    Fichier   10cm     300g    ✨
                 Épée en bois       Fichier   50cm     1kg     ✨
+                Livre de sorts     Fichier   20cm     500g    ✨✨
+                Poupée chantante   Fichier   15cm     200g    ✨✨✨
                 Jouets             Dossier   -        -       -
                 """);
     }
@@ -85,7 +85,7 @@ public class ElfLsTests
             .Should()
             .BeEquivalentTo(
                 """
-                Poupée chantante (Jouet, 200g, ✨✨✨), Livre de sorts (Livre, 500g, ✨✨), Boîte à musique (Objet, 300g, ✨), Épée en bois (Arme, 1kg, ✨), Dossier Jouets/
+                Boîte à musique (Objet, 300g, ✨), Épée en bois (Arme, 1kg, ✨), Livre de sorts (Livre, 500g, ✨✨), Poupée chantante (Jouet, 200g, ✨✨✨), Dossier Jouets/
                 """);
     }
 
@@ -103,13 +103,13 @@ public class ElfLsTests
             .BeEquivalentTo(
                 """
                 .
-                ├── Poupée chantante (200g, ✨✨✨)
-                ├── Livre de sorts (500g, ✨✨)
                 ├── Boîte à musique (300g, ✨)
                 ├── Épée en bois (1kg, ✨)
+                ├── Livre de sorts (500g, ✨✨)
+                ├── Poupée chantante (200g, ✨✨✨)
                 └── Dossier Jouets/
-                    ├── Sablier magique (300g, ✨✨)
-                    └── Boule de neige (100g, ✨)
+                    ├── Boule de neige (100g, ✨)
+                    └── Sablier magique (300g, ✨✨)
                 """);
     }
 }

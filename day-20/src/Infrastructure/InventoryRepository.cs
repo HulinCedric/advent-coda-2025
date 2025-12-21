@@ -10,8 +10,8 @@ public sealed class InventoryRepository(string sidecarMetadataSuffix = ".meta.js
     private InventoryDirectory ScanDirectory(DirectoryInfo directoryInfo, string? directoryName = null)
         => InventoryDirectory.CreateDirectory(
             directoryName ?? directoryInfo.Name,
-            ChildrenDirectories(directoryInfo),
-            Files(directoryInfo));
+            ChildrenDirectories(directoryInfo).OrderBy(d => d.Name),
+            Files(directoryInfo).OrderBy(f => f.Name));
 
     private IEnumerable<InventoryDirectory> ChildrenDirectories(DirectoryInfo directoryInfo)
         => directoryInfo
