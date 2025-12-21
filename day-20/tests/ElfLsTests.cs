@@ -1,8 +1,6 @@
 ﻿using System.Text;
-using ElfLs.Commands;
 using ElfLs.Tests.Utils;
 using FluentAssertions;
-using Spectre.Console.Cli;
 using Spectre.Console.Cli.Testing;
 using Xunit;
 
@@ -21,13 +19,7 @@ public class ElfLsTests
                 TrimConsoleOutput = true
             }
         };
-        _app.Configure(config =>
-        {
-            config.SetApplicationName("elf");
-            config.AddCommand<NormalCommand>("normal");
-            config.AddCommand<CompactCommand>("compact");
-            config.AddCommand<TreeCommand>("tree");
-        });
+        _app.Configure(AppConfigurationExtensions.Configure);
     }
 
     [Fact]
