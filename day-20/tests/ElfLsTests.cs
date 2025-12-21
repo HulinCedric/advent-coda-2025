@@ -1,4 +1,5 @@
 ﻿using System.Text;
+using ElfLs.Commands;
 using ElfLs.Tests.Utils;
 using FluentAssertions;
 using Spectre.Console.Cli;
@@ -20,8 +21,13 @@ public class ElfLsTests
                 TrimConsoleOutput = true
             }
         };
-        _app.SetDefaultCommand<ElfCommand>();
-        _app.Configure(config => config.SetApplicationName("elf"));
+        _app.Configure(config =>
+        {
+            config.SetApplicationName("elf");
+            config.AddCommand<NormalCommand>("normal");
+            config.AddCommand<CompactCommand>("compact");
+            config.AddCommand<TreeCommand>("tree");
+        });
     }
 
     [Fact]
@@ -38,15 +44,15 @@ public class ElfLsTests
             .BeEquivalentTo(
                 """
                 USAGE:
-                    elf [OPTIONS]
+                    elf [OPTIONS] <COMMAND>
 
                 OPTIONS:
-                                         DEFAULT
-                    -h, --help                      Prints help information
-                    -p, --path <PATH>    .          Base directory path
-                    -n, --normal                    Displays items in a detailed table format
-                    -c, --compact                   Displays items in a compact line
-                    -t, --tree                      Displays items in a tree structure
+                    -h, --help    Prints help information
+
+                COMMANDS:
+                    normal     Displays items in a detailed table format
+                    compact    Displays items in a compact line
+                    tree       Displays items in a tree structure
                 """);
     }
 
@@ -56,21 +62,21 @@ public class ElfLsTests
         // Given
 
         // When
-        var result = _app.Run("--path", "workshop-inventory".FindDirectory(), "normal");
+        var result = _app.Run("normal", "--path", "workshop-inventory".FindDirectory());
 
         // Then
         result.Output.Normalize(NormalizationForm.FormC)
             .Should()
             .BeEquivalentTo(
                 """
-                Nom                Type      Taille   Poids   Magie
+                    Nom                Type      Taille   Poids   Magie
 
-                Boîte à musique    Fichier   10cm     300g    ✨
-                Épée en bois       Fichier   50cm     1kg     ✨
-                Livre de sorts     Fichier   20cm     500g    ✨✨
-                Poupée chantante   Fichier   15cm     200g    ✨✨✨
-                Jouets             Dossier   -        -       -
-                """.Normalize(NormalizationForm.FormC));
+                    Boîte à musique    Fichier   10cm     300g    ✨
+                    Épée en bois       Fichier   50cm     1kg     ✨
+                    Livre de sorts     Fichier   20cm     500g    ✨✨
+                    Poupée chantante   Fichier   15cm     200g    ✨✨✨
+                    Jouets             Dossier   -        -       -
+                    """.Normalize(NormalizationForm.FormC));
     }
 
     [Fact]
@@ -79,15 +85,15 @@ public class ElfLsTests
         // Given
 
         // When
-        var result = _app.Run("--path", "workshop-inventory".FindDirectory(), "compact");
+        var result = _app.Run("compact", "--path", "workshop-inventory".FindDirectory());
 
         // Then
         result.Output.Normalize(NormalizationForm.FormC)
             .Should()
             .BeEquivalentTo(
                 """
-                Boîte à musique (Objet, 300g, ✨), Épée en bois (Arme, 1kg, ✨), Livre de sorts (Livre, 500g, ✨✨), Poupée chantante (Jouet, 200g, ✨✨✨), Dossier Jouets/
-                """.Normalize(NormalizationForm.FormC));
+                    Boîte à musique (Objet, 300g, ✨), Épée en bois (Arme, 1kg, ✨), Livre de sorts (Livre, 500g, ✨✨), Poupée chantante (Jouet, 200g, ✨✨✨), Dossier Jouets/
+                    """.Normalize(NormalizationForm.FormC));
     }
 
     [Fact]
@@ -96,21 +102,21 @@ public class ElfLsTests
         // Given
 
         // When
-        var result = _app.Run("--path", "workshop-inventory".FindDirectory(), "tree");
+        var result = _app.Run("tree", "--path", "workshop-inventory".FindDirectory());
 
         // Then
         result.Output.Normalize(NormalizationForm.FormC)
             .Should()
             .BeEquivalentTo(
                 """
-                .
-                ├── Boîte à musique (300g, ✨)
-                ├── Épée en bois (1kg, ✨)
-                ├── Livre de sorts (500g, ✨✨)
-                ├── Poupée chantante (200g, ✨✨✨)
-                └── Dossier Jouets/
-                    ├── Boule de neige (100g, ✨)
-                    └── Sablier magique (300g, ✨✨)
-                """.Normalize(NormalizationForm.FormC));
+                    .
+                    ├── Boîte à musique (300g, ✨)
+                    ├── Épée en bois (1kg, ✨)
+                    ├── Livre de sorts (500g, ✨✨)
+                    ├── Poupée chantante (200g, ✨✨✨)
+                    └── Dossier Jouets/
+                        ├── Boule de neige (100g, ✨)
+                        └── Sablier magique (300g, ✨✨)
+                    """.Normalize(NormalizationForm.FormC));
     }
 }

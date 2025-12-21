@@ -1,7 +1,11 @@
 ﻿using ElfLs;
+using ElfLs.Commands;
 using Spectre.Console.Cli;
 
 var app = new CommandApp();
-app.SetDefaultCommand<ElfCommand>();
-app.Configure(config => config.SetApplicationName("elf"));
+app.Configure(config =>
+{
+    config.SetApplicationName("elf");
+    config.AddCommand<NormalCommand>("normal");
+});
 await app.RunAsync(args);
