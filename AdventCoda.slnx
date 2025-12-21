@@ -96,4 +96,9 @@
     <File Path="day-19\index.html" />
     <File Path="day-19\README.md" />
   </Folder>
+  <Folder Name="/Jour 20 - Logistique Elfique/">
+    <File Path="day-20\README.md" />
+    <Project Path="day-20/src/ElfLs.csproj" />
+    <Project Path="day-20/tests/ElfLs.Tests.csproj" />
+  </Folder>
 </Solution>
