@@ -1,4 +1,5 @@
-﻿using ElfLs.Presentations;
+﻿using System.Text;
+using ElfLs.Presentations;
 using ElfLs.Tests.Data;
 using FluentAssertions;
 using Spectre.Console.Testing;
@@ -37,7 +38,7 @@ public class PresentationTests
                 Boîte à musique    Fichier   10cm     300g    ✨
                 Épée en bois       Fichier   50cm     1kg     ✨
                 Jouets             Dossier   -        -       -
-                """);
+                """.Normalize(NormalizationForm.FormC));
     }
 
     [Fact]
@@ -55,7 +56,7 @@ public class PresentationTests
             .BeEquivalentTo(
                 """
                 Poupée chantante (Jouet, 200g, ✨✨✨), Livre de sorts (Livre, 500g, ✨✨), Boîte à musique (Objet, 300g, ✨), Épée en bois (Arme, 1kg, ✨), Dossier Jouets/
-                """);
+                """.Normalize(NormalizationForm.FormC));
     }
 
     [Fact]
@@ -80,7 +81,7 @@ public class PresentationTests
                 └── Dossier Jouets/
                     ├── Sablier magique (300g, ✨✨)
                     └── Boule de neige (100g, ✨)
-                """);
+                """.Normalize(NormalizationForm.FormC));
     }
 
     private string Output() => _console.Output.NormalizeLineEndings().TrimLines().Trim();

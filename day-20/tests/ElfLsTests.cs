@@ -1,4 +1,5 @@
-﻿using ElfLs.Tests.Utils;
+﻿using System.Text;
+using ElfLs.Tests.Utils;
 using FluentAssertions;
 using Spectre.Console.Cli;
 using Spectre.Console.Cli.Testing;
@@ -58,18 +59,18 @@ public class ElfLsTests
         var result = _app.Run("--path", "workshop-inventory".FindDirectory(), "--normal");
 
         // Then
-        result.Output
+        result.Output.Normalize(NormalizationForm.FormC)
             .Should()
             .BeEquivalentTo(
                 """
                 Nom                Type      Taille   Poids   Magie
-                
+
                 Boîte à musique    Fichier   10cm     300g    ✨
                 Épée en bois       Fichier   50cm     1kg     ✨
                 Livre de sorts     Fichier   20cm     500g    ✨✨
                 Poupée chantante   Fichier   15cm     200g    ✨✨✨
                 Jouets             Dossier   -        -       -
-                """);
+                """.Normalize(NormalizationForm.FormC));
     }
 
     [Fact]
@@ -81,12 +82,12 @@ public class ElfLsTests
         var result = _app.Run("--path", "workshop-inventory".FindDirectory(), "--compact");
 
         // Then
-        result.Output
+        result.Output.Normalize(NormalizationForm.FormC)
             .Should()
             .BeEquivalentTo(
                 """
-                Boîte à musique (Objet, 300g, ✨), Épée en bois (Arme, 1kg, ✨), Livre de sorts (Livre, 500g, ✨✨), Poupée chantante (Jouet, 200g, ✨✨✨), Dossier Jouets/
-                """);
+                Boîte à musique (Objet, 300g, ✨), Épée en bois (Arme, 1kg, ✨), Livre de sorts (Livre, 500g, ✨✨), Poupée chantante (Jouet, 200g, ✨✨✨), Dossier Jouets/
+                """.Normalize(NormalizationForm.FormC));
     }
 
     [Fact]
@@ -98,7 +99,7 @@ public class ElfLsTests
         var result = _app.Run("--path", "workshop-inventory".FindDirectory(), "--tree");
 
         // Then
-        result.Output
+        result.Output.Normalize(NormalizationForm.FormC)
             .Should()
             .BeEquivalentTo(
                 """
@@ -110,6 +111,6 @@ public class ElfLsTests
                 └── Dossier Jouets/
                     ├── Boule de neige (100g, ✨)
                     └── Sablier magique (300g, ✨✨)
-                """);
+                """.Normalize(NormalizationForm.FormC));
     }
 }

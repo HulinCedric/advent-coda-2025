@@ -1,3 +1,4 @@
+using System.Text;
 using ElfLs.Core;
 
 namespace ElfLs.Tests.Builders;
@@ -44,9 +45,9 @@ public class InventoryFileBuilder
 
     public InventoryFile Build()
         => new(
-            Name: _name,
-            Category: _category,
-            Size: _size,
-            Weight: _weight,
-            Magic: _magic);
+            Name: _name.Normalize(NormalizationForm.FormC),
+            Category: _category.Normalize(NormalizationForm.FormC),
+            Size: _size.Normalize(NormalizationForm.FormC),
+            Weight: _weight.Normalize(NormalizationForm.FormC),
+            Magic: _magic.Normalize(NormalizationForm.FormC));
 }
