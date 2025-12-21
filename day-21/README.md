@@ -31,3 +31,14 @@ SELECT 'person' AS tbl, COUNT(*) AS cnt FROM person
 UNION ALL SELECT 'gift', COUNT(*) FROM gift
 UNION ALL SELECT 'transactions', COUNT(*) FROM transactions
 UNION ALL SELECT 'access_log', COUNT(*) FROM access_log;
+```
+
+Mène l’enquête, voici quelques pistes (non exhaustives) :
+
+- Cherche qui agit lorsqu'il y a moins de monde...
+- Repère des transactions suspectes (ex. `missing`, traces d’emoji, formulations bizarres) et relie-les aux acteurs.
+- Essaie de corréler certaines actions avec des accès (±2 minutes).
+- Vérifie si des comptes partagent la même IP/device.
+- Analyse l'état des cadeaux juste après les actions du suspect...
+
+> Indice : un elfe qui travaille « hors horaires » est suspect.
