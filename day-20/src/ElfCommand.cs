@@ -1,3 +1,4 @@
+using ElfLs.Core;
 using ElfLs.Infrastructure;
 using ElfLs.Presentations;
 using Spectre.Console;
@@ -12,15 +13,21 @@ public class ElfCommand(IAnsiConsole console) : Command<ElfSettings>
         ElfSettings settings,
         CancellationToken cancellationToken)
     {
-        var directory = new InventoryRepository().Load(settings.Path);
-        IPresentationStrategy presentation = settings.DisplayMode switch
+        var presentation = PresentationStrategyFactory(settings.DisplayMode);
+        var inventoryRepository = new InventoryRepository();
+        var useCase = new TakeInventoryUseCase(inventoryRepository, presentation);
+
+        useCase.Handle(settings.Path);
+
+        return 0;
+    }
+
+    private IPresentationStrategy PresentationStrategyFactory(DisplayMode displayMode)
+        => displayMode switch
         {
             DisplayMode.Normal => new NormalPresentation(console),
             DisplayMode.Compact => new CompactPresentation(console),
             DisplayMode.Tree => new TreePresentation(console),
             _ => new NormalPresentation(console)
         };
-        presentation.Present(directory);
-        return 0;
-    }
 }

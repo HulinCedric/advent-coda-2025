@@ -56,7 +56,7 @@ public class ElfLsTests
         // Given
 
         // When
-        var result = _app.Run("--path", "workshop-inventory".FindDirectory(), "--normal");
+        var result = _app.Run("--path", "workshop-inventory".FindDirectory(), "normal");
 
         // Then
         result.Output.Normalize(NormalizationForm.FormC)
@@ -79,7 +79,7 @@ public class ElfLsTests
         // Given
 
         // When
-        var result = _app.Run("--path", "workshop-inventory".FindDirectory(), "--compact");
+        var result = _app.Run("--path", "workshop-inventory".FindDirectory(), "compact");
 
         // Then
         result.Output.Normalize(NormalizationForm.FormC)
@@ -96,7 +96,7 @@ public class ElfLsTests
         // Given
 
         // When
-        var result = _app.Run("--path", "workshop-inventory".FindDirectory(), "--tree");
+        var result = _app.Run("--path", "workshop-inventory".FindDirectory(), "tree");
 
         // Then
         result.Output.Normalize(NormalizationForm.FormC)

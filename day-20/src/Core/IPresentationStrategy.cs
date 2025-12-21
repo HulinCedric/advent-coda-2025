@@ -1,6 +1,4 @@
-using ElfLs.Core;
-
-namespace ElfLs.Presentations;
+namespace ElfLs.Core;
 
 public interface IPresentationStrategy
 {

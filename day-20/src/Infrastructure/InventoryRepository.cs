@@ -4,7 +4,7 @@ using ElfLs.Core;
 
 namespace ElfLs.Infrastructure;
 
-public sealed class InventoryRepository(string sidecarMetadataSuffix = ".meta.json")
+public sealed class InventoryRepository(string sidecarMetadataSuffix = ".meta.json") : IInventoryRepository
 {
     public InventoryDirectory Load(string directoryPath)
         => ScanDirectory(
