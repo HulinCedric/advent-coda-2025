@@ -101,4 +101,10 @@
     <Project Path="day-20/src/ElfLs.csproj" />
     <Project Path="day-20/tests/ElfLs.Tests.csproj" />
   </Folder>
+  <Folder Name="/Jour 21 - Démasquer l’elfe malveillant/">
+    <File Path="day-21\elf_challenge.db" />
+    <File Path="day-21\investigation.ipynb" />
+    <File Path="day-21\README.md" />
+    <File Path="day-21\requirements.txt" />
+  </Folder>
 </Solution>
