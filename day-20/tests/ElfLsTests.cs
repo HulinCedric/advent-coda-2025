@@ -1,4 +1,5 @@
-﻿using FluentAssertions;
+﻿using ElfLs.Tests.Utils;
+using FluentAssertions;
 using Spectre.Console.Cli;
 using Spectre.Console.Cli.Testing;
 using Xunit;
@@ -54,7 +55,7 @@ public class ElfLsTests
         // Given
 
         // When
-        var result = _app.Run("--path", "workshop-inventory", "--normal");
+        var result = _app.Run("--path", "workshop-inventory".FindDirectory(), "--normal");
 
         // Then
         result.Output
@@ -77,7 +78,7 @@ public class ElfLsTests
         // Given
 
         // When
-        var result = _app.Run("--path", "workshop-inventory", "--compact");
+        var result = _app.Run("--path", "workshop-inventory".FindDirectory(), "--compact");
 
         // Then
         result.Output
@@ -94,7 +95,7 @@ public class ElfLsTests
         // Given
 
         // When
-        var result = _app.Run("--path", "workshop-inventory", "--tree");
+        var result = _app.Run("--path", "workshop-inventory".FindDirectory(), "--tree");
 
         // Then
         result.Output
