@@ -23,3 +23,4 @@ Ce repository contient mes résolutions du [calendrier de l'Avent Coda](https://
 - [Jour 19 - Le vrai visage du Père Noël](day-19/README.md)
 - [Jour 20 - Logistique Elfique](day-20/README.md)
 - [Jour 21 - Démasquer l’elfe malveillant](day-21/README.md)
+- [Jour 22 - ASCII paraît, on installe le sapin ?](day-22/README.md)
