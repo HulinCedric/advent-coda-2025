@@ -3,7 +3,11 @@
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
   </PropertyGroup>
   <ItemGroup>
+    <PackageVersion Include="Faker.Net" Version="2.0.163" />
     <PackageVersion Include="FluentAssertions" Version="8.8.0" />
+    <PackageVersion Include="FluentAssertions.LanguageExt" Version="0.5.0" />
+    <PackageVersion Include="FsCheck.Xunit.v3" Version="3.3.2" />
+    <PackageVersion Include="LanguageExt.Core" Version="4.4.9" />
     <PackageVersion Include="Spectre.Console.Cli" Version="0.53.1" />
     <PackageVersion Include="Spectre.Console.Cli.Testing" Version="1.0.0-alpha.0.12" />
     <PackageVersion Include="xunit.v3" Version="3.2.1" />

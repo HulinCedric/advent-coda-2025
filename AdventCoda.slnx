@@ -111,4 +111,9 @@
     <File Path="day-22\README.md" />
     <Project Path="day-22/src/ChristmasTreeArt.csproj" />
   </Folder>
+  <Folder Name="/Jour 23 - Se rendre indispensable/">
+    <File Path="day-23\README.md" />
+    <Project Path="day-23/src/Delivery.csproj" />
+    <Project Path="day-23/tests/Delivery.Tests.csproj" />
+  </Folder>
 </Solution>
