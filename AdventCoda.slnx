@@ -107,4 +107,8 @@
     <File Path="day-21\README.md" />
     <File Path="day-21\requirements.txt" />
   </Folder>
+  <Folder Name="/Jour 22 - ASCII paraît, on installe le sapin/">
+    <File Path="day-22\README.md" />
+    <Project Path="day-22/src/ChristmasTreeArt.csproj" />
+  </Folder>
 </Solution>
