@@ -1,4 +1,5 @@
 ﻿using FluentAssertions;
+using LanguageExt;
 using Xunit;
 
 namespace GifFeedbackAudit.Tests;
@@ -18,26 +19,32 @@ public class GifFeedbackAuditTests
                 """
                 === Rapport des Enfants Mécontents ===
 
-                France : 12 mécontents
-                Brazil : 8 mécontents
-                Japan : 3 mécontents
-                Germany : 4 mécontents
-                Poland : 5 mécontents
+                France : 1 mécontents
+                Japan : 1 mécontents
+                Germany : 1 mécontents
 
-                Total global : 32 enfants mécontents
+                Total global : 3 enfants mécontents
                 """);
     }
 
     private string BuildReport(string input)
-        => """
-           === Rapport des Enfants Mécontents ===
+    {
+        var feedbacks = input.Split("|").Select(Feedback.Parse).Somes();
 
-           France : 12 mécontents
-           Brazil : 8 mécontents
-           Japan : 3 mécontents
-           Germany : 4 mécontents
-           Poland : 5 mécontents
+        var groupedByCountry = feedbacks
+            .Where(fb => fb.Satisfaction.Value == "unhappy")
+            .GroupBy(fb => fb.Country.Value)
+            .ToDictionary(
+                g => g.Key,
+                g => g.Count());
 
-           Total global : 32 enfants mécontents
-           """;
+        return $$"""
+                 === Rapport des Enfants Mécontents ===
+
+                 {{string.Join("\n", groupedByCountry.Select(kvp =>
+                     $"{kvp.Key} : {kvp.Value} mécontents"))}}
+
+                 Total global : {{groupedByCountry.Sum(f => f.Value)}} enfants mécontents
+                 """;
+    }
 }
