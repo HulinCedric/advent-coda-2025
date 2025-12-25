@@ -13,4 +13,6 @@ public record Country(string Value)
             .Map(s => new Country(s));
 
     private static bool ContainOnlyLetter(string input) => input.All(char.IsLetter);
+
+    public override string ToString() => Value;
 }
