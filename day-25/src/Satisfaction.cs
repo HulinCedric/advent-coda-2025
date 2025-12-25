@@ -1,6 +1,3 @@
-using LanguageExt;
-using static LanguageExt.Prelude;
-
 namespace GifFeedbackAudit;
 
 public record Satisfaction(string Value)

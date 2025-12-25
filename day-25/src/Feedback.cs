@@ -1,6 +1,3 @@
-using LanguageExt;
-using static LanguageExt.Prelude;
-
 namespace GifFeedbackAudit;
 
 public record Feedback(Country Country, FirstName FirstName, Satisfaction Satisfaction, Age Age)
