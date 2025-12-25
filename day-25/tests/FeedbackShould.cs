@@ -28,6 +28,10 @@ public class FeedbackShould
     [InlineData("??-??-happy-?", "invalid characters")]
     [InlineData("elgium-Laura-happiness-9", "invalid satisfaction")]
     [InlineData("USA-Mike-neutral-", "empty age")]
+    [InlineData(null, "null input")]
+    [InlineData("", "empty input")]
+    [InlineData("   ", "whitespace input")]
+    [InlineData("USA-Mike-neutral-2-oops", "too many values")]
     public void Parse_invalid_feedback_return_none(string input, string because)
         => Feedback.Parse(input)
             .Should()
