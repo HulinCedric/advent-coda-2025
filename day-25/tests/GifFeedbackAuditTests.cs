@@ -79,10 +79,18 @@ public class FirstNameShould
     [InlineData("Lucie")]
     [InlineData("Antonio")]
     [InlineData("Hiro")]
-    public void Pase_valid_input(string input)
+    public void Pase_valid_input_return_first_name(string input)
         => FirstName.Parse(input)
             .Should()
             .BeSome();
+    
+    [Theory]
+    [InlineData("")]
+    [InlineData("?")]
+    public void Parse_invalid_input_return_none(string input)
+        => FirstName.Parse(input)
+            .Should()
+            .BeNone();
 }
 
 public record FirstName(string Value)
