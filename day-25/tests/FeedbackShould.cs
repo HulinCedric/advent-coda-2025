@@ -32,8 +32,8 @@ public class FeedbackShould
     [InlineData("", "empty input")]
     [InlineData("   ", "whitespace input")]
     [InlineData("USA-Mike-neutral-2-oops", "too many values")]
-    public void Parse_invalid_feedback_return_none(string input, string because)
-        => Feedback.Parse(input)
+    public void Parse_invalid_feedback_return_none(string? input, string because)
+        => Feedback.Parse(input!)
             .Should()
             .BeNone(because);
 }
