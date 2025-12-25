@@ -41,13 +41,9 @@ public class GifFeedbackAuditTests
            Total global : 32 enfants mécontents
            """;
 
-    // France-Lucie-happy-7
-    // Brazil-Antonio-unhappy-9
-    // Japan-Hiro-unhappy-11
-    // Canada-Sophie-neutral-6
     [Theory]
     [InlineData("France-Lucie-unhappy-7", "France", "Lucie", "unhappy", 7)]
-    [InlineData("Brazil-Antonio-unhappy-9", "Brazil", "Antonio", "unhappy", 9)]
+    [InlineData("Brazil-Antonio-happy-10", "Brazil", "Antonio", "happy", 10)]
     [InlineData("Japan-Hiro-unhappy-11", "Japan", "Hiro", "unhappy", 11)]
     [InlineData("Canada-Sophie-neutral-6", "Canada", "Sophie", "neutral", 6)]
     public void Parse_valid_feedback(string input, string country, string firstName, string satisfaction, int age)
