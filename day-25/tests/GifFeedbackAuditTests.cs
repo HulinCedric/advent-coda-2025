@@ -1,4 +1,7 @@
 ﻿using FluentAssertions;
+using FluentAssertions.Execution;
+using FluentAssertions.Primitives;
+using LanguageExt;
 using Xunit;
 using static GifFeedbackAudit.Tests.FeedbackBuilder;
 
@@ -58,7 +61,14 @@ public class GifFeedbackAuditTests
                     .Satisfied(satisfaction)
                     .Build());
 
-    private Feedback Parse(string input)
+    [Theory]
+    [InlineData("France--happy-7", "first name empty")]
+    public void Parse_invalid_feedback_return_none_feedback(string input, string because)
+        => Parse(input)
+            .Should()
+            .BeNone(because);
+
+    private Option<Feedback> Parse(string input)
     {
         var feedbackParts = input.Split("-");
         var country = feedbackParts[0];
@@ -105,4 +115,85 @@ public class FeedbackBuilder
     }
 
     public Feedback Build() => new(_country, _firstName, _satisfaction, _age);
+}
+
+public static class LanguageExtOptionExtensions
+{
+    public static LanguageExtOptionAssertions<T> Should<T>(this Option<T> instance)
+        => new(instance, AssertionChain.GetOrCreate());
+}
+
+public class LanguageExtOptionAssertions<T> : ReferenceTypeAssertions<Option<T>, LanguageExtOptionAssertions<T>>
+{
+    public LanguageExtOptionAssertions(Option<T> instance, AssertionChain chain) : base(instance, chain)
+    {
+    }
+
+    protected override string Identifier => "option";
+
+    public AndConstraint<LanguageExtOptionAssertions<T>> BeNone(string because = "", params object[] becauseArgs)
+    {
+        CurrentAssertionChain
+            .BecauseOf(because, becauseArgs)
+            .WithExpectation(
+                "Expected {context:option} to be None{reason}, ",
+                because,
+                becauseArgs,
+                chain => chain
+                    .Given(() => Subject)
+                    .ForCondition(subject => subject.IsNone)
+                    .FailWith("but found to be Some."));
+
+        return new AndConstraint<LanguageExtOptionAssertions<T>>(this);
+    }
+
+    public AndWhichConstraint<LanguageExtOptionAssertions<T>, T> BeSome(
+        string because = "",
+        params object[] becauseArgs)
+    {
+        CurrentAssertionChain
+            .BecauseOf(because, becauseArgs)
+            .WithExpectation(
+                "Expected {context:option} to be Some{reason}, ",
+                because,
+                becauseArgs,
+                chain => chain
+                    .Given(() => Subject)
+                    .ForCondition(subject => subject.IsSome)
+                    .FailWith("but found to be None."));
+
+        return new AndWhichConstraint<LanguageExtOptionAssertions<T>, T>(this, (T)Subject);
+    }
+
+    public AndConstraint<LanguageExtOptionAssertions<T>> BeSome(
+        Action<T> action,
+        string because = "",
+        params object[] becauseArgs)
+    {
+        BeSome(because, becauseArgs);
+        Subject.IfSome(action);
+
+        return new AndConstraint<LanguageExtOptionAssertions<T>>(this);
+    }
+
+    public AndConstraint<LanguageExtOptionAssertions<T>> Be(
+        T expected,
+        string because = "",
+        params object[] becauseArgs)
+    {
+        CurrentAssertionChain
+            .BecauseOf(because, becauseArgs)
+            .WithExpectation(
+                "Expected {context:option} to be Some {0}{reason}, ",
+                expected,
+                chain => chain
+                    .Given(() => Subject)
+                    .ForCondition(subject => subject.IsSome)
+                    .FailWith("but found to be None.")
+                    .Then
+                    .ForCondition(subject => subject.Equals(expected))
+                    .FailWith("but found Some {0}.", Subject));
+
+        return new AndConstraint<LanguageExtOptionAssertions<T>>(this);
+    }
 }
