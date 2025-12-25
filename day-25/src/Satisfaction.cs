@@ -1,18 +1,21 @@
 using LanguageExt;
+using static LanguageExt.Prelude;
 
 namespace GifFeedbackAudit;
 
 public record Satisfaction(string Value)
 {
     public static Option<Satisfaction> Parse(string input)
-    {
-        var trimmedInput = input?.Trim();
-        return trimmedInput switch
+        => Optional(input)
+            .Map(s => s.Trim())
+            .Bind(ParseSatisfaction);
+
+    private static Option<Satisfaction> ParseSatisfaction(string input)
+        => input switch
         {
-            "happy" => new Satisfaction("happy"),
-            "neutral" => new Satisfaction("neutral"),
-            "unhappy" => new Satisfaction("unhappy"),
-            _ => Option<Satisfaction>.None
+            "happy" => Some(new Satisfaction("happy")),
+            "neutral" => Some(new Satisfaction("neutral")),
+            "unhappy" => Some(new Satisfaction("unhappy")),
+            _ => None
         };
-    }
 }
