@@ -1,5 +1,6 @@
 ﻿using FluentAssertions;
 using Xunit;
+using static GifFeedbackAudit.Tests.FeedbackBuilder;
 
 namespace GifFeedbackAudit.Tests;
 
@@ -47,7 +48,15 @@ public class GifFeedbackAuditTests
     [InlineData("Japan-Hiro-unhappy-11", "Japan", "Hiro", "unhappy", 11)]
     [InlineData("Canada-Sophie-neutral-6", "Canada", "Sophie", "neutral", 6)]
     public void Parse_valid_feedback(string input, string country, string firstName, string satisfaction, int age)
-        => Parse(input).Should().Be(new Feedback(country, firstName, satisfaction, age));
+        => Parse(input)
+            .Should()
+            .Be(
+                AFeedback()
+                    .From(country)
+                    .IssuedBy(firstName)
+                    .Aged(age)
+                    .Satisfied(satisfaction)
+                    .Build());
 
     private Feedback Parse(string input)
     {
@@ -61,3 +70,39 @@ public class GifFeedbackAuditTests
 }
 
 public record Feedback(string Country, string FirstName, string Satisfaction, int Age);
+
+public class FeedbackBuilder
+{
+    private int _age = 7;
+    private string _country = "France";
+    private string _firstName = "Lucie";
+    private string _satisfaction = "unhappy";
+
+    public static FeedbackBuilder AFeedback() => new();
+
+    public FeedbackBuilder From(string country)
+    {
+        _country = country;
+        return this;
+    }
+
+    public FeedbackBuilder IssuedBy(string firstName)
+    {
+        _firstName = firstName;
+        return this;
+    }
+
+    public FeedbackBuilder Satisfied(string satisfaction)
+    {
+        _satisfaction = satisfaction;
+        return this;
+    }
+
+    public FeedbackBuilder Aged(int age)
+    {
+        _age = age;
+        return this;
+    }
+
+    public Feedback Build() => new(_country, _firstName, _satisfaction, _age);
+}
