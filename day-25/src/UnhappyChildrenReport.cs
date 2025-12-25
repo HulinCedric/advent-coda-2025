@@ -20,5 +20,12 @@ public class UnhappyChildrenReport
                 Country: countryGroup.Key,
                 NumberOfFeedback: countryGroup.Count()));
 
+    public static UnhappyChildrenReport Parse(string input)
+    {
+        var feedbacks = input.Split("|").Select(Feedback.Parse).Somes();
+
+        return BuildFrom(feedbacks);
+    }
+
     public record ReportLine(Country Country, int NumberOfFeedback);
 }

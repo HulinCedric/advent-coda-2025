@@ -1,6 +1,5 @@
 ﻿using System.Reflection;
 using FluentAssertions;
-using LanguageExt;
 using Xunit;
 using static System.IO.Path;
 
@@ -20,11 +19,11 @@ public class GifFeedbackAuditTests
             .BeEquivalentTo(
                 """
                 === Rapport des Enfants Mécontents ===
-                
+
                 France : 1 mécontents
                 Germany : 1 mécontents
                 Japan : 1 mécontents
-                
+
                 Total global : 3 enfants mécontents
                 """);
     }
@@ -40,7 +39,7 @@ public class GifFeedbackAuditTests
             .BeEquivalentTo(
                 """
                 === Rapport des Enfants Mécontents ===
-                
+
                 Poland : 268 mécontents
                 Brazil : 264 mécontents
                 Mexico : 251 mécontents
@@ -71,19 +70,13 @@ public class GifFeedbackAuditTests
                 India : 206 mécontents
                 Italy : 194 mécontents
                 Australia : 190 mécontents
-                
+
                 Total global : 6952 enfants mécontents
                 """);
     }
 
     private static string BuildReport(string input)
-    {
-        var feedbacks = input.Split("|").Select(Feedback.Parse).Somes();
-
-        var report = UnhappyChildrenReport.BuildFrom(feedbacks);
-
-        return UnhappyChildrenReportPresenter.Present(report);
-    }
+        => UnhappyChildrenReportPresenter.Present(UnhappyChildrenReport.Parse(input));
 
     private static string ReadReportContent(string fileName)
         => File.ReadAllText(
