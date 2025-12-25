@@ -26,7 +26,7 @@ public class FeedbackShould
     [InlineData("France--happy-7", "first name empty")]
     [InlineData("Italy-Mario-12", "missing satisfaction field")]
     [InlineData("??-??-happy-?", "invalid characters")]
-    [InlineData("elgium-Laura-happiness-9", "invalid satisfaction")]
+    [InlineData("Belgium-Laura-happiness-9", "invalid satisfaction")]
     [InlineData("USA-Mike-neutral-", "empty age")]
     [InlineData(null, "null input")]
     [InlineData("", "empty input")]

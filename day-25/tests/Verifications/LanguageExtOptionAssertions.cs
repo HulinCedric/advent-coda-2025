@@ -16,8 +16,6 @@ public class LanguageExtOptionAssertions<T>(Option<T> instance, AssertionChain c
             .BecauseOf(because, becauseArgs)
             .WithExpectation(
                 "Expected {context:option} to be None{reason}, ",
-                because,
-                becauseArgs,
                 chain => chain
                     .Given(() => Subject)
                     .ForCondition(subject => subject.IsNone)
@@ -34,8 +32,6 @@ public class LanguageExtOptionAssertions<T>(Option<T> instance, AssertionChain c
             .BecauseOf(because, becauseArgs)
             .WithExpectation(
                 "Expected {context:option} to be Some{reason}, ",
-                because,
-                becauseArgs,
                 chain => chain
                     .Given(() => Subject)
                     .ForCondition(subject => subject.IsSome)

@@ -12,7 +12,7 @@ public class SatisfactionShould
     [InlineData("  happy")]
     [InlineData("neutral  ")]
     [InlineData("  unhappy  ")]
-    public void Pase_valid_input_return_satisfaction(string input)
+    public void Parse_valid_input_return_satisfaction(string input)
         => Satisfaction.Parse(input)
             .Should()
             .BeSome();

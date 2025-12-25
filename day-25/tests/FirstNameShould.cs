@@ -17,7 +17,7 @@ public class FirstNameShould
     [InlineData("Élise")]
     [InlineData("Ελένη")]
     [InlineData("Алексей")]
-    public void Pase_valid_input_return_first_name(string input)
+    public void Parse_valid_input_return_first_name(string input)
         => FirstName.Parse(input)
             .Should()
             .BeSome();
@@ -29,7 +29,9 @@ public class FirstNameShould
     public void Trim_first_name(string input, string expected)
         => FirstName.Parse(input)
             .Should()
-            .BeSome(firstName => firstName.Value.Should().Be(expected));
+            .BeSome()
+            .Which.Value.Should()
+            .Be(expected);
 
     [Theory]
     [InlineData(null)]
