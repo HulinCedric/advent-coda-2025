@@ -72,6 +72,31 @@ public class GifFeedbackAuditTests
             .BeNone(because);
 }
 
+public class FirstNameShould
+{
+    [Theory]
+    [InlineData("Lucie")]
+    [InlineData("Antonio")]
+    [InlineData("Hiro")]
+    public void Pase_valid_input(string input)
+        => FirstName.Parse(input)
+            .Should()
+            .BeSome();
+}
+
+public record FirstName(string Value)
+{
+    public static Option<string> Parse(string input)
+    {
+        if (input == "")
+            return Option<string>.None;
+        if (input == "?")
+            return Option<string>.None;
+
+        return input;
+    }
+}
+
 public record Feedback(string Country, string FirstName, string Satisfaction, int Age)
 {
     public static Option<Feedback> Parse(string input)
@@ -85,11 +110,10 @@ public record Feedback(string Country, string FirstName, string Satisfaction, in
         if (country.Contains("?"))
             return Option<Feedback>.None;
 
-        var firstName = feedbackParts[1];
-        if (firstName == "")
+        var potentialFirstName = Tests.FirstName.Parse(feedbackParts[1]);
+        if (potentialFirstName.IsNone)
             return Option<Feedback>.None;
-        if (firstName == "?")
-            return Option<Feedback>.None;
+        var firstName = potentialFirstName.IfNone(string.Empty);
 
         var satisfaction = feedbackParts[2];
         var rawAge = feedbackParts[3];
