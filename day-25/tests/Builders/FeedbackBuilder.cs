@@ -1,3 +1,5 @@
+using LanguageExt.UnsafeValueAccess;
+
 namespace GifFeedbackAudit.Tests.Builders;
 
 public class FeedbackBuilder
@@ -33,5 +35,5 @@ public class FeedbackBuilder
         return this;
     }
 
-    public Feedback Build() => new(_country, _firstName, _satisfaction, _age);
+    public Feedback Build() => new(_country, FirstName.Parse(_firstName).ValueUnsafe()!, _satisfaction, _age);
 }

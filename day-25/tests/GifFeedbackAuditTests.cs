@@ -1,6 +1,7 @@
 ﻿using FluentAssertions;
 using GifFeedbackAudit.Tests.Verifications;
 using LanguageExt;
+using LanguageExt.UnsafeValueAccess;
 using Xunit;
 using static GifFeedbackAudit.Tests.Builders.FeedbackBuilder;
 
@@ -86,18 +87,18 @@ public class FirstNameShould
 
 public record FirstName(string Value)
 {
-    public static Option<string> Parse(string input)
+    public static Option<FirstName> Parse(string input)
     {
         if (input == "")
-            return Option<string>.None;
+            return Option<FirstName>.None;
         if (input == "?")
-            return Option<string>.None;
+            return Option<FirstName>.None;
 
-        return input;
+        return new FirstName(input);
     }
 }
 
-public record Feedback(string Country, string FirstName, string Satisfaction, int Age)
+public record Feedback(string Country, FirstName FirstName, string Satisfaction, int Age)
 {
     public static Option<Feedback> Parse(string input)
     {
@@ -110,10 +111,10 @@ public record Feedback(string Country, string FirstName, string Satisfaction, in
         if (country.Contains("?"))
             return Option<Feedback>.None;
 
-        var potentialFirstName = Tests.FirstName.Parse(feedbackParts[1]);
+        var potentialFirstName = FirstName.Parse(feedbackParts[1]);
         if (potentialFirstName.IsNone)
             return Option<Feedback>.None;
-        var firstName = potentialFirstName.IfNone(string.Empty);
+        var firstName = potentialFirstName.ValueUnsafe()!;
 
         var satisfaction = feedbackParts[2];
         var rawAge = feedbackParts[3];
