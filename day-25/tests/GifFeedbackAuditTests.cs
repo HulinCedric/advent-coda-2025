@@ -51,7 +51,15 @@ public class GifFeedbackAuditTests
     public void Parse_valid_feedback(string input, string country, string firstName, string satisfaction, int age)
         => Parse(input).Should().Be(new Feedback(country, firstName, satisfaction, age));
 
-    private Feedback Parse(string input) => new("France", "Lucie", "unhappy", 7);
+    private Feedback Parse(string input)
+    {
+        var feedbackParts = input.Split("-");
+        var country = feedbackParts[0];
+        var firstName = feedbackParts[1];
+        var satisfaction = feedbackParts[2];
+        var age = int.Parse(feedbackParts[3]);
+        return new Feedback(country, firstName, satisfaction, age);
+    }
 }
 
 public record Feedback(string Country, string FirstName, string Satisfaction, int Age);
