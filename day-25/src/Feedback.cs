@@ -3,10 +3,6 @@ using static LanguageExt.Prelude;
 
 namespace GifFeedbackAudit;
 
-public class IsUn
-{
-}
-
 public record Feedback(Country Country, FirstName FirstName, Satisfaction Satisfaction, Age Age)
 {
     private const string Separator = "-";

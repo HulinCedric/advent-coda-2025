@@ -31,20 +31,22 @@ public class GifFeedbackAuditTests
     {
         var feedbacks = input.Split("|").Select(Feedback.Parse).Somes();
 
-        var groupedByCountry = feedbacks
-            .Where(feedback => feedback.IsUnhappy())
-            .GroupBy(fb => fb.Country)
-            .ToDictionary(
-                g => g.Key,
-                g => g.Count());
+        var report = UnhappyChildrenReport.BuildFrom(feedbacks);
 
-        return $$"""
-                 === Rapport des Enfants Mécontents ===
+        return $"""
+                === Rapport des Enfants Mécontents ===
 
-                 {{string.Join("\n", groupedByCountry.Select(kvp =>
-                     $"{kvp.Key} : {kvp.Value} mécontents"))}}
+                {FormLines(report.Lines())}
 
-                 Total global : {{groupedByCountry.Sum(f => f.Value)}} enfants mécontents
-                 """;
+                {FormatTotal(report.TotalNumberOfFeedbacks())}
+                """;
     }
+
+    private static string FormLines(IEnumerable<UnhappyChildrenReport.ReportLine> lines)
+        => string.Join(Environment.NewLine, lines.Select(FormatLine));
+
+    private static string FormatLine(UnhappyChildrenReport.ReportLine line)
+        => $"{line.Country} : {line.NumberOfFeedback} mécontents";
+
+    private static string FormatTotal(int total) => $"Total global : {total} enfants mécontents";
 }
