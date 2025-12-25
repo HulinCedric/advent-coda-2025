@@ -18,4 +18,6 @@ public record Satisfaction(string Value)
             "unhappy" => Some(new Satisfaction("unhappy")),
             _ => None
         };
+
+    public bool IsUnhappy() => Value == "unhappy";
 }

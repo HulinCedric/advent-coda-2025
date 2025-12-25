@@ -32,7 +32,7 @@ public class GifFeedbackAuditTests
         var feedbacks = input.Split("|").Select(Feedback.Parse).Somes();
 
         var groupedByCountry = feedbacks
-            .Where(fb => fb.Satisfaction.Value == "unhappy")
+            .Where(feedback => feedback.IsUnhappy())
             .GroupBy(fb => fb.Country.Value)
             .ToDictionary(
                 g => g.Key,

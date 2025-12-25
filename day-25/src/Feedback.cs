@@ -3,6 +3,10 @@ using static LanguageExt.Prelude;
 
 namespace GifFeedbackAudit;
 
+public class IsUn
+{
+}
+
 public record Feedback(Country Country, FirstName FirstName, Satisfaction Satisfaction, Age Age)
 {
     private const string Separator = "-";
@@ -24,4 +28,6 @@ public record Feedback(Country Country, FirstName FirstName, Satisfaction Satisf
             from satisfaction in Satisfaction.Parse(parts[2])
             from age in Age.Parse(parts[3])
             select new Feedback(country, firstName, satisfaction, age);
+
+    public bool IsUnhappy() => Satisfaction.IsUnhappy();
 }
