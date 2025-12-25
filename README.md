@@ -24,3 +24,4 @@ Ce repository contient mes résolutions du [calendrier de l'Avent Coda](https://
 - [Jour 20 - Logistique Elfique](day-20/README.md)
 - [Jour 21 - Démasquer l’elfe malveillant](day-21/README.md)
 - [Jour 22 - ASCII paraît, on installe le sapin ?](day-22/README.md)
+- [Jour 25 - L’Audit des cadeaux mécontents](day-25/README.md)
