@@ -71,7 +71,11 @@ public class GifFeedbackAuditTests
     {
         var feedbackParts = input.Split("-");
         var country = feedbackParts[0];
+        
         var firstName = feedbackParts[1];
+        if (firstName == "")
+            return Option<Feedback>.None;
+        
         var satisfaction = feedbackParts[2];
         var age = int.Parse(feedbackParts[3]);
         return new Feedback(country, firstName, satisfaction, age);
