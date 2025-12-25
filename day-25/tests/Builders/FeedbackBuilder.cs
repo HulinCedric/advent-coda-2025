@@ -39,6 +39,6 @@ public class FeedbackBuilder
         => new(
             Country.Parse(_country).ValueUnsafe()!,
             FirstName.Parse(_firstName).ValueUnsafe()!,
-            _satisfaction,
+            Satisfaction.Parse(_satisfaction).ValueUnsafe()!,
             Age.Parse(_age.ToString()).ValueUnsafe()!);
 }
