@@ -12,7 +12,10 @@ public static class UnhappyChildrenReportPresenter
             """;
 
     private static string FormLines(IEnumerable<UnhappyChildrenReport.ReportLine> lines)
-        => string.Join(Environment.NewLine, lines.Select(FormatLine));
+        => string.Join(Environment.NewLine, lines
+            .OrderByDescending(line => line.NumberOfFeedback)
+            .ThenBy(line => line.Country.ToString())
+            .Select(FormatLine));
 
     private static string FormatLine(UnhappyChildrenReport.ReportLine line)
         => $"{line.Country} : {line.NumberOfFeedback} mécontents";
