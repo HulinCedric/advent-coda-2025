@@ -29,5 +29,5 @@ public record Feedback(Country Country, FirstName FirstName, Satisfaction Satisf
             from age in Age.Parse(parts[3])
             select new Feedback(country, firstName, satisfaction, age);
 
-    public bool IsUnhappy() => Satisfaction.IsUnhappy();
+    public bool IsUnhappy() => Satisfaction == Satisfaction.Unhappy;
 }

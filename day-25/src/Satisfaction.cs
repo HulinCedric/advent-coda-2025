@@ -5,6 +5,10 @@ namespace GifFeedbackAudit;
 
 public record Satisfaction(string Value)
 {
+    public static readonly Satisfaction Happy = new("happy");
+    public static readonly Satisfaction Neutral = new("neutral");
+    public static readonly Satisfaction Unhappy = new("unhappy");
+
     public static Option<Satisfaction> Parse(string input)
         => Optional(input)
             .Map(s => s.Trim())
@@ -13,11 +17,9 @@ public record Satisfaction(string Value)
     private static Option<Satisfaction> ParseSatisfaction(string input)
         => input switch
         {
-            "happy" => Some(new Satisfaction("happy")),
-            "neutral" => Some(new Satisfaction("neutral")),
-            "unhappy" => Some(new Satisfaction("unhappy")),
+            "happy" => Happy,
+            "neutral" => Neutral,
+            "unhappy" => Unhappy,
             _ => None
         };
-
-    public bool IsUnhappy() => Value == "unhappy";
 }
