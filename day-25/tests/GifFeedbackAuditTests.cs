@@ -79,16 +79,26 @@ public class FirstNameShould
     [InlineData("Lucie")]
     [InlineData("Antonio")]
     [InlineData("Hiro")]
+    [InlineData("Sophie")]
+    [InlineData("Cédric")]
+    [InlineData("Élise")]
     public void Pase_valid_input_return_first_name(string input)
         => FirstName.Parse(input)
             .Should()
             .BeSome();
-    
+
     [Theory]
+    [InlineData(null)]
     [InlineData("")]
+    [InlineData(" ")]
     [InlineData("?")]
-    public void Parse_invalid_input_return_none(string input)
-        => FirstName.Parse(input)
+    [InlineData("%")]
+    [InlineData("1")]
+    [InlineData("John3")]
+    [InlineData("An@")]
+    [InlineData("Marie-Louise")]
+    public void Parse_invalid_input_return_none(string? input)
+        => FirstName.Parse(input!)
             .Should()
             .BeNone();
 }
@@ -96,14 +106,9 @@ public class FirstNameShould
 public record FirstName(string Value)
 {
     public static Option<FirstName> Parse(string input)
-    {
-        if (input == "")
-            return Option<FirstName>.None;
-        if (input == "?")
-            return Option<FirstName>.None;
-
-        return new FirstName(input);
-    }
+        => string.IsNullOrWhiteSpace(input) || !input.All(char.IsLetter)
+            ? Option<FirstName>.None
+            : new FirstName(input);
 }
 
 public record Feedback(string Country, FirstName FirstName, string Satisfaction, int Age)
