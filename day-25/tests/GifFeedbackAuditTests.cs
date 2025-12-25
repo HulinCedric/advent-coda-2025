@@ -50,7 +50,7 @@ public class GifFeedbackAuditTests
     [InlineData("Japan-Hiro-unhappy-11", "Japan", "Hiro", "unhappy", 11)]
     [InlineData("Canada-Sophie-neutral-6", "Canada", "Sophie", "neutral", 6)]
     public void Parse_valid_feedback(string input, string country, string firstName, string satisfaction, int age)
-        => Parse(input)
+        => Feedback.Parse(input)
             .Should()
             .Be(
                 AFeedback()
@@ -67,11 +67,14 @@ public class GifFeedbackAuditTests
     [InlineData("Italy-Mario-12", "missing satisfaction field")]
     [InlineData("??-??-happy-?", "invalid characters")]
     public void Parse_invalid_feedback_return_none_feedback(string input, string because)
-        => Parse(input)
+        => Feedback.Parse(input)
             .Should()
             .BeNone(because);
+}
 
-    private Option<Feedback> Parse(string input)
+public record Feedback(string Country, string FirstName, string Satisfaction, int Age)
+{
+    public static Option<Feedback> Parse(string input)
     {
         var feedbackParts = input.Split("-");
 
@@ -96,5 +99,3 @@ public class GifFeedbackAuditTests
         return new Feedback(country, firstName, satisfaction, age);
     }
 }
-
-public record Feedback(string Country, string FirstName, string Satisfaction, int Age);
