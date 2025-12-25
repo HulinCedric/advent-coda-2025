@@ -48,6 +48,8 @@ public class GifFeedbackAuditTests
     [Theory]
     [InlineData("France-Lucie-unhappy-7", "France", "Lucie", "unhappy", 7)]
     [InlineData("Brazil-Antonio-unhappy-9", "Brazil", "Antonio", "unhappy", 9)]
+    [InlineData("Japan-Hiro-unhappy-11", "Japan", "Hiro", "unhappy", 11)]
+    [InlineData("Canada-Sophie-neutral-6", "Canada", "Sophie", "neutral", 6)]
     public void Parse_valid_feedback(string input, string country, string firstName, string satisfaction, int age)
         => Parse(input).Should().Be(new Feedback(country, firstName, satisfaction, age));
 
