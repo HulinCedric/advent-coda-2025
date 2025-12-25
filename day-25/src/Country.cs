@@ -9,6 +9,8 @@ public record Country(string Value)
         => Optional(input)
             .Map(s => s.Trim())
             .Filter(s => s.Length > 0)
-            .Filter(s => s.All(char.IsLetter))
+            .Filter(ContainOnlyLetter)
             .Map(s => new Country(s));
+
+    private static bool ContainOnlyLetter(string input) => input.All(char.IsLetter);
 }
