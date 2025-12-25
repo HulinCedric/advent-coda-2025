@@ -40,5 +40,5 @@ public class FeedbackBuilder
             Country.Parse(_country).ValueUnsafe()!,
             FirstName.Parse(_firstName).ValueUnsafe()!,
             _satisfaction,
-            _age);
+            Age.Parse(_age.ToString()).ValueUnsafe()!);
 }

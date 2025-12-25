@@ -3,7 +3,7 @@ using LanguageExt.UnsafeValueAccess;
 
 namespace GifFeedbackAudit;
 
-public record Feedback(Country Country, FirstName FirstName, string Satisfaction, int Age)
+public record Feedback(Country Country, FirstName FirstName, string Satisfaction, Age Age)
 {
     public static Option<Feedback> Parse(string input)
     {
@@ -23,10 +23,11 @@ public record Feedback(Country Country, FirstName FirstName, string Satisfaction
         var firstName = potentialFirstName.ValueUnsafe()!;
 
         var satisfaction = feedbackParts[2];
-        var rawAge = feedbackParts[3];
-        if (rawAge.Contains("?"))
+
+        var potentialAge = Age.Parse(feedbackParts[3]);
+        if (potentialAge.IsNone)
             return Option<Feedback>.None;
-        var age = int.Parse(rawAge);
+        var age = potentialAge.ValueUnsafe()!;
         return new Feedback(country, firstName, satisfaction, age);
     }
 }
