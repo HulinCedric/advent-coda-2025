@@ -131,6 +131,16 @@ public class CountryShould
             .Should()
             .BeSome();
 
+    // trim country
+    [Theory]
+    [InlineData("  Brazil", "Brazil")]
+    [InlineData("Japan  ", "Japan")]
+    [InlineData("  France  ", "France")]
+    public void Trim_country(string input, string expected)
+        => Country.Parse(input)
+            .Should()
+            .BeSome(country => country.Value.Should().Be(expected));
+    
     [Theory]
     [InlineData(null)]
     [InlineData("")]
@@ -160,9 +170,12 @@ public record FirstName(string Value)
 public record Country(string Value)
 {
     public static Option<Country> Parse(string input)
-        => string.IsNullOrWhiteSpace(input) || !input.All(char.IsLetter)
+    {
+        var trimmedInput = input?.Trim();
+        return string.IsNullOrWhiteSpace(trimmedInput) || !trimmedInput.All(char.IsLetter)
             ? Option<Country>.None
-            : new Country(input);
+            : new Country(trimmedInput);
+    }
 }
 
 public record Feedback(string Country, FirstName FirstName, string Satisfaction, int Age)
