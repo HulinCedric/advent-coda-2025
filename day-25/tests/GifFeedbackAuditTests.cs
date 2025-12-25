@@ -60,8 +60,12 @@ public class GifFeedbackAuditTests
                     .Satisfied(satisfaction)
                     .Build());
 
+    // ??-??-happy-?                # caractères invalides
+    // Belgium-Laura-happiness-9    # satisfaction invalide
+    // USA-Mike-neutral-            # âge vide
     [Theory]
     [InlineData("France--happy-7", "first name empty")]
+    [InlineData("Italy-Mario-12", "missing satisfaction field")]
     public void Parse_invalid_feedback_return_none_feedback(string input, string because)
         => Parse(input)
             .Should()
@@ -70,12 +74,16 @@ public class GifFeedbackAuditTests
     private Option<Feedback> Parse(string input)
     {
         var feedbackParts = input.Split("-");
+
+        if (feedbackParts.Length != 4)
+            return Option<Feedback>.None;
+
         var country = feedbackParts[0];
-        
+
         var firstName = feedbackParts[1];
         if (firstName == "")
             return Option<Feedback>.None;
-        
+
         var satisfaction = feedbackParts[2];
         var age = int.Parse(feedbackParts[3]);
         return new Feedback(country, firstName, satisfaction, age);
