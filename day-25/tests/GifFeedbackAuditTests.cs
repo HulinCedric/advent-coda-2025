@@ -80,12 +80,25 @@ public class FirstNameShould
     [InlineData("Antonio")]
     [InlineData("Hiro")]
     [InlineData("Sophie")]
+    [InlineData("MarieLouise")]
+    [InlineData("OConnor")]
     [InlineData("Cédric")]
     [InlineData("Élise")]
+    [InlineData("Ελένη")]
+    [InlineData("Алексей")]
     public void Pase_valid_input_return_first_name(string input)
         => FirstName.Parse(input)
             .Should()
             .BeSome();
+
+    [Theory]
+    [InlineData("  Antonio", "Antonio")]
+    [InlineData("Hiro  ", "Hiro")]
+    [InlineData("  Lucie  ", "Lucie")]
+    public void Trim_first_name(string input, string expected)
+        => FirstName.Parse(input)
+            .Should()
+            .BeSome(firstName => firstName.Value.Should().Be(expected));
 
     [Theory]
     [InlineData(null)]
@@ -97,8 +110,38 @@ public class FirstNameShould
     [InlineData("John3")]
     [InlineData("An@")]
     [InlineData("Marie-Louise")]
+    [InlineData("O'Connor")]
     public void Parse_invalid_input_return_none(string? input)
         => FirstName.Parse(input!)
+            .Should()
+            .BeNone();
+}
+
+public class CountryShould
+{
+    [Theory]
+    [InlineData("France")]
+    [InlineData("Brazil")]
+    [InlineData("Japan")]
+    [InlineData("Canada")]
+    [InlineData("CôteDivoire")]
+    [InlineData("Suisse")]
+    public void Parse_valid_input_return_country(string input)
+        => Country.Parse(input)
+            .Should()
+            .BeSome();
+
+    [Theory]
+    [InlineData(null)]
+    [InlineData("")]
+    [InlineData(" ")]
+    [InlineData("?")]
+    [InlineData("%")]
+    [InlineData("1")]
+    [InlineData("U$A")]
+    [InlineData("New-Zealand")]
+    public void Parse_invalid_input_return_none(string? input)
+        => Country.Parse(input!)
             .Should()
             .BeNone();
 }
@@ -106,9 +149,20 @@ public class FirstNameShould
 public record FirstName(string Value)
 {
     public static Option<FirstName> Parse(string input)
-        => string.IsNullOrWhiteSpace(input) || !input.All(char.IsLetter)
+    {
+        var trimmedInput = input?.Trim();
+        return string.IsNullOrWhiteSpace(trimmedInput) || !trimmedInput.All(char.IsLetter)
             ? Option<FirstName>.None
-            : new FirstName(input);
+            : new FirstName(trimmedInput);
+    }
+}
+
+public record Country(string Value)
+{
+    public static Option<Country> Parse(string input)
+        => string.IsNullOrWhiteSpace(input) || !input.All(char.IsLetter)
+            ? Option<Country>.None
+            : new Country(input);
 }
 
 public record Feedback(string Country, FirstName FirstName, string Satisfaction, int Age)
