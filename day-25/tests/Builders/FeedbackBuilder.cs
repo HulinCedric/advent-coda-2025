@@ -35,5 +35,10 @@ public class FeedbackBuilder
         return this;
     }
 
-    public Feedback Build() => new(_country, FirstName.Parse(_firstName).ValueUnsafe()!, _satisfaction, _age);
+    public Feedback Build()
+        => new(
+            Country.Parse(_country).ValueUnsafe()!,
+            FirstName.Parse(_firstName).ValueUnsafe()!,
+            _satisfaction,
+            _age);
 }

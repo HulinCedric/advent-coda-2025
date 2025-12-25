@@ -140,7 +140,7 @@ public class CountryShould
         => Country.Parse(input)
             .Should()
             .BeSome(country => country.Value.Should().Be(expected));
-    
+
     [Theory]
     [InlineData(null)]
     [InlineData("")]
@@ -178,7 +178,7 @@ public record Country(string Value)
     }
 }
 
-public record Feedback(string Country, FirstName FirstName, string Satisfaction, int Age)
+public record Feedback(Country Country, FirstName FirstName, string Satisfaction, int Age)
 {
     public static Option<Feedback> Parse(string input)
     {
@@ -187,9 +187,10 @@ public record Feedback(string Country, FirstName FirstName, string Satisfaction,
         if (feedbackParts.Length != 4)
             return Option<Feedback>.None;
 
-        var country = feedbackParts[0];
-        if (country.Contains("?"))
+        var potentialCountry = Country.Parse(feedbackParts[0]);
+        if (potentialCountry.IsNone)
             return Option<Feedback>.None;
+        var country = potentialCountry.ValueUnsafe()!;
 
         var potentialFirstName = FirstName.Parse(feedbackParts[1]);
         if (potentialFirstName.IsNone)
