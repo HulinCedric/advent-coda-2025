@@ -9,7 +9,7 @@ public class FakeDeliveryService : IDeliveryService
 
     public void DeliverGift(string gift, string recipient)
     {
-        if (_shouldFailToDeliver) throw new Exception(_failureReason);
+        if (_shouldFailToDeliver) throw new InvalidOperationException(_failureReason);
     }
 
     public void WillFailToDeliver(string failureReason)
