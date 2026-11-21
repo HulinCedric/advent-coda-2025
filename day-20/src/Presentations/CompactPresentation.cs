@@ -1,6 +1,5 @@
 using ElfLs.Core;
 using Spectre.Console;
-using Spectre.Console.Rendering;
 using static System.Linq.Enumerable;
 
 namespace ElfLs.Presentations;
@@ -9,7 +8,7 @@ public class CompactPresentation(IAnsiConsole console) : IPresentationStrategy
 {
     public void Present(InventoryDirectory directory) => console.Write(Render(directory));
 
-    private static IRenderable Render(InventoryDirectory directory) => new Text(string.Join(", ", Items(directory)));
+    private static Text Render(InventoryDirectory directory) => new Text(string.Join(", ", Items(directory)));
 
     private static IEnumerable<string> Items(InventoryDirectory directory)
         => Empty<string>()

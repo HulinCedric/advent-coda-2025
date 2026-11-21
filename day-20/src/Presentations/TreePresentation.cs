@@ -1,6 +1,5 @@
 using ElfLs.Core;
 using Spectre.Console;
-using Spectre.Console.Rendering;
 
 namespace ElfLs.Presentations;
 
@@ -13,7 +12,7 @@ public class TreePresentation : IPresentationStrategy
     public void Present(InventoryDirectory directory) => _console.Write(Render(directory));
 
 
-    private static IRenderable Render(InventoryDirectory directory)
+    private static Tree Render(InventoryDirectory directory)
     {
         var tree = new Tree(directory.Name);
         AddDirectoryNodes(tree, directory);

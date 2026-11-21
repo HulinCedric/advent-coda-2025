@@ -1,6 +1,5 @@
 using ElfLs.Core;
 using Spectre.Console;
-using Spectre.Console.Rendering;
 
 namespace ElfLs.Presentations;
 
@@ -12,7 +11,7 @@ public class NormalPresentation : IPresentationStrategy
 
     public void Present(InventoryDirectory directory) => _console.Write(Render(directory));
 
-    private static IRenderable Render(InventoryDirectory directory)
+    private static Table Render(InventoryDirectory directory)
     {
         var table = new Table()
             .Border(TableBorder.None)
