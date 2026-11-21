@@ -1,0 +1,67 @@
+name: Dependabot auto-merge
+
+# 1. A Dependabot pull request with only minor or patch updates gets the "automerge" label
+# 2. Once the .NET workflow succeeds on that pull request, it is squash-merged
+# Major updates are never labeled: they stay open for a manual review
+on:
+  pull_request:
+    branches:
+      - main
+  workflow_run:
+    workflows:
+      - .NET
+    types:
+      - completed
+
+permissions: {}
+
+jobs:
+  label:
+    if: ${{ github.event_name == 'pull_request' && github.event.pull_request.user.login == 'dependabot[bot]' }}
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+      - name: Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v3
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Label minor and patch updates
+        if: ${{ steps.metadata.outputs.update-type != 'version-update:semver-major' }}
+        run: |
+          gh label create automerge --repo "$REPOSITORY" --color 0E8A16 --description "Merged by Dependabot auto-merge once CI passes" --force
+          gh pr edit "$PR_URL" --add-label automerge
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPOSITORY: ${{ github.repository }}
+          PR_URL: ${{ github.event.pull_request.html_url }}
+
+  merge:
+    if: >-
+      ${{ github.event_name == 'workflow_run'
+      && github.event.workflow_run.event == 'pull_request'
+      && github.event.workflow_run.conclusion == 'success'
+      && github.event.workflow_run.actor.login == 'dependabot[bot]'
+      && github.event.workflow_run.head_repository.full_name == github.repository }}
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - name: Squash-merge labeled pull request
+        run: |
+          pr=$(gh pr view "$HEAD_BRANCH" --repo "$REPOSITORY" --json number,author,state,headRefOid,labels \
+            --jq "select(.author.login == \"app/dependabot\" and .state == \"OPEN\" and .headRefOid == \"$HEAD_SHA\" and any(.labels[]; .name == \"automerge\")) | .number")
+          if [ -z "$pr" ]; then
+            echo "No open, labeled Dependabot pull request at $HEAD_SHA on $HEAD_BRANCH"
+            exit 0
+          fi
+          gh pr merge "$pr" --repo "$REPOSITORY" --squash --delete-branch --match-head-commit "$HEAD_SHA"
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPOSITORY: ${{ github.repository }}
+          HEAD_BRANCH: ${{ github.event.workflow_run.head_branch }}
+          HEAD_SHA: ${{ github.event.workflow_run.head_sha }}
