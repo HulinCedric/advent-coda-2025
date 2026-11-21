@@ -2,7 +2,7 @@ using Xunit;
 
 namespace Day06.Tests;
 
-internal class AverageWeightScenarios : TheoryData<double[], double>
+internal sealed class AverageWeightScenarios : TheoryData<double[], double>
 {
     public AverageWeightScenarios()
     {
