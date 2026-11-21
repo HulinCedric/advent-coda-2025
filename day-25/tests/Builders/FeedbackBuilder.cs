@@ -1,3 +1,4 @@
+using System.Globalization;
 using LanguageExt.UnsafeValueAccess;
 
 namespace GifFeedbackAudit.Tests.Builders;
@@ -40,5 +41,5 @@ public class FeedbackBuilder
             Country.Parse(_country).ValueUnsafe()!,
             FirstName.Parse(_firstName).ValueUnsafe()!,
             Satisfaction.Parse(_satisfaction).ValueUnsafe()!,
-            Age.Parse(_age.ToString()).ValueUnsafe()!);
+            Age.Parse(_age.ToString(CultureInfo.InvariantCulture)).ValueUnsafe()!);
 }
