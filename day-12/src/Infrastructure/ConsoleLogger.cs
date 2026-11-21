@@ -1,4 +1,5 @@
-﻿using GiftMachine.Core;
+﻿using System.Globalization;
+using GiftMachine.Core;
 
 namespace GiftMachine.Infrastructure;
 
@@ -13,7 +14,7 @@ public class ConsoleLogger : ILogger
 
     public void Log(string message)
     {
-        var time = _timeProvider.GetCurrentDateTime().ToString("HH:mm:ss");
+        var time = _timeProvider.GetCurrentDateTime().ToString("HH:mm:ss", CultureInfo.InvariantCulture);
         Console.WriteLine($"[{time}] {message}");
     }
 }
