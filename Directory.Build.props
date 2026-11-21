@@ -5,10 +5,14 @@
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
         <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+        <AnalysisLevel>latest-recommended</AnalysisLevel>
+        <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     </PropertyGroup>
     <PropertyGroup Condition="$(MSBuildProjectName.EndsWith('.Tests'))">
         <IsPackable>false</IsPackable>
         <OutputType>Exe</OutputType>
+        <!-- Test names use underscores for readability (e.g. Should_do_something_when_condition) -->
+        <NoWarn>$(NoWarn);CA1707</NoWarn>
     </PropertyGroup>
     <ItemGroup Condition="$(MSBuildProjectName.EndsWith('.Tests'))">
         <PackageReference Include="FluentAssertions" />
