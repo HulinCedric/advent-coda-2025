@@ -7,7 +7,7 @@ using Xunit;
 
 namespace ElfLs.Tests;
 
-public class PresentationTests
+public sealed class PresentationTests : IDisposable
 {
     private readonly TestConsole _console;
 
@@ -16,6 +16,8 @@ public class PresentationTests
         _console = new TestConsole();
         _console.Profile.Width = 200;
     }
+
+    public void Dispose() => _console.Dispose();
 
     [Fact]
     public void Present_directory_in_normal_mode()
