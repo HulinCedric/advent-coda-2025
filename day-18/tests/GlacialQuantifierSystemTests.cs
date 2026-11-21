@@ -12,7 +12,7 @@ public class GlacialQuantifierSystemTests
     [InlineData('0', 0)]
     [InlineData('*', 1)]
     [InlineData('✦', 2)]
-    public void Translate_GQS_symbols(char symbol, double @decimal) => Symbol.Parse(symbol).Value.Should().Be(@decimal);
+    public void Translate_GQS_symbols(char symbol, double expected) => Symbol.Parse(symbol).Value.Should().Be(expected);
 
     [Theory]
     [InlineData("✦0", 10)]
@@ -21,8 +21,8 @@ public class GlacialQuantifierSystemTests
     [InlineData("☃", -2)]
     [InlineData("✦**", 56)]
     [InlineData("✦*0❄", 274)]
-    public void Calculate_GQS_measure(string measure, double @decimal)
-        => Measure.Parse(measure).Value.Should().Be(@decimal);
+    public void Calculate_GQS_measure(string measure, double expected)
+        => Measure.Parse(measure).Value.Should().Be(expected);
 
     [Theory]
     [InlineData(new[] { "✦0", "*", "❄", "☃", "✦**" }, 12.8)]
