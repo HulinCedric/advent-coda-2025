@@ -1,0 +1,54 @@
+# Dependabot version updates, once a week
+# Please see the documentation for all configuration options:
+# https://docs.github.com/code-security/dependabot/working-with-dependabot/dependabot-options-reference
+
+version: 2
+updates:
+  # NuGet packages (versions centralized in Directory.Packages.props)
+  - package-ecosystem: nuget
+    directory: "/"
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 10
+    commit-message:
+      prefix: chore
+      include: scope
+    groups:
+      spectre-console:
+        patterns:
+          - "Spectre.Console*"
+
+  # .NET SDK pinned in global.json
+  - package-ecosystem: dotnet-sdk
+    directory: "/"
+    schedule:
+      interval: weekly
+    commit-message:
+      prefix: chore
+      include: scope
+
+  # Day 15 TypeScript tooling
+  - package-ecosystem: npm
+    directory: "/day-15"
+    schedule:
+      interval: weekly
+    commit-message:
+      prefix: chore
+      include: scope
+    groups:
+      day-15-npm:
+        patterns:
+          - "*"
+
+  # GitHub Actions used by the workflows
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+    commit-message:
+      prefix: chore
+      include: scope
+    groups:
+      github-actions:
+        patterns:
+          - "*"
