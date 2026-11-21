@@ -6,4 +6,7 @@
         <Nullable>enable</Nullable>
         <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
     </PropertyGroup>
+    <PropertyGroup Condition="'$(GITHUB_ACTIONS)' == 'true' And $(MSBuildProjectName.EndsWith('.Tests'))">
+        <TestingPlatformCommandLineArguments>$(TestingPlatformCommandLineArguments) --report-xunit-trx --report-xunit-trx-filename $(MSBuildProjectName).trx --report-xunit-markdown --report-xunit-markdown-filename $(MSBuildProjectName).md</TestingPlatformCommandLineArguments>
+    </PropertyGroup>
 </Project>

@@ -39,4 +39,22 @@ jobs:
       run: dotnet build --no-restore --configuration Release
       
     - name: Test
-      run: dotnet test --no-build --configuration Release
+      run: dotnet test --no-build --configuration Release --results-directory "${{ github.workspace }}/TestResults"
+
+    - name: Test summary
+      if: ${{ !cancelled() }}
+      run: |
+        for report in TestResults/*.md; do
+          [ -e "$report" ] || continue
+          echo "## $(basename "$report" .md)" >> "$GITHUB_STEP_SUMMARY"
+          tail -n +2 "$report" >> "$GITHUB_STEP_SUMMARY"
+          echo >> "$GITHUB_STEP_SUMMARY"
+        done
+
+    - name: Upload test results
+      if: ${{ !cancelled() }}
+      uses: actions/upload-artifact@v7
+      with:
+        name: test-results
+        path: TestResults/*.trx
+        if-no-files-found: ignore
