@@ -49,7 +49,7 @@ build/
 
 ### C#
 bin/
-Obj/
+[Oo]bj/
 *.user
 dotCover*
 BenchmarkDotNet.Artifacts/
