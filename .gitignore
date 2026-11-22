@@ -34,6 +34,9 @@ target/
 *.ipr
 .idea/
 
+### Claude Code
+.claude/
+
 ### Approval
 *.received.*
 
@@ -50,6 +53,7 @@ Obj/
 *.user
 dotCover*
 BenchmarkDotNet.Artifacts/
+TestResults/
 *.DotSettings
 
 #### Specflow
